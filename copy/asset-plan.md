@@ -106,3 +106,8 @@ Claude does not cross a gate without an explicit go-ahead.
   available right now, so Gates B–D cannot run until the MCP server is added. Nothing else is blocked.
 - ⚠️ **`ffmpeg` is not installed in this environment.** Needed at Gate E for the all-keyframe re-encode.
   Fix at build time with a system install or an `ffmpeg-static` dev dependency.
+- ⚠️ **The property's own site is unreachable from this session.** `dostepinn-living.at` is blocked by the
+  environment's egress policy, so room categories and property facts could not be pulled from
+  `https://dostepinn-living.at/#/booking/search`. Until they are supplied, the subjects of images 4 and 5
+  (`room-private`, `room-shared`) are provisional — if Living is an apartment product rather than a
+  hostel-style hotel, those two prompts must be rewritten before generation.

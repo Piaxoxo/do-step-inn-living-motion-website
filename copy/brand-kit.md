@@ -177,6 +177,30 @@ before they are used on this site.
 | Managing director | Mag. Gerald Kern | repo `imprint.html` |
 | Operator email | office@dostepinn.at | repo `imprint.html` |
 
+### OPEN — source of truth not yet reachable
+
+The operator named the booking site as the source for all property facts:
+
+```txt
+https://dostepinn-living.at/#/booking/search
+```
+
+It could not be read from this session — `dostepinn-living.at` is blocked by this environment's network
+egress policy (proxy answered 403 to CONNECT). Nothing from it has been used. To unblock, either add the
+domain to the environment's allowed hosts, drop an export of the page into Google Drive, or paste the
+facts directly.
+
+Note that the page is a hash-route booking search (`/#/booking/search`), i.e. a JavaScript app — a plain
+HTML fetch may return an empty shell even once the domain is reachable. The room categories most likely
+come from a booking-engine API behind it.
+
+**Positioning question — blocks the creative brief.** Third-party search results describe Do Step Inn
+Living as *furnished apartments for short and medium-term stays* (business trips, project work, study,
+interim housing), which is a different product from the hostel-style social hotel this brief currently
+assumes. Unconfirmed and third-party, so it is recorded here only as a question, not as a fact.
+**TO VERIFY — is Living an apartment product or a hotel/hostel product?** The answer changes the scroll
+story, the room-card model, and the image prompts.
+
 ### TO VERIFY — everything property-specific
 
 Nothing below may be published or generated until the operator supplies it.
