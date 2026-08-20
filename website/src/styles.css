@@ -1,0 +1,654 @@
+/* Hotel Do Step Inn Living — see copy/brand-kit.md for the token contract. */
+
+:root {
+  --bg: #0b1020;
+  --bg-2: #11172b;
+  --surface: #171d32;
+  --surface-2: #202741;
+  --surface-soft: rgba(23, 29, 50, 0.78);
+  --text: #f7f4f2;
+  --muted: #b6b4be;
+  --accent: #ff3b8d;
+  --accent-2: #ff7a3d;
+  --blue: #243dff;
+  --line: rgba(255, 255, 255, 0.12);
+  --success: #67d7a0;
+
+  --font: "Inter", system-ui, sans-serif;
+  --font-head: "Space Grotesk", system-ui, sans-serif;
+  --font-mono: "Space Mono", ui-monospace, monospace;
+
+  --pad: clamp(1.25rem, 5vw, 6rem);
+  --nav-h: 4.5rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-head);
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+h2 {
+  font-size: clamp(2.25rem, 6.4vw, 5rem);
+}
+
+h3 {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* --- background layers -------------------------------------------------- */
+
+.bg-video,
+.mobile-poster {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.mobile-poster {
+  display: none;
+  background: url("/img/hero-room.jpg") center / cover no-repeat;
+}
+
+.bg-tint {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(11, 16, 32, 0.82) 0%, rgba(11, 16, 32, 0.42) 34%, rgba(11, 16, 32, 0.78) 100%),
+    radial-gradient(120% 80% at 80% 20%, rgba(11, 16, 32, 0) 0%, rgba(11, 16, 32, 0.55) 100%);
+}
+
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.22;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/></filter><rect width='140' height='140' filter='url(%23n)' opacity='0.5'/></svg>");
+}
+
+.page {
+  position: relative;
+  z-index: 10;
+}
+
+/* --- nav ----------------------------------------------------------------- */
+
+.nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 40;
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0 var(--pad);
+  background: linear-gradient(180deg, rgba(11, 16, 32, 0.88), rgba(11, 16, 32, 0));
+  backdrop-filter: blur(6px);
+}
+
+.nav__logo {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.nav__logo em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+.nav__links {
+  display: flex;
+  gap: 1.5rem;
+  margin-inline: auto;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.nav__links a {
+  text-decoration: none;
+  color: var(--muted);
+  transition: color 0.2s;
+}
+
+.nav__links a:hover {
+  color: var(--text);
+}
+
+.nav__end {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav__progress {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.nav__progress::after {
+  content: "%";
+  opacity: 0.5;
+}
+
+.nav__rule {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 2px;
+  background: var(--line);
+}
+
+.nav__rule > span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+
+/* --- buttons ------------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.5rem;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+  white-space: nowrap;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.btn--primary {
+  background: var(--accent);
+  color: #fff;
+  border: 0;
+  box-shadow: 0 18px 48px rgba(255, 59, 141, 0.25);
+}
+
+.btn--ghost {
+  color: var(--text);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.nav .btn {
+  padding: 0.6rem 1.1rem;
+  font-size: 0.8125rem;
+}
+
+/* --- shared bits --------------------------------------------------------- */
+
+.label,
+.chips,
+.notice,
+.hero__cue {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.lede {
+  font-size: clamp(1.0625rem, 1.6vw, 1.375rem);
+  color: var(--muted);
+  max-width: 46ch;
+  text-wrap: pretty;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* Unverified content is visibly marked so a placeholder build can never be
+   mistaken for a finished one. */
+.todo {
+  color: var(--accent-2);
+  border-bottom: 1px dashed rgba(255, 122, 61, 0.5);
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.notice {
+  border: 1px solid rgba(255, 122, 61, 0.35);
+  background: rgba(255, 122, 61, 0.08);
+  color: var(--accent-2);
+  border-radius: 14px;
+  padding: 0.85rem 1.1rem;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  max-width: 62ch;
+}
+
+.panel {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(23, 29, 50, 0.9), rgba(11, 16, 32, 0.8));
+  border: 1px solid var(--line);
+  border-radius: 26px;
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.34);
+}
+
+.panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 18% 0%, rgba(255, 59, 141, 0.14), transparent 34%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.05), transparent 42%);
+  pointer-events: none;
+}
+
+.crop {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 22px;
+  border: 1px solid var(--line);
+}
+
+.crop img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.crop:hover img {
+  transform: scale(1.04);
+}
+
+.crop figcaption {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+}
+
+.crop--tall {
+  aspect-ratio: 3 / 4;
+}
+
+.crop--wide {
+  aspect-ratio: 16 / 9;
+}
+
+/* --- sections ------------------------------------------------------------ */
+
+section {
+  padding: 18vh var(--pad);
+}
+
+.hero {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(0.85rem, 1.6vh, 1.5rem);
+  padding-top: calc(var(--nav-h) + 4vh);
+  padding-bottom: 8vh;
+}
+
+.hero__title {
+  font-size: clamp(2.5rem, 7.4vw, 7rem);
+  max-width: 15ch;
+}
+
+.hero__lede {
+  font-size: clamp(1.125rem, 1.8vw, 1.5rem);
+  color: var(--muted);
+  max-width: 40ch;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.hero__cue {
+  margin-top: 6vh;
+  color: var(--muted);
+}
+
+.stay {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+}
+
+.stay__pin {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  min-height: 100svh;
+  justify-content: center;
+}
+
+.stay__lines {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: clamp(2.5rem, 8vw, 7rem);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  max-width: 18ch;
+}
+
+.stay-word {
+  display: inline-block;
+  will-change: opacity, filter, transform;
+}
+
+.living__head,
+.rooms__head,
+.vienna__body,
+.social__body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 60ch;
+}
+
+.living__grid {
+  margin-top: 4rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.living__note {
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.rooms__head {
+  margin-bottom: 1.5rem;
+}
+
+.rooms-grid {
+  margin-top: 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.75rem;
+}
+
+.stay-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.stay-card__media {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+
+.stay-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.stay-card:hover .stay-card__media img {
+  transform: scale(1.05);
+}
+
+.stay-card__body {
+  position: relative;
+  z-index: 1;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.85rem;
+}
+
+.chips {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0;
+  margin: 0;
+}
+
+.chips li {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.35rem 0.75rem;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.social,
+.vienna {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+}
+
+.cta {
+  min-height: 80svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.25rem;
+}
+
+.cta h2 {
+  font-size: clamp(2.5rem, 7.4vw, 7rem);
+}
+
+/* --- footer -------------------------------------------------------------- */
+
+.footer {
+  position: relative;
+  z-index: 10;
+  margin-top: 24vh;
+  padding: 16vh var(--pad) 8vh;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.footer::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 45vh;
+  background: linear-gradient(to bottom, transparent, var(--bg));
+  pointer-events: none;
+}
+
+.footer__mark {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: clamp(2rem, 8vw, 6rem);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.footer__mark em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+.footer__cols {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem;
+}
+
+.footer__cols .label {
+  margin-bottom: 0.5rem;
+}
+
+.footer__note {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+  padding-top: 1.5rem;
+  max-width: 70ch;
+}
+
+/* --- compact / touch ----------------------------------------------------- */
+
+@media (hover: none), (max-width: 768px) {
+  .bg-video {
+    display: none;
+  }
+
+  .mobile-poster {
+    display: block;
+  }
+
+  .nav__links {
+    display: none;
+  }
+
+  .living__grid,
+  .rooms-grid,
+  .social,
+  .vienna,
+  .footer__cols {
+    grid-template-columns: 1fr;
+  }
+
+  .crop--tall {
+    aspect-ratio: 4 / 3;
+  }
+
+  .stay__pin {
+    min-height: auto;
+  }
+
+  section {
+    padding: 12vh var(--pad);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .bg-video {
+    display: none;
+  }
+
+  .mobile-poster {
+    display: block;
+  }
+
+  .crop img,
+  .stay-card__media img,
+  .btn {
+    transition: none;
+  }
+
+  .stay-word {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+  }
+}

@@ -1,0 +1,16 @@
+# --- procedural placeholder media --------------------------------------------
+# These are regenerated in one command and would otherwise sit in git history
+# for good:
+#   python3 scripts/generate_placeholder_media.py --all
+#
+# The site itself does not need them — it runs on the web-weight copies in
+# website/public/, which ARE committed.
+#
+# DELETE THIS BLOCK once the real GPT Image 2 / Seedance 2.0 assets land: those
+# are the masters and belong in the repository.
+assets/images/*.png
+assets/videos/do-step-inn-living-scroll-background-placeholder.mp4
+
+# -----------------------------------------------------------------------------
+__pycache__/
+.DS_Store

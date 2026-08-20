@@ -1,7 +1,9 @@
 # Asset plan — Hotel Do Step Inn Living
 
 The complete, approved-list-only inventory of media for this project.
-**Nothing here is generated yet.** No generation may run until the operator approves this list.
+**No GPT Image 2 or Seedance 2.0 asset exists yet.** No generation may run until the operator
+approves this list. In the meantime every path below is filled by a procedural placeholder from
+`scripts/generate_placeholder_media.py` so the site can be built and reviewed — see the README.
 
 Legend: ⛔ not generated · ⏳ generating · 🔍 needs review · ✅ approved
 
@@ -61,6 +63,7 @@ One generation. Runs only after images 1–3 are approved.
 |---|---|---|
 | Raw output | `assets/videos/do-step-inn-living-scroll-background-raw.mp4` | 16:9, 12–18 s, high quality, no audio needed |
 | Production | `website/public/bg.mp4` | all-keyframe H.264, produced by `scripts/swap-bg-video.sh` |
+| Production | `website/public/bg.webm` | all-keyframe VP9 sibling, same script; browsers prefer it, H.264 covers Safari |
 
 Prompt and phase map: `copy/video-prompt.md`.
 
@@ -70,7 +73,7 @@ Prompt and phase map: `copy/video-prompt.md`.
 
 Copied or encoded from the above, once they exist:
 
-- `website/public/img/*.png` — the seven images, copied and web-optimised
+- `website/public/img/*.jpg` — the seven images, downscaled to 1600px and JPEG-encoded (a 1600px PNG of a smooth gradient costs ~1.4 MB against ~120 KB as JPEG)
 - `website/public/bg.mp4` — all-keyframe re-encode of the raw film
 - `website/public/img/hero-room.png` — doubles as mobile poster and video `poster`
 
