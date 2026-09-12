@@ -85,18 +85,37 @@ No code changes — the paths are identical.
 
 ---
 
-## What is verified in the browser
+## Verifying it
 
-Checked in headless Chromium at 1440 / 768 / 390 px:
+A scroll-driven page fails quietly — a pin can print itself over the next section, a reveal can stick
+at `opacity: 0`, the film can stop following the scroll — and the build still passes.
+`scripts/verify-motion.cjs` drives a real browser and asserts the behaviour. It caught both of those
+bugs during the first build.
 
-- scroll 0 → 100 % maps linearly onto film time 0 → 14.95 s, forwards and backwards
-- the pinned `#stay` reveal resolves its lines one at a time across the pin
-- the progress readout tracks scroll
-- no horizontal overflow at any of the three widths
-- `npm run build -- --base=./` passes
+```bash
+cd website && npm run dev                                    # one shell
+npx --yes playwright@latest node ../scripts/verify-motion.cjs   # another
+```
 
-Known environment note: Google Fonts is blocked by this container's egress policy, so local
-screenshots render in fallback faces. That is an environment limit, not a site bug.
+Playwright is deliberately not a dependency of this project — fetch it on demand. `URL` and
+`CHROMIUM` override the target and the browser binary. It exits non-zero on failure.
+
+15 checks, all passing: the film loads and exposes its dev hooks; scrubbing is monotonic forwards
+*and* backwards and spans the whole film; the pinned reveal resolves and does not bleed into the
+next section; hero copy clears WCAG AA; no horizontal overflow at 1440/1024/768/390/320 px; no page
+errors or failed same-origin requests; touch falls back to the poster with a nav that fits; and
+reduced-motion disables smooth scroll and the film while leaving every line visible.
+
+### Before launch: self-host the fonts
+
+`index.html` currently pulls Inter, Space Grotesk and Space Mono from Google Fonts. For an Austrian
+property that is worth changing: hotlinking transmits every visitor's IP to Google, which a German
+regional court found to be a GDPR violation in 2022, and the same reasoning applies here. Download
+the three families, serve them from `website/public/fonts/`, and replace the `<link>` with local
+`@font-face` rules. It also removes a render-blocking third-party request.
+
+(This could not be done in the build environment — `fonts.gstatic.com` is blocked by its egress
+policy, which is also why local screenshots render in fallback faces.)
 
 ---
 

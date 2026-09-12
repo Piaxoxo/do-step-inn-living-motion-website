@@ -402,19 +402,23 @@ section {
   color: var(--muted);
 }
 
+/* Deliberately a block, not a flex container. ScrollTrigger pins by wrapping
+   .stay__pin in a spacer div that reserves the pinned scroll distance; as a
+   flex child that spacer does not hold its height, the following section rides
+   up underneath, and the pinned text ends up printed over it. The pin element
+   centres itself instead. */
 .stay {
+  display: block;
   min-height: 100svh;
-  display: flex;
-  align-items: center;
 }
 
 .stay__pin {
   width: 100%;
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  min-height: 100svh;
   justify-content: center;
+  gap: 2rem;
 }
 
 .stay__lines {
@@ -540,8 +544,8 @@ section {
 .footer {
   position: relative;
   z-index: 10;
-  margin-top: 24vh;
-  padding: 16vh var(--pad) 8vh;
+  margin-top: 18vh;
+  padding: 11vh var(--pad) 7vh;
   background: var(--bg);
   display: flex;
   flex-direction: column;
@@ -602,8 +606,25 @@ section {
     display: block;
   }
 
-  .nav__links {
+  /* At 390px only the wordmark and the booking CTA fit. The section links and
+     the scroll readout would push the button off the right edge. */
+  .nav__links,
+  .nav__progress {
     display: none;
+  }
+
+  .nav {
+    gap: 0.75rem;
+    justify-content: space-between;
+  }
+
+  .nav__logo {
+    font-size: 0.9375rem;
+  }
+
+  .nav .btn {
+    padding: 0.5rem 0.95rem;
+    font-size: 0.75rem;
   }
 
   .living__grid,

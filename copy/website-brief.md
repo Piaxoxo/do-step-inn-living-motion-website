@@ -217,5 +217,7 @@ npx serve dist      # preview over HTTP, never file://
 - [ ] the booking CTA is unmistakable
 - [ ] `npm run build -- --base=./` passes
 - [ ] **zero unverified hotel facts on the page** — every placeholder replaced or removed
+- [ ] fonts self-hosted rather than hotlinked from Google (GDPR — see README)
+- [ ] `scripts/verify-motion.cjs` passes
 - [ ] no text baked into any image or video
 - [ ] every asset saved at its planned path
