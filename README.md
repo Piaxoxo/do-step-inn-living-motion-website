@@ -1,4 +1,4 @@
-# do-step-inn-living-motion-website
+# Hotel Do Step Inn Living — motion website
 
 A scroll-driven cinematic landing page for **Hotel Do Step Inn Living** — Vite · React · GSAP ·
 ScrollTrigger · Lenis.
@@ -8,7 +8,7 @@ ScrollTrigger · Lenis.
 > placeholder. Swapping in the real GPT Image 2 / Seedance 2.0 assets is a file copy.
 
 Follows the skill at
-[`.claude/skills/do-step-inn-living-motion-website/SKILL.md`](../.claude/skills/do-step-inn-living-motion-website/SKILL.md).
+[`.claude/skills/do-step-inn-living-motion-website/SKILL.md`](.claude/skills/do-step-inn-living-motion-website/SKILL.md).
 
 ---
 
