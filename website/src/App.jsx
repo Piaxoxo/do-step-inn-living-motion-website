@@ -1,53 +1,52 @@
 import { useEffect, useRef } from "react";
 import { initMotion } from "./motion.js";
+import Preisrechner from "./components/Preisrechner.jsx";
 import {
   KONTAKT,
-  ANFRAGE_HREF,
-  AUSSTATTUNG,
-  ZIMMERAUSSTATTUNG,
+  anfrageHref,
+  PRODUKTE,
+  KATEGORIEN,
   PREIS_BASIS,
-  ZIMMER,
   PREIS_HINWEISE,
-  WOCHEN_MONATSPREIS_OFFEN,
-  LEISTUNGEN,
-  LEISTUNGEN_FUSSNOTEN,
-  RESTAURANT,
+  KONDITIONEN,
   FIRMEN_VORTEILE,
   FIRMEN_AUF_EINEN_BLICK,
+  INNSIDER,
   LAGE,
+  WEITERE_STANDORTE_OFFEN,
 } from "./data/content.js";
+import { eur } from "./lib/preis.js";
 
 const NAV = [
   ["Wohnen", "#wohnen"],
-  ["Zimmer", "#zimmer"],
-  ["Leistungen", "#leistungen"],
+  ["Apartments", "#apartments"],
+  ["Preise", "#preise"],
+  ["InnSider", "#innsider"],
   ["Firmen", "#firmen"],
   ["Kontakt", "#kontakt"],
 ];
 
-function Anfragen({ variant = "primary", children = "Jetzt anfragen" }) {
+function Anfragen({ variant = "primary", children = "Jetzt anfragen", betreff, text }) {
   return (
-    <a className={`btn btn--${variant}`} href={ANFRAGE_HREF}>
+    <a className={`btn btn--${variant}`} href={anfrageHref(betreff, text)}>
       {children}
-    </a>
-  );
-}
-
-function Anrufen({ variant = "ghost" }) {
-  return (
-    <a className={`btn btn--${variant}`} href={KONTAKT.telefonHref}>
-      Jetzt anrufen
     </a>
   );
 }
 
 export default function App() {
   const videoRef = useRef(null);
-
   useEffect(() => initMotion({ video: videoRef.current }), []);
 
   return (
     <>
+      <div className="loader" data-loader aria-hidden="true">
+        <span className="loader__mark">
+          Do Step Inn <em>Living</em>
+        </span>
+      </div>
+      <div className="cursor" data-cursor aria-hidden="true" />
+
       <video
         ref={videoRef}
         id="bgv"
@@ -59,8 +58,6 @@ export default function App() {
         aria-hidden="true"
         tabIndex={-1}
       >
-        {/* VP9 first — smaller and seeks well; H.264 covers Safari. Both are
-            encoded all-keyframe so scrubbing lands on an exact frame. */}
         <source src="/bg.webm" type="video/webm" />
         <source src="/bg.mp4" type="video/mp4" />
       </video>
@@ -74,9 +71,7 @@ export default function App() {
         </a>
         <nav className="nav__links" aria-label="Abschnitte">
           {NAV.map(([label, href]) => (
-            <a key={href} href={href}>
-              {label}
-            </a>
+            <a key={href} href={href}>{label}</a>
           ))}
         </nav>
         <div className="nav__end">
@@ -92,27 +87,20 @@ export default function App() {
 
       <main className="page">
         <section id="home" className="hero">
-          <p className="eyebrow" data-reveal>
-            unkompliziert &amp; komfortabel
-          </p>
+          <p className="eyebrow" data-reveal>unkompliziert &amp; komfortabel</p>
           <h1 className="hero__title" data-reveal>
-            Wohnen auf Zeit
+            Wohnen<br />auf Zeit
           </h1>
           <p className="hero__lede" data-reveal>
-            Do Step Inn Living bietet moderne, voll ausgestattete Apartments für
-            Kurzzeitaufenthalte in Wien. Ob Geschäftsreise, Projektarbeit, Studium oder
-            Übergangslösung – wir verbinden die Flexibilität einer Kurzzeitvermietung mit
-            dem Komfort eines Zuhauses.
+            Möblierte Apartments und Zimmer in Wien-Meidling — für ein paar Wochen,
+            ein paar Monate oder so lange, wie das Projekt dauert. Keine Mindestdauer,
+            zu jedem Monatsende kündbar.
           </p>
           <div className="actions" data-reveal>
             <Anfragen />
-            <a className="btn btn--ghost" href="#zimmer">
-              Zu den Preisen
-            </a>
+            <a className="btn btn--ghost" href="#preise">Preis berechnen</a>
           </div>
-          <p className="hero__cue" aria-hidden="true">
-            weiterscrollen
-          </p>
+          <p className="hero__cue" aria-hidden="true">weiterscrollen</p>
         </section>
 
         <section id="wohnen" className="stay" data-pin-section>
@@ -127,125 +115,90 @@ export default function App() {
           </div>
         </section>
 
-        <section id="apartments" className="living">
+        <section id="apartments" className="produkte">
           <div className="section__head" data-reveal>
-            <p className="label">02 — Flexible Kurzzeitvermietung in Wien</p>
-            <h2>Alles da, worauf es ankommt.</h2>
+            <p className="label">02 — Zwei Arten zu wohnen</p>
+            <h2>Mit eigener Küche oder mit geteilter.</h2>
             <p className="lede">
-              Unsere Apartments sind ideal für alle, die eine flexible Wohnlösung ab
-              wenigen Wochen suchen. Jedes Apartment ist funktional eingerichtet und
-              bietet alles, was du für einen angenehmen Aufenthalt brauchst.
+              Beides voll möbliert, beides bezugsfertig. Der Unterschied ist, wie viel
+              eigenen Haushalt du willst.
             </p>
           </div>
-          <div className="living__grid">
-            <ul className="ticks panel" data-reveal>
-              {AUSSTATTUNG.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-            <figure className="crop" data-reveal>
-              <img
-                src="/img/lobby-living-reference.jpg"
-                alt="Platzhalterbild — Wohnbereich"
-              />
-              <figcaption>Wohnen mit Atmosphäre</figcaption>
-            </figure>
-            <div className="panel note" data-reveal>
-              <p className="label">In jedem Zimmer</p>
-              <ul className="ticks ticks--tight">
-                {ZIMMERAUSSTATTUNG.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-              <p className="muted small">
-                Die Zimmer werden aufgebettet übergeben und vom Housekeeping regelmäßig
-                serviciert.
-              </p>
-            </div>
+          <div className="produkte__grid">
+            {PRODUKTE.map((p, i) => (
+              <article className="produkt panel" key={p.id} data-reveal data-tiefe={i === 0 ? "1" : "2"}>
+                <p className="produkt__kern">{p.kern}</p>
+                <h3>{p.name}</h3>
+                <p className="muted">{p.text}</p>
+                <ul className="ticks ticks--tight">
+                  {p.merkmale.map((m) => <li key={m}>{m}</li>)}
+                </ul>
+              </article>
+            ))}
           </div>
         </section>
 
-        <section id="zimmer" className="rooms">
+        <section id="preise" className="preise">
           <div className="section__head" data-reveal>
-            <p className="label">03 — Preisübersicht</p>
-            <h2>Transparentes Preis- &amp; Leistungsmodell</h2>
-            <p className="lede">Sie entscheiden, wir gestalten die passende Lösung.</p>
-          </div>
-
-          <div className="table-wrap panel" data-reveal>
-            <p className="table__basis">{PREIS_BASIS}</p>
-            <table className="prices">
-              <thead>
-                <tr>
-                  <th scope="col">Kategorie</th>
-                  <th scope="col">3–5 Nächte</th>
-                  <th scope="col">Wochenpreis</th>
-                  <th scope="col">Monatspreis</th>
-                </tr>
-              </thead>
-              <tbody>
-                {ZIMMER.map((z) => (
-                  <tr key={z.name}>
-                    <th scope="row">{z.name}</th>
-                    <td className="num">{z.preis} €</td>
-                    <td className="num todo">
-                      {WOCHEN_MONATSPREIS_OFFEN ? "zu prüfen" : ""}
-                    </td>
-                    <td className="num todo">
-                      {WOCHEN_MONATSPREIS_OFFEN ? "zu prüfen" : ""}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            <ul className="footnotes">
-              {PREIS_HINWEISE.map((h) => (
-                <li key={h}>{h}</li>
-              ))}
-            </ul>
-          </div>
-
-          {WOCHEN_MONATSPREIS_OFFEN && (
-            <p className="notice" data-reveal>
-              Wochen- und Monatspreise sind noch nicht freigegeben: Der Firmenflyer führt
-              sie inklusive USt. und Ortstaxe, die Website netto. Beide Stände weichen
-              voneinander ab, deshalb steht hier nichts, statt womöglich Falsches.
-            </p>
-          )}
-        </section>
-
-        <section id="leistungen" className="services">
-          <div className="section__head" data-reveal>
-            <p className="label">04 — Zusatzleistungen</p>
+            <p className="label">03 — Preisrechner</p>
             <h2>Stellen Sie Ihren Aufenthalt zusammen.</h2>
             <p className="lede">
-              Ergänze den Aufenthalt flexibel mit zusätzlichen Services.
+              Kategorie, Dauer und Leistungen wählen — die Summe rechnet sich mit.
+              Am Ende schicken Sie die fertige Zusammenstellung als Anfrage ab.
             </p>
           </div>
-          <div className="services__grid">
-            <ul className="service-list" data-reveal>
-              {LEISTUNGEN.map((l) => (
-                <li key={l.name}>
-                  <span className="service-list__name">{l.name}</span>
-                  <span className="service-list__detail">{l.detail}</span>
-                  <span className="service-list__price num">€ {l.preis}</span>
-                </li>
-              ))}
-            </ul>
-            <aside className="panel note" data-reveal>
-              <p className="label">InnSider Restaurant · im Haus</p>
-              <ul className="ticks ticks--tight">
-                {RESTAURANT.map((r) => (
-                  <li key={r}>{r}</li>
-                ))}
-              </ul>
-            </aside>
+
+          <div data-reveal>
+            <Preisrechner />
           </div>
-          <ul className="footnotes" data-reveal>
-            {LEISTUNGEN_FUSSNOTEN.map((f) => (
-              <li key={f}>{f}</li>
+
+          <div className="tabelle-wrap panel" data-reveal>
+            <p className="label">Alle Kategorien im Überblick</p>
+            <div className="tabelle-scroll">
+              <table className="prices">
+                <thead>
+                  <tr>
+                    <th scope="col">Kategorie</th>
+                    <th scope="col">3–5 Nächte</th>
+                    <th scope="col">Woche ab 7</th>
+                    <th scope="col">Monat ab 30</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {KATEGORIEN.map((k) => (
+                    <tr key={k.id}>
+                      <th scope="row">{k.name}</th>
+                      <td className="num">{eur(k.nacht)}</td>
+                      <td className="num">{eur(k.woche)}</td>
+                      <td className="num">{eur(k.monat)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="table__basis">{PREIS_BASIS}</p>
+            <ul className="footnotes">
+              {PREIS_HINWEISE.map((h) => <li key={h}>{h}</li>)}
+            </ul>
+          </div>
+        </section>
+
+        <section id="innsider" className="innsider">
+          <div className="section__head" data-reveal>
+            <p className="label">04 — Frühstück &amp; Halbpension</p>
+            <h2>Gegessen wird im InnSider.</h2>
+            <p className="lede">{INNSIDER.text}</p>
+            <ul className="ticks ticks--tight">
+              {INNSIDER.punkte.map((p) => <li key={p}>{p}</li>)}
+            </ul>
+          </div>
+          <div className="galerie" data-galerie>
+            {INNSIDER.bilder.map((b, i) => (
+              <figure className="galerie__bild" key={b.src} data-tiefe={String((i % 3) + 1)}>
+                <img src={b.src} alt={b.alt} loading="lazy" />
+              </figure>
             ))}
-          </ul>
+          </div>
         </section>
 
         <section id="firmen" className="business">
@@ -259,42 +212,64 @@ export default function App() {
               wirtschaftliche Lösung mit Hotelkomfort und klar kalkulierbaren Kosten.
             </p>
             <ul className="ticks">
-              {FIRMEN_VORTEILE.map((v) => (
-                <li key={v}>{v}</li>
-              ))}
+              {FIRMEN_VORTEILE.map((v) => <li key={v}>{v}</li>)}
             </ul>
+            <Anfragen
+              betreff="Firmenanfrage Do Step Inn Living"
+              text={"Guten Tag,\n\nwir möchten Mitarbeitende längerfristig unterbringen.\n\nZeitraum: \nAnzahl Personen: \nAnzahl Zimmer: \n\nBeste Grüße"}
+            >
+              Firmenangebot anfragen
+            </Anfragen>
           </div>
           <div className="panel note" data-reveal>
             <p className="label">Die Vorteile auf einen Blick</p>
             <ul className="ticks ticks--tight">
-              {FIRMEN_AUF_EINEN_BLICK.map((v) => (
-                <li key={v}>{v}</li>
-              ))}
+              {FIRMEN_AUF_EINEN_BLICK.map((v) => <li key={v}>{v}</li>)}
             </ul>
           </div>
         </section>
 
-        <section id="lage" className="vienna">
+        <section id="konditionen" className="konditionen">
           <div className="section__head" data-reveal>
-            <p className="label">06 — Lage</p>
-            <h2>Wien-Meidling, gut angebunden.</h2>
+            <p className="label">06 — Gut zu wissen</p>
+            <h2>Die Konditionen, kurz.</h2>
+          </div>
+          <dl className="fakten" data-reveal>
+            {KONDITIONEN.map((k) => (
+              <div key={k.frage}>
+                <dt>{k.frage}</dt>
+                <dd>{k.antwort}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+
+        <section id="lage" className="lage">
+          <div className="section__head" data-reveal>
+            <p className="label">07 — Lage</p>
+            <h2>Wien-Meidling.</h2>
             <p className="lede">
               {KONTAKT.strasse}, {KONTAKT.ort}. Was in unmittelbarer Umgebung liegt:
             </p>
             <ul className="ticks">
-              {LAGE.map((l) => (
-                <li key={l}>{l}</li>
-              ))}
+              {LAGE.map((l) => <li key={l}>{l}</li>)}
             </ul>
+            {WEITERE_STANDORTE_OFFEN && (
+              <p className="notice">
+                Weitere Wohnungen an anderen Standorten in Wien sind vorhanden — Namen,
+                Adressen und Preise liegen uns noch nicht vor und stehen deshalb hier
+                noch nicht. Auf Anfrage.
+              </p>
+            )}
           </div>
-          <figure className="crop crop--wide" data-reveal>
+          <figure className="crop crop--wide" data-reveal data-tiefe="2">
             <img src="/img/city-lifestyle.jpg" alt="Platzhalterbild — Stadtumgebung" />
           </figure>
         </section>
 
         <section id="kontakt" className="cta">
           <div data-reveal>
-            <p className="label">07 — Kontakt</p>
+            <p className="label">08 — Kontakt</p>
             <h2>Wir sind für Sie da.</h2>
             <p className="lede">
               Sie haben Fragen, wünschen ein individuelles Angebot oder möchten direkt
@@ -304,20 +279,16 @@ export default function App() {
           </div>
           <div className="actions" data-reveal>
             <Anfragen />
-            <Anrufen />
+            <a className="btn btn--ghost" href={KONTAKT.telefonHref}>Jetzt anrufen</a>
           </div>
           <dl className="contact" data-reveal>
             <div>
               <dt>E-Mail</dt>
-              <dd>
-                <a href={ANFRAGE_HREF}>{KONTAKT.email}</a>
-              </dd>
+              <dd><a href={anfrageHref()}>{KONTAKT.email}</a></dd>
             </div>
             <div>
               <dt>Telefon</dt>
-              <dd>
-                <a href={KONTAKT.telefonHref}>{KONTAKT.telefon}</a>
-              </dd>
+              <dd><a href={KONTAKT.telefonHref}>{KONTAKT.telefon}</a></dd>
             </div>
             <div>
               <dt>Erreichbarkeit</dt>
@@ -325,54 +296,41 @@ export default function App() {
             </div>
             <div>
               <dt>Adresse</dt>
-              <dd>
-                {KONTAKT.strasse}
-                <br />
-                {KONTAKT.ort}
-              </dd>
+              <dd>{KONTAKT.strasse}<br />{KONTAKT.ort}</dd>
             </div>
           </dl>
         </section>
       </main>
 
       <footer className="footer">
-        <p className="footer__mark">
-          Do Step Inn <em>Living</em>
-        </p>
+        <p className="footer__mark">Do Step Inn <em>Living</em></p>
         <p className="footer__claim">Dein Zuhause auf Zeit.</p>
         <div className="footer__cols">
           <div>
             <p className="label">Kontakt</p>
             <p>
-              <a href={ANFRAGE_HREF}>{KONTAKT.email}</a>
-              <br />
-              <a href={KONTAKT.telefonHref}>{KONTAKT.telefon}</a>
-              <br />
+              <a href={anfrageHref()}>{KONTAKT.email}</a><br />
+              <a href={KONTAKT.telefonHref}>{KONTAKT.telefon}</a><br />
               {KONTAKT.erreichbarkeit}
             </p>
           </div>
           <div>
             <p className="label">Adresse</p>
-            <p>
-              {KONTAKT.strasse}
-              <br />
-              {KONTAKT.ort}
-            </p>
+            <p>{KONTAKT.strasse}<br />{KONTAKT.ort}</p>
           </div>
           <div>
             <p className="label">Rechtliches</p>
             <p>
-              <a href={KONTAKT.home}>Home</a>
-              <br />
-              <a href={KONTAKT.agb}>AGB</a>
-              <br />
+              <a href={KONTAKT.home}>Home</a><br />
+              <a href={KONTAKT.agb}>AGB</a><br />
               {KONTAKT.betreiber}
             </p>
           </div>
         </div>
         <p className="footer__note">
-          Platzhalter-Build. Die Bilder und der Hintergrundfilm sind prozedural erzeugt,
-          keine Fotografie — sie werden durch echtes Bildmaterial ersetzt.
+          Vorschau-Build. Impressum und Datenschutzerklärung für Do Step Inn Living fehlen
+          noch und sind vor einer Veröffentlichung verpflichtend. Die Raumbilder und der
+          Hintergrundfilm sind prozedurale Platzhalter; die Fotos im InnSider-Abschnitt sind echt.
         </p>
       </footer>
     </>

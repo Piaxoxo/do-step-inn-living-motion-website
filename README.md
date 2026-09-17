@@ -3,11 +3,12 @@
 A scroll-driven cinematic landing page for **Hotel Do Step Inn Living** — Vite · React · GSAP ·
 ScrollTrigger · Lenis.
 
-> **Status: the site is built, in German, on the operator's real content.** Room categories,
-> prices, services, contact details and the company positioning all come from supplied material —
-> see [`copy/brand-kit.md`](copy/brand-kit.md). Two things are still open: the imagery and the
-> background film are procedural placeholders, and the weekly/monthly price columns show
-> "zu prüfen" because the two supplied sources disagree.
+> **Status: the site is built, in German, on the operator's real content and prices.** Two
+> products (Mini-Apartment with its own kitchen, Apartmentzimmer with a shared one), the full
+> flyer tariff, an interactive price calculator that produces a ready-to-send enquiry, and the
+> real InnSider photos. Still open: photography of the rooms themselves, an English version, the
+> other locations, and the legally required imprint and privacy policy — see
+> [Offene Punkte](copy/brand-kit.md#offene-punkte).
 
 Follows the skill at
 [`.claude/skills/do-step-inn-living-motion-website/SKILL.md`](.claude/skills/do-step-inn-living-motion-website/SKILL.md).
@@ -91,6 +92,23 @@ the nearest keyframe. It ships as VP9 (`bg.webm`, preferred) with H.264 (`bg.mp4
 No code changes — the paths are identical.
 
 ---
+
+## The price calculator
+
+`website/src/lib/preis.js` holds the tariff logic, deliberately separate from the component so it
+can be tested without a browser:
+
+```bash
+cd website && node ../scripts/test-preis.mjs
+```
+
+Full months at the monthly rate, whole weeks at the weekly rate, the remainder per night, and a
+final cap so a staged stay is never dearer than paying per night. The operator's own tariff has
+real jumps — six nights cost 288 €, seven cost 287 € — so the calculator surfaces them ("30 Nächte
+kosten 398 € weniger als 29 — übernehmen?") instead of quietly smoothing someone else's prices.
+
+The "Angebot anfragen" button opens a pre-filled mail to the operator with the whole breakdown. No
+backend, nothing to maintain, and the enquiry arrives itemised.
 
 ## Verifying it
 

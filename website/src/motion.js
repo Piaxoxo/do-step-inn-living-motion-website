@@ -110,13 +110,13 @@ function setupSectionEntrances() {
   const tweens = items.map((el) =>
     gsap.fromTo(
       el,
-      { opacity: 0, y: 26 },
+      { opacity: 0, y: 44 },
       {
         opacity: 1,
         y: 0,
-        duration: 0.9,
-        ease: "power2.out",
-        scrollTrigger: { trigger: el, start: "top 82%", once: true },
+        duration: 1.05,
+        ease: "power3.out",
+        scrollTrigger: { trigger: el, start: "top 86%", once: true },
       }
     )
   );
@@ -147,6 +147,89 @@ function setupProgressReadout() {
     },
   });
   return () => trigger.kill();
+}
+
+
+/** Eigener Cursor, nur wo es ein echtes Zeigegerät gibt. */
+function setupCursor() {
+  const el = document.querySelector("[data-cursor]");
+  if (!el || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return () => {};
+
+  const pos = { x: innerWidth / 2, y: innerHeight / 2 };
+  const ziel = { ...pos };
+  const setX = gsap.quickSetter(el, "x", "px");
+  const setY = gsap.quickSetter(el, "y", "px");
+
+  const onMove = (e) => {
+    ziel.x = e.clientX;
+    ziel.y = e.clientY;
+    el.classList.add("cursor--an");
+  };
+  const onOut = () => el.classList.remove("cursor--an");
+  const onOver = (e) => {
+    const gross = e.target.closest("a, button, .produkt, .galerie__bild, input");
+    el.classList.toggle("cursor--gross", Boolean(gross));
+  };
+
+  const tick = () => {
+    pos.x += (ziel.x - pos.x) * 0.18;
+    pos.y += (ziel.y - pos.y) * 0.18;
+    setX(pos.x);
+    setY(pos.y);
+  };
+
+  window.addEventListener("pointermove", onMove, { passive: true });
+  window.addEventListener("pointerover", onOver, { passive: true });
+  document.addEventListener("pointerleave", onOut);
+  gsap.ticker.add(tick);
+  document.documentElement.classList.add("hat-cursor");
+
+  return () => {
+    window.removeEventListener("pointermove", onMove);
+    window.removeEventListener("pointerover", onOver);
+    document.removeEventListener("pointerleave", onOut);
+    gsap.ticker.remove(tick);
+    document.documentElement.classList.remove("hat-cursor");
+  };
+}
+
+/**
+ * Tiefenebenen: Elemente mit data-tiefe wandern unterschiedlich schnell.
+ * Das ist die verabredete "3D"-Wirkung — Parallax, kein WebGL, kein Ladegewicht.
+ */
+function setupTiefe() {
+  const teile = gsap.utils.toArray("[data-tiefe]");
+  const tweens = teile.map((el) => {
+    const tiefe = Number(el.dataset.tiefe) || 1;
+    return gsap.fromTo(el,
+      { yPercent: 4 * tiefe },
+      {
+        yPercent: -4 * tiefe,
+        ease: "none",
+        scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: 0.6 },
+      });
+  });
+  return () => tweens.forEach((t) => { t.scrollTrigger?.kill(); t.kill(); });
+}
+
+/** Die InnSider-Galerie zieht beim Scrollen seitlich durch. */
+function setupGalerie() {
+  const el = document.querySelector("[data-galerie]");
+  if (!el) return () => {};
+  const weite = () => el.scrollWidth - el.clientWidth;
+  if (weite() <= 0) return () => {};
+  const tween = gsap.to(el, {
+    scrollLeft: weite,
+    ease: "none",
+    scrollTrigger: {
+      trigger: el,
+      start: "top 75%",
+      end: "bottom top",
+      scrub: 0.8,
+      invalidateOnRefresh: true,
+    },
+  });
+  return () => { tween.scrollTrigger?.kill(); tween.kill(); };
 }
 
 /**
@@ -188,7 +271,12 @@ export function initMotion({ video } = {}) {
   }
 
   if (!reduced && !compact) cleanups.push(setupStayReveal());
-  if (!reduced) cleanups.push(setupSectionEntrances());
+  if (!reduced) {
+    cleanups.push(setupSectionEntrances());
+    cleanups.push(setupTiefe());
+    cleanups.push(setupGalerie());
+    cleanups.push(setupCursor());
+  }
   cleanups.push(setupProgressReadout());
 
   if (import.meta.env.DEV) {

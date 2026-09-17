@@ -784,3 +784,466 @@ section {
     transform: none !important;
   }
 }
+
+/* === Ladeanimation ========================================================
+   Bewusst reines CSS: Eine JS-gesteuerte Deckschicht verschließt die Seite für
+   immer, sobald das Skript scheitert. Diese läuft von selbst ab. */
+
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  background: var(--paper-2);
+  animation: loaderRaus 1.5s cubic-bezier(0.6, 0, 0.2, 1) forwards;
+}
+
+.loader__mark {
+  font-family: var(--font-head);
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  color: var(--mint-deep);
+  opacity: 0;
+  animation: markeRein 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.loader__mark em {
+  font-style: italic;
+  color: var(--mint);
+}
+
+@keyframes loaderRaus {
+  0%, 62% { opacity: 1; }
+  100% { opacity: 0; visibility: hidden; pointer-events: none; }
+}
+
+@keyframes markeRein {
+  0% { opacity: 0; transform: translateY(12px); }
+  35%, 58% { opacity: 1; transform: translateY(0); }
+  80%, 100% { opacity: 0; }
+}
+
+/* === eigener Cursor ======================================================= */
+
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 150;
+  width: 26px;
+  height: 26px;
+  margin: -13px 0 0 -13px;
+  border: 1.5px solid var(--mint-deep);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s, width 0.25s, height 0.25s, margin 0.25s, background 0.25s;
+}
+
+.cursor--an { opacity: 0.75; }
+
+.cursor--gross {
+  width: 54px;
+  height: 54px;
+  margin: -27px 0 0 -27px;
+  background: rgba(94, 214, 178, 0.16);
+}
+
+@media (hover: none), (pointer: coarse) {
+  .cursor { display: none; }
+}
+
+/* === Produkte ============================================================= */
+
+.produkte__grid {
+  margin-top: 3.5rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.75rem;
+}
+
+.produkt {
+  padding: 2.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: linear-gradient(170deg, rgba(169, 233, 214, 0.5), rgba(255, 255, 255, 0.92) 62%);
+}
+
+.produkt__kern {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--mint-deep);
+}
+
+.produkt h3 {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+}
+
+/* === Preisrechner ========================================================= */
+
+.rechner {
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 1.75rem;
+  align-items: start;
+}
+
+.rechner__form {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.feld {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.feld legend {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--mint-deep);
+  padding: 0;
+}
+
+.feld__hinweis {
+  font-size: 0.8125rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.feld-reihe {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.chips-wahl {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chip {
+  font: inherit;
+  font-size: 0.875rem;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.chip:hover { border-color: var(--mint); }
+
+.chip--an {
+  background: var(--mint-deep);
+  border-color: var(--mint-deep);
+  color: #fff;
+}
+
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 0.25rem;
+  width: fit-content;
+}
+
+.stepper button {
+  font: inherit;
+  font-size: 1.125rem;
+  line-height: 1;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  border: 0;
+  background: transparent;
+  color: var(--mint-deep);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.stepper button:hover { background: rgba(94, 214, 178, 0.18); }
+
+.stepper input {
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  width: 3.5rem;
+  text-align: center;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  -moz-appearance: textfield;
+}
+
+.stepper input::-webkit-outer-spin-button,
+.stepper input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.stepper--klein button { width: 1.9rem; height: 1.9rem; font-size: 1rem; }
+.stepper__wert { min-width: 1.75rem; text-align: center; }
+
+.schnellwahl { display: flex; gap: 0.35rem; }
+
+.mini {
+  font: inherit;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid var(--line-soft);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.mini:hover { color: var(--mint-deep); border-color: var(--mint); }
+
+.extras { list-style: none; margin: 0; padding: 0; display: grid; }
+
+.extra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.8rem 0.9rem;
+  border-radius: 14px;
+  border: 1px solid transparent;
+  border-bottom-color: var(--line-soft);
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.extra--an {
+  background: rgba(169, 233, 214, 0.28);
+  border-color: rgba(94, 214, 178, 0.45);
+}
+
+.extra__text { display: grid; gap: 0.1rem; }
+.extra__name { font-weight: 500; }
+.extra__detail { font-size: 0.8125rem; color: var(--muted); }
+
+.rechner__summe {
+  padding: 1.75rem;
+  display: grid;
+  gap: 1rem;
+  position: sticky;
+  top: calc(var(--nav-h) + 1rem);
+}
+
+.rechner__summe h3 {
+  font-size: 1.5rem;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.summe__meta {
+  font-family: var(--font);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: var(--muted);
+  letter-spacing: 0;
+}
+
+.posten { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.6rem; }
+
+.posten li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.9375rem;
+  color: var(--ink-soft);
+}
+
+.posten li em {
+  display: block;
+  font-style: normal;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.posten--zwischen {
+  border-top: 1px solid var(--line-soft);
+  padding-top: 0.6rem;
+}
+
+.posten__gesamt {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  border-top: 1px solid var(--line);
+  padding-top: 0.9rem;
+  font-family: var(--font-head);
+  font-size: 1.5rem;
+  color: var(--ink);
+}
+
+.posten__gesamt .num { color: var(--mint-deep); }
+
+.tarif-tipp {
+  font: inherit;
+  text-align: left;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  padding: 0.8rem 1rem;
+  border-radius: 14px;
+  border: 1px solid rgba(94, 214, 178, 0.5);
+  background: rgba(169, 233, 214, 0.3);
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.tarif-tipp strong { color: var(--mint-deep); }
+.tarif-tipp:hover { background: rgba(169, 233, 214, 0.5); }
+
+.hinweis-mint {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--mint-deep);
+  background: rgba(169, 233, 214, 0.3);
+  border-radius: 12px;
+  padding: 0.7rem 0.9rem;
+}
+
+.btn--breit { width: 100%; }
+
+.tabelle-wrap { margin-top: 2.5rem; padding: 1.75rem; }
+.tabelle-scroll { overflow-x: auto; margin-top: 1rem; }
+
+/* === InnSider-Galerie ===================================================== */
+
+.innsider { display: grid; gap: 3rem; }
+
+.galerie {
+  display: flex;
+  gap: 1.25rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 0.5rem;
+  scrollbar-width: thin;
+}
+
+.galerie__bild {
+  margin: 0;
+  flex: 0 0 min(34rem, 78vw);
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  border-radius: 20px;
+  border: 1px solid var(--line-soft);
+  scroll-snap-align: center;
+}
+
+.galerie__bild img { width: 100%; height: 100%; object-fit: cover; }
+
+/* === Konditionen ========================================================== */
+
+.fakten {
+  margin: 3rem 0 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1.5rem;
+}
+
+.fakten > div {
+  padding: 1.5rem;
+  border-radius: 18px;
+  background: rgba(169, 233, 214, 0.24);
+  border: 1px solid rgba(94, 214, 178, 0.3);
+}
+
+.fakten dt {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mint-deep);
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.fakten dd { margin: 0; color: var(--ink-soft); }
+
+/* === mint-dominante Flächen =============================================== */
+
+.produkte,
+.preise {
+  background: linear-gradient(180deg, rgba(244, 255, 251, 0) 0%, rgba(169, 233, 214, 0.22) 22%, rgba(244, 255, 251, 0.6) 100%);
+}
+
+@media (hover: none), (max-width: 860px) {
+  .produkte__grid,
+  .rechner,
+  .feld-reihe {
+    grid-template-columns: 1fr;
+  }
+
+  .rechner__summe { position: static; }
+  .galerie__bild { flex-basis: 84vw; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader { display: none; }
+  .cursor { display: none; }
+}
+
+/* Grid-Kinder haben von Haus aus min-width:auto — ein langer Kategoriename
+   drückt dann die ganze Spur breiter als das Fenster. Auf schmalen Geräten
+   war genau das der horizontale Überlauf. */
+.rechner > *,
+.rechner__form > *,
+.feld-reihe > *,
+.produkte__grid > *,
+.fakten > * {
+  min-width: 0;
+}
+
+.chip {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+/* "Reinigung bei MitarbeiterInnenwechsel" neben einem Stepper passt auf 320px
+   nicht in eine Zeile. Der Text darf schrumpfen und umbrechen, die Zeile darf
+   umklappen — statt die Seite seitlich aufzuziehen. */
+.extras > *,
+.extra__text {
+  min-width: 0;
+}
+
+.extra {
+  flex-wrap: wrap;
+}
+
+.extra__name,
+.extra__detail {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 420px) {
+  .extra {
+    align-items: flex-start;
+  }
+
+  .extra .stepper--klein {
+    margin-left: auto;
+  }
+}
+
+/* Ankersprünge landeten mit der Überschrift unter der fixen Kopfzeile. */
+section[id] {
+  scroll-margin-top: calc(var(--nav-h) + 1.5rem);
+}

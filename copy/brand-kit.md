@@ -92,9 +92,14 @@ Zahlen in Preistabellen mit `font-variant-numeric: tabular-nums`, damit Spalten 
 - keine Menschenmassen; wenn Menschen, dann beiläufig und einzeln
 - kein Text, keine Logos, keine Preisschilder im Bild
 
-**Aktueller Stand:** Alle Bilder und der Hintergrundfilm sind prozedurale Platzhalter
-(`scripts/generate_placeholder_media.py`) in genau dieser Palette. Sie geben Licht und Stimmung
-vor, zeigen aber keine Räume. Echtes Bildmaterial ersetzt sie 1:1 an denselben Pfaden.
+**Aktueller Stand:** Die Fotos im InnSider-Abschnitt sind echt (aus dem Drive-Ordner des
+Betreibers). Alles andere — Raumbilder und Hintergrundfilm — sind prozedurale Platzhalter
+(`scripts/generate_placeholder_media.py`) in dieser Palette; sie geben Licht und Stimmung vor,
+zeigen aber keine Räume. Echtes Raum-Bildmaterial ersetzt sie 1:1 an denselben Pfaden.
+
+Die Restaurantfotos sind dunkel und warm und stehen damit quer zur hellen Marke. Sie funktionieren
+als Karten auf hellem Grund im InnSider-Abschnitt — als durchgehende Bildsprache der Seite
+funktionieren sie nicht.
 
 ---
 
@@ -145,7 +150,14 @@ Park Wien. **Keine Geh- oder Fahrzeiten** — das Material nennt keine.
 
 Nicht erfunden, nicht stillschweigend entschieden. Jeder Punkt braucht eine Antwort vom Betreiber.
 
-### 1. Zwei Preisstände, die sich widersprechen
+### 1. Preisstand — entschieden: Firmenflyer
+
+Verbindlich sind die **Bruttopreise des Firmenflyers, inkl. USt. und Ortstaxe**. Die Nettopreise
+der Website werden nicht mehr verwendet; der Rechner und die Tabelle rechnen ausschließlich mit
+dem Flyer-Stand. Die frühere Gegenüberstellung bleibt hier nur zur Nachvollziehbarkeit stehen.
+
+<details>
+<summary>Die alte Diskrepanz (historisch)</summary>
 
 Die Website führt Nettopreise, der Flyer Bruttopreise inklusive USt. und Ortstaxe — und die
 Differenz ist nicht durch Steuern erklärbar:
@@ -164,17 +176,18 @@ Zusätzlich: Auf der Website kosten Doppelzimmer 2 PAX und Zweibettzimmer unters
 Auch die Zusatzleistungen unterscheiden sich (Frühstück 9,82 netto vs. 10,80 brutto; Abendessen
 12,90 vs. 15,80; Zusatzreinigung 14,55 vs. 16,00; Park&Ride 4,60 vs. 4,99).
 
-**Die Seite zeigt derzeit die Netto-Werte der Website.** Wochen- und Monatspreise stehen nur im
-Flyer und damit auf der anderen Basis — deshalb stehen sie auf der Seite als „zu prüfen", statt
-gemischt zu werden. **Benötigt:** ein freigegebener Preisstand mit einer einzigen Basis.
+</details>
 
-### 2. Apartment oder Hotelzimmer?
+**Zwei Punkte bleiben offen:** Der „Bleibezimmer Service" (7,27 € netto) steht nur auf der Website
+und hat keine Entsprechung im Flyer — er ist deshalb **nicht** im Rechner. Und die beiden Quellen
+beschreiben den Reinigungsrhythmus unterschiedlich (Flyer: wöchentlich inkludiert; Website: nach
+2 Wochen). Die Seite folgt dem Flyer, weil auch die Preise von dort stammen.
 
-Die Website verkauft „Apartments" mit „eigene Küche oder Kitchenette". Der Flyer verkauft
-„modern eingerichtete Hotelzimmer" mit „Gemeinschaftsküche & Aufenthaltsräume". Die
-Kategorienamen (Einzel-, Doppel-, Drei-, Vierbettzimmer) sind Hotelzimmer-Namen.
-Das ist kein Detail: Es entscheidet, was auf Bildern zu sehen sein muss und was die Seite
-verspricht. **Die Seite übernimmt aktuell beide Formulierungen aus ihrer jeweiligen Quelle.**
+### 2. Apartment oder Hotelzimmer? — beantwortet
+
+Es sind **zwei Produkte**, nicht ein Widerspruch: **Mini-Apartments mit eigener Küche** und
+**Apartmentzimmer mit geteilter Küche**. Beide Quellen hatten recht, nur über Verschiedenes.
+Die Seite führt sie als zwei Angebote nebeneinander.
 
 ### 3. Schreibweise der Adresse
 
@@ -193,12 +206,25 @@ Platzhalternummer aus einem Template. Angezeigt wird die richtige Nummer, gewäh
   (z. B. 329,00 ÷ 7 = 47,00 — das ist der Zimmerpreis, bei 2 PAX wären es 23,50).
 - Einzelzimmer-Monatspreis: 798,00 ÷ 30 = 26,60, angegeben sind 27,00.
 
-### 6. Weiterhin nicht übermittelt
+### 6. Eine Eigenheit der Preisstaffel
 
-- URL der Buchungsmaschine für einen „Direkt buchen"-Button
-- Stornobedingungen, Kaution, Mindestaufenthalt, Check-in/Check-out-Zeiten
-- Sternekategorie, Bewertungen, Auszeichnungen
-- Impressum und Datenschutzerklärung für *Living* (nur die AGB-URL liegt vor)
-- Social-Media-Profile
-- Barrierefreiheit
-- echtes Bildmaterial der Räume
+Sechs Nächte im Einzelzimmer kosten 288 €, sieben nur 287 €. Bei 29 gegen 30 Nächten sind es
+398 € Unterschied. Das ist die Staffel des Betreibers, keine Rechenfehler — der Rechner glättet
+sie nicht still, sondern blendet einen Hinweis ein („30 Nächte kosten 398 € weniger als 29 —
+übernehmen?"). Falls das so nicht gewollt ist, gehört die Staffel angepasst, nicht der Rechner.
+
+### 7. Weiterhin nicht übermittelt
+
+- URL der Buchungsmaschine des Hotels (alles andere läuft ohnehin über Anfrage)
+- Namen, Adressen und Preise der **weiteren Standorte** — der Betreiber möchte dafür werben,
+  es liegen aber keine Angaben vor
+- Check-in/Check-out-Zeiten, Zahlungsarten
+- Impressum und Datenschutzerklärung für *Living*. Ein Impressum von einer anderen Seite zu
+  kopieren geht nicht: Es muss den tatsächlichen Betreiber mit Firmenbuchnummer, UID und
+  Geschäftsführung nennen. Eine Datenschutzerklärung ist zusätzlich nötig.
+- Google-Bewertungen als zitierbarer Text (ein eingebettetes Google-Widget würde fremde Skripte
+  laden und einen Cookie-Banner nach sich ziehen)
+- Gehzeiten zu Bahnhof Meidling & Co. — das Material nennt keine, erfunden wird keine
+- englische Fassung: der Betreiber will DE **und** EN, die Übersetzungen liegen nicht vor
+- **echtes Bildmaterial der Räume.** 13 Fotos im Drive-Ordner sind größer als 10 MB und damit
+  über den Connector nicht erreichbar; die 14 ladbaren zeigen alle das InnSider Restaurant.
