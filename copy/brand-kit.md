@@ -228,3 +228,71 @@ sie nicht still, sondern blendet einen Hinweis ein („30 Nächte kosten 398 €
 - englische Fassung: der Betreiber will DE **und** EN, die Übersetzungen liegen nicht vor
 - **echtes Bildmaterial der Räume.** 13 Fotos im Drive-Ordner sind größer als 10 MB und damit
   über den Connector nicht erreichbar; die 14 ladbaren zeigen alle das InnSider Restaurant.
+
+---
+
+## Nachtrag — das Living-Webdokument
+
+`DoStepInn-Living_Web_English.docx` hat das Fundament verschoben und einiges
+beantwortet, was vorher offen war. **Es gilt jetzt als führende Quelle für
+Produkt, Standorte und Preise**, weil es die Living-Webinhalte selbst sind.
+
+### Vier Standorte, nicht einer
+
+| Standort | Adresse | Bahnhof |
+|---|---|---|
+| Do Step Inn Hotel (Hauptstandort) | Felberstraße 20, 1150 Wien | Westbahnhof · 3 Min zu Fuß |
+| Do Step Inn Meidling | Wurmbstraße 36, 1120 Wien | Wien Meidling · 3 Min zu Fuß |
+| Do Step Inn Central | Südtiroler Platz 3, 1040 Wien | Hauptbahnhof · gegenüber |
+| Do Step Inn Kollergasse | Kollergasse 9, 1030 Wien | Wien Mitte · in der Nähe |
+
+Damit sind auch die **Gehzeiten belegt** — sie stammen aus dem Dokument des
+Betreibers, nicht aus einer Schätzung.
+
+### Vier Zimmertypen statt sechs Kategorien
+
+Standard Zimmer · Standard Zimmer mit Hochbett · Premium Zimmer · Mini-Apartment.
+Die früheren Kategorien des Firmenflyers (Einzel-, Doppel-, Zwei-, Drei-,
+Vierbettzimmer) sind ein anderes Modell und passen nicht dazu.
+
+### Die dritte Preisliste — und warum sie gilt
+
+Es liegen inzwischen **drei** Preisstände vor:
+
+1. Website netto (Einzelzimmer 39,60 €/Nacht)
+2. Firmenflyer brutto (Einzelzimmer 48,00 €/Nacht, 798 €/Monat)
+3. **Living-Webdokument** (Standard 1 Person: 37 € Tag / 175 € Woche / 528 € Monat)
+
+Der Betreiber hatte zuvor den Firmenflyer als verbindlich benannt. Das war,
+bevor dieses Dokument vorlag. Der Rechner arbeitet jetzt mit **Liste 3**, weil
+nur sie zu den vier Zimmertypen und den vier Standorten passt — mit den
+Flyer-Kategorien ließe sich der Rechner gar nicht bauen. **Das gehört
+bestätigt.** Ein Wechsel zurück ist eine Änderung in `content.js`, sonst nichts.
+
+Regeln aus dem Dokument: Einzelne Tage sind nicht buchbar, der Tagespreis
+verlängert nur einen Wochen- oder Monatsaufenthalt. Wochenpreis ab 7 Nächten.
+Monatspreis immer für 30 Nächte. Preise inklusive aller Steuern und
+Serviceleistungen, Strom und Instandhaltung inbegriffen. Keine Kaution außer
+40 € Schlüsselkaution, die zurückerstattet wird.
+
+### Wie der Rechner staffelt
+
+Er sucht die **günstigste Kombination**, die den Aufenthalt abdeckt, nicht die
+naheliegendste. 13 Nächte werden als zwei Wochen abgerechnet (350 €), weil eine
+Woche plus sechs Tage 397 € kosten würde. 49 Nächte als Monat plus drei Wochen
+(1.053 €) statt als zwei Monate (1.056 €). Das ist bewusst so: Eine gierige
+Rechnung von der größten Einheit abwärts stellt Gästen regelmäßig zu viel in
+Rechnung. Geprüft wird das in `scripts/test-preis.mjs` — unter anderem, dass
+kein längerer Aufenthalt je billiger ist als ein kürzerer.
+
+### Was das Dokument noch offen lässt
+
+- Ein **FAQ** und ein **„Über uns"** sind im Dokument als Wunsch vermerkt, aber
+  ohne Inhalt („[Reiter] Kontakt + [Reiter] FAQ — fehlt").
+- Der Wunsch nach einem **Stadtplan** bei den Standorten ist notiert. Eine
+  eingebettete Karte lädt fremde Skripte und zieht einen Cookie-Banner nach
+  sich — dazu braucht es eine Entscheidung.
+- Die **deutschen Fassungen** der Standort- und Zimmertexte sind Übersetzungen
+  des englischen Originals durch Claude und **nicht freigegeben**.
+- Das Dokument nennt den Copyright-Platzhalter „XXXX" und verweist auf
+  Impressum, AGB und Datenschutz — die Inhalte fehlen weiterhin.

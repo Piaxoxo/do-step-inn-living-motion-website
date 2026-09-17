@@ -1,63 +1,61 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { initMotion } from "./motion.js";
 import Preisrechner from "./components/Preisrechner.jsx";
+import { SpracheContext, t as uebersetze, UI } from "./i18n.js";
 import {
   KONTAKT,
   anfrageHref,
-  PRODUKTE,
-  KATEGORIEN,
-  PREIS_BASIS,
-  PREIS_HINWEISE,
+  ZIMMERTYPEN,
+  STANDORTE,
+  VORTEILE,
+  ZIELGRUPPEN,
+  AUSSTATTUNG_TEXT,
+  PREIS_REGELN,
   KONDITIONEN,
-  FIRMEN_VORTEILE,
-  FIRMEN_AUF_EINEN_BLICK,
+  FIRMEN,
   INNSIDER,
-  LAGE,
-  WEITERE_STANDORTE_OFFEN,
+  SPRACHEN,
 } from "./data/content.js";
-import { eur } from "./lib/preis.js";
 
-const NAV = [
-  ["Wohnen", "#wohnen"],
-  ["Apartments", "#apartments"],
-  ["Preise", "#preise"],
-  ["InnSider", "#innsider"],
-  ["Firmen", "#firmen"],
-  ["Kontakt", "#kontakt"],
-];
-
-function Anfragen({ variant = "primary", children = "Jetzt anfragen", betreff, text }) {
+/**
+ * Anfrage-Link. Bewusst außerhalb von App deklariert: Eine im Render erzeugte
+ * Komponente ist bei jedem Durchlauf eine neue Identität, React hängt ihren
+ * Teilbaum dann jedes Mal neu ein.
+ */
+function AnfrageLink({ sprache, ui, variant = "primary", label, betreff, text }) {
+  const standardText =
+    sprache === "de"
+      ? "Hallo,\n\nich hätte eine Anfrage...\n\nZeitraum: \nPersonen: \nWunschstandort: "
+      : "Hello,\n\nI have an enquiry...\n\nDates: \nPeople: \nPreferred location: ";
+  const standardBetreff =
+    sprache === "de" ? "Anfrage Do Step Inn Living" : "Enquiry Do Step Inn Living";
   return (
-    <a className={`btn btn--${variant}`} href={anfrageHref(betreff, text)}>
-      {children}
+    <a className={`btn btn--${variant}`} href={anfrageHref(betreff ?? standardBetreff, text ?? standardText)}>
+      {label ?? ui.anfragen}
     </a>
   );
 }
 
 export default function App() {
   const videoRef = useRef(null);
+  const [sprache, setSprache] = useState("de");
+  const ui = UI[sprache];
+  const t = (w) => uebersetze(w, sprache);
+
   useEffect(() => initMotion({ video: videoRef.current }), []);
+  useEffect(() => {
+    document.documentElement.lang = sprache;
+  }, [sprache]);
 
   return (
-    <>
+    <SpracheContext.Provider value={sprache}>
       <div className="loader" data-loader aria-hidden="true">
-        <span className="loader__mark">
-          Do Step Inn <em>Living</em>
-        </span>
+        <span className="loader__mark">Do Step Inn <em>Living</em></span>
       </div>
       <div className="cursor" data-cursor aria-hidden="true" />
 
-      <video
-        ref={videoRef}
-        id="bgv"
-        className="bg-video"
-        poster="/img/hero-room.jpg"
-        muted
-        playsInline
-        preload="auto"
-        aria-hidden="true"
-        tabIndex={-1}
-      >
+      <video ref={videoRef} id="bgv" className="bg-video" poster="/img/hero-room.jpg"
+             muted playsInline preload="auto" aria-hidden="true" tabIndex={-1}>
         <source src="/bg.webm" type="video/webm" />
         <source src="/bg.mp4" type="video/mp4" />
       </video>
@@ -66,136 +64,139 @@ export default function App() {
       <div className="grain" aria-hidden="true" />
 
       <header className="nav">
-        <a className="nav__logo" href="#home">
-          Do Step Inn <em>Living</em>
-        </a>
-        <nav className="nav__links" aria-label="Abschnitte">
-          {NAV.map(([label, href]) => (
-            <a key={href} href={href}>{label}</a>
-          ))}
+        <a className="nav__logo" href="#home">Do Step Inn <em>Living</em></a>
+        <nav className="nav__links" aria-label={sprache === "de" ? "Abschnitte" : "Sections"}>
+          {ui.nav.map(([label, href]) => <a key={href} href={href}>{label}</a>)}
         </nav>
         <div className="nav__end">
-          <span className="nav__progress" aria-hidden="true">
-            <span data-progress-label>00</span>
-          </span>
-          <Anfragen variant="primary">Anfragen</Anfragen>
+          <div className="sprachwahl" role="group" aria-label={sprache === "de" ? "Sprache" : "Language"}>
+            {SPRACHEN.map((s) => (
+              <button key={s} type="button" className={s === sprache ? "an" : ""}
+                      aria-pressed={s === sprache} onClick={() => setSprache(s)}>
+                {s.toUpperCase()}
+              </button>
+            ))}
+          </div>
+          <span className="nav__progress" aria-hidden="true"><span data-progress-label>00</span></span>
+          <AnfrageLink sprache={sprache} ui={ui} label={ui.anfragenKurz} />
         </div>
-        <span className="nav__rule" aria-hidden="true">
-          <span data-progress-bar />
-        </span>
+        <span className="nav__rule" aria-hidden="true"><span data-progress-bar /></span>
       </header>
 
       <main className="page">
         <section id="home" className="hero">
-          <p className="eyebrow" data-reveal>unkompliziert &amp; komfortabel</p>
+          <p className="eyebrow" data-reveal>{ui.heroEyebrow}</p>
           <h1 className="hero__title" data-reveal>
-            Wohnen<br />auf Zeit
+            {ui.heroTitel[0]}<br />{ui.heroTitel[1]}
           </h1>
-          <p className="hero__lede" data-reveal>
-            Möblierte Apartments und Zimmer in Wien-Meidling — für ein paar Wochen,
-            ein paar Monate oder so lange, wie das Projekt dauert. Keine Mindestdauer,
-            zu jedem Monatsende kündbar.
-          </p>
+          <p className="hero__lede" data-reveal>{ui.heroText}</p>
           <div className="actions" data-reveal>
-            <Anfragen />
-            <a className="btn btn--ghost" href="#preise">Preis berechnen</a>
+            <AnfrageLink sprache={sprache} ui={ui} />
+            <a className="btn btn--ghost" href="#preise">{ui.preisBerechnen}</a>
           </div>
-          <p className="hero__cue" aria-hidden="true">weiterscrollen</p>
+          <p className="hero__cue" aria-hidden="true">{ui.weiterscrollen}</p>
         </section>
 
         <section id="wohnen" className="stay" data-pin-section>
           <div className="stay__pin">
-            <p className="label">01 — Dein Zuhause auf Zeit</p>
+            <p className="label">{ui.pinLabel}</p>
             <p className="stay__lines">
-              <span className="stay-word">Einfach einziehen</span>{" "}
-              <span className="stay-word">und wohlfühlen</span>{" "}
-              <span className="stay-word">– ohne langfristige</span>{" "}
-              <span className="stay-word">Verpflichtungen.</span>
+              {ui.pinZeilen.map((w, i) => (
+                <span className="stay-word" key={i}>{w}{" "}</span>
+              ))}
             </p>
           </div>
         </section>
 
-        <section id="apartments" className="produkte">
+        <section id="vorteile" className="produkte">
           <div className="section__head" data-reveal>
-            <p className="label">02 — Zwei Arten zu wohnen</p>
-            <h2>Mit eigener Küche oder mit geteilter.</h2>
-            <p className="lede">
-              Beides voll möbliert, beides bezugsfertig. Der Unterschied ist, wie viel
-              eigenen Haushalt du willst.
-            </p>
+            <p className="label">{ui.vorteileLabel}</p>
+            <h2>{ui.vorteileTitel}</h2>
+            <p className="lede">{ui.vorteileText}</p>
           </div>
           <div className="produkte__grid">
-            {PRODUKTE.map((p, i) => (
-              <article className="produkt panel" key={p.id} data-reveal data-tiefe={i === 0 ? "1" : "2"}>
-                <p className="produkt__kern">{p.kern}</p>
-                <h3>{p.name}</h3>
-                <p className="muted">{p.text}</p>
-                <ul className="ticks ticks--tight">
-                  {p.merkmale.map((m) => <li key={m}>{m}</li>)}
+            <ul className="ticks panel" data-reveal data-tiefe="1">
+              {t(VORTEILE).map((v) => <li key={v}>{v}</li>)}
+            </ul>
+            <div className="panel note" data-reveal data-tiefe="2">
+              <p className="label">{ui.zielgruppenTitel}</p>
+              <ul className="ticks ticks--tight">
+                {t(ZIELGRUPPEN).map((z) => <li key={z}>{z}</li>)}
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="zimmer" className="zimmertypen">
+          <div className="section__head" data-reveal>
+            <p className="label">{ui.zimmerLabel}</p>
+            <h2>{ui.zimmerTitel}</h2>
+            <p className="lede">{ui.zimmerText}</p>
+          </div>
+          <div className="typen__grid">
+            {ZIMMERTYPEN.map((z, i) => (
+              <article className="typ panel" key={z.id} data-reveal data-tiefe={String((i % 2) + 1)}>
+                <p className="produkt__kern">{t(z.kern)}</p>
+                <h3>{t(z.name)}</h3>
+                <p className="muted">{t(z.text)}</p>
+              </article>
+            ))}
+          </div>
+          <div className="panel note" data-reveal>
+            <p className="label">{ui.ausstattungTitel}</p>
+            <p className="muted">{t(AUSSTATTUNG_TEXT)}</p>
+          </div>
+        </section>
+
+        <section id="preise" className="preise">
+          <div className="section__head" data-reveal>
+            <p className="label">{ui.preiseLabel}</p>
+            <h2>{ui.preiseTitel}</h2>
+            <p className="lede">{ui.preiseText}</p>
+          </div>
+          <div data-reveal><Preisrechner /></div>
+          <ul className="footnotes" data-reveal>
+            {t(PREIS_REGELN).map((r) => <li key={r}>{r}</li>)}
+          </ul>
+        </section>
+
+        <section id="standorte" className="standorte">
+          <div className="section__head" data-reveal>
+            <p className="label">{ui.standorteLabel}</p>
+            <h2>{ui.standorteTitel}</h2>
+            <p className="lede">{ui.standorteText}</p>
+          </div>
+          <div className="standorte__liste">
+            {STANDORTE.map((s, i) => (
+              <article className="standort panel" key={s.id} data-reveal data-tiefe={String((i % 3) + 1)}>
+                <header>
+                  <h3>{s.name}</h3>
+                  <p className="standort__adresse">{s.strasse} · {s.ort}</p>
+                  <p className="standort__bahn">{t(s.bahnhof)}</p>
+                </header>
+                <p className="muted">{t(s.text)}</p>
+                <p className="muted">{t(s.zusatz)}</p>
+                <ul className="chips">
+                  {t(s.merkmale).map((m) => <li key={m}>{m}</li>)}
                 </ul>
               </article>
             ))}
           </div>
         </section>
 
-        <section id="preise" className="preise">
-          <div className="section__head" data-reveal>
-            <p className="label">03 — Preisrechner</p>
-            <h2>Stellen Sie Ihren Aufenthalt zusammen.</h2>
-            <p className="lede">
-              Kategorie, Dauer und Leistungen wählen — die Summe rechnet sich mit.
-              Am Ende schicken Sie die fertige Zusammenstellung als Anfrage ab.
-            </p>
-          </div>
-
-          <div data-reveal>
-            <Preisrechner />
-          </div>
-
-          <div className="tabelle-wrap panel" data-reveal>
-            <p className="label">Alle Kategorien im Überblick</p>
-            <div className="tabelle-scroll">
-              <table className="prices">
-                <thead>
-                  <tr>
-                    <th scope="col">Kategorie</th>
-                    <th scope="col">3–5 Nächte</th>
-                    <th scope="col">Woche ab 7</th>
-                    <th scope="col">Monat ab 30</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {KATEGORIEN.map((k) => (
-                    <tr key={k.id}>
-                      <th scope="row">{k.name}</th>
-                      <td className="num">{eur(k.nacht)}</td>
-                      <td className="num">{eur(k.woche)}</td>
-                      <td className="num">{eur(k.monat)}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <p className="table__basis">{PREIS_BASIS}</p>
-            <ul className="footnotes">
-              {PREIS_HINWEISE.map((h) => <li key={h}>{h}</li>)}
-            </ul>
-          </div>
-        </section>
-
         <section id="innsider" className="innsider">
           <div className="section__head" data-reveal>
-            <p className="label">04 — Frühstück &amp; Halbpension</p>
-            <h2>Gegessen wird im InnSider.</h2>
-            <p className="lede">{INNSIDER.text}</p>
+            <p className="label">{ui.innsiderLabel}</p>
+            <h2>{ui.innsiderTitel}</h2>
+            <p className="lede">{t(INNSIDER.text)}</p>
             <ul className="ticks ticks--tight">
-              {INNSIDER.punkte.map((p) => <li key={p}>{p}</li>)}
+              {t(INNSIDER.punkte).map((p) => <li key={p}>{p}</li>)}
             </ul>
           </div>
           <div className="galerie" data-galerie>
             {INNSIDER.bilder.map((b, i) => (
               <figure className="galerie__bild" key={b.src} data-tiefe={String((i % 3) + 1)}>
-                <img src={b.src} alt={b.alt} loading="lazy" />
+                <img src={b.src} alt={t(b.alt)} loading="lazy" />
               </figure>
             ))}
           </div>
@@ -203,100 +204,52 @@ export default function App() {
 
         <section id="firmen" className="business">
           <div className="business__body" data-reveal>
-            <p className="label">05 — Ihr Langzeit-Hotel in Wien</p>
-            <h2>Eine Lösung, die sich Ihrem Projekt anpasst.</h2>
-            <p className="lede">
-              Do Step Inn Living ist auf längere Aufenthalte von Unternehmensmitarbeitenden
-              spezialisiert. Ob mehrwöchiger Projekteinsatz, temporäre Teamunterbringung
-              oder langfristige Stationierung – wir bieten eine strukturierte,
-              wirtschaftliche Lösung mit Hotelkomfort und klar kalkulierbaren Kosten.
-            </p>
+            <p className="label">{ui.firmenLabel}</p>
+            <h2>{ui.firmenTitel}</h2>
+            <p className="lede">{ui.firmenText}</p>
             <ul className="ticks">
-              {FIRMEN_VORTEILE.map((v) => <li key={v}>{v}</li>)}
+              {t(FIRMEN.vorteile).map((v) => <li key={v}>{v}</li>)}
             </ul>
-            <Anfragen
-              betreff="Firmenanfrage Do Step Inn Living"
-              text={"Guten Tag,\n\nwir möchten Mitarbeitende längerfristig unterbringen.\n\nZeitraum: \nAnzahl Personen: \nAnzahl Zimmer: \n\nBeste Grüße"}
-            >
-              Firmenangebot anfragen
-            </Anfragen>
+            <AnfrageLink
+              sprache={sprache}
+              ui={ui}
+              label={ui.firmenCta}
+              betreff={sprache === "de" ? "Firmenanfrage Do Step Inn Living" : "Company enquiry Do Step Inn Living"}
+              text={sprache === "de"
+                ? "Guten Tag,\n\nwir möchten Mitarbeitende längerfristig unterbringen.\n\nZeitraum: \nAnzahl Personen: \nAnzahl Zimmer: \nWunschstandort: \n\nBeste Grüße"
+                : "Hello,\n\nwe would like to accommodate staff long term.\n\nDates: \nNumber of people: \nNumber of rooms: \nPreferred location: \n\nBest regards"}
+            />
           </div>
-          <div className="panel note" data-reveal>
-            <p className="label">Die Vorteile auf einen Blick</p>
-            <ul className="ticks ticks--tight">
-              {FIRMEN_AUF_EINEN_BLICK.map((v) => <li key={v}>{v}</li>)}
-            </ul>
+          <div className="panel note" data-reveal data-tiefe="2">
+            <p className="label">{ui.konditionenLabel}</p>
+            <dl className="fakten fakten--eng">
+              {KONDITIONEN.map((k) => (
+                <div key={t(k.frage)}>
+                  <dt>{t(k.frage)}</dt>
+                  <dd>{t(k.antwort)}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
-        </section>
-
-        <section id="konditionen" className="konditionen">
-          <div className="section__head" data-reveal>
-            <p className="label">06 — Gut zu wissen</p>
-            <h2>Die Konditionen, kurz.</h2>
-          </div>
-          <dl className="fakten" data-reveal>
-            {KONDITIONEN.map((k) => (
-              <div key={k.frage}>
-                <dt>{k.frage}</dt>
-                <dd>{k.antwort}</dd>
-              </div>
-            ))}
-          </dl>
-        </section>
-
-        <section id="lage" className="lage">
-          <div className="section__head" data-reveal>
-            <p className="label">07 — Lage</p>
-            <h2>Wien-Meidling.</h2>
-            <p className="lede">
-              {KONTAKT.strasse}, {KONTAKT.ort}. Was in unmittelbarer Umgebung liegt:
-            </p>
-            <ul className="ticks">
-              {LAGE.map((l) => <li key={l}>{l}</li>)}
-            </ul>
-            {WEITERE_STANDORTE_OFFEN && (
-              <p className="notice">
-                Weitere Wohnungen an anderen Standorten in Wien sind vorhanden — Namen,
-                Adressen und Preise liegen uns noch nicht vor und stehen deshalb hier
-                noch nicht. Auf Anfrage.
-              </p>
-            )}
-          </div>
-          <figure className="crop crop--wide" data-reveal data-tiefe="2">
-            <img src="/img/city-lifestyle.jpg" alt="Platzhalterbild — Stadtumgebung" />
-          </figure>
         </section>
 
         <section id="kontakt" className="cta">
           <div data-reveal>
-            <p className="label">08 — Kontakt</p>
-            <h2>Wir sind für Sie da.</h2>
-            <p className="lede">
-              Sie haben Fragen, wünschen ein individuelles Angebot oder möchten direkt
-              buchen? Kontaktieren Sie uns gerne persönlich — wir beraten Sie zuverlässig
-              und unkompliziert.
-            </p>
+            <p className="label">{ui.kontaktLabel}</p>
+            <h2>{ui.kontaktTitel}</h2>
+            <p className="lede">{ui.kontaktText}</p>
           </div>
           <div className="actions" data-reveal>
-            <Anfragen />
-            <a className="btn btn--ghost" href={KONTAKT.telefonHref}>Jetzt anrufen</a>
+            <AnfrageLink sprache={sprache} ui={ui} />
+            <a className="btn btn--ghost" href={KONTAKT.telefonHref}>{ui.anrufen}</a>
           </div>
           <dl className="contact" data-reveal>
+            <div><dt>{ui.eMail}</dt><dd><a href={anfrageHref("Anfrage", "")}>{KONTAKT.email}</a></dd></div>
+            <div><dt>{ui.telefon}</dt><dd><a href={KONTAKT.telefonHref}>{KONTAKT.telefon}</a></dd></div>
+            <div><dt>{ui.erreichbar}</dt><dd>{t(KONTAKT.erreichbarkeit)}</dd></div>
             <div>
-              <dt>E-Mail</dt>
-              <dd><a href={anfrageHref()}>{KONTAKT.email}</a></dd>
-            </div>
-            <div>
-              <dt>Telefon</dt>
-              <dd><a href={KONTAKT.telefonHref}>{KONTAKT.telefon}</a></dd>
-            </div>
-            <div>
-              <dt>Erreichbarkeit</dt>
-              <dd>{KONTAKT.erreichbarkeit}</dd>
-            </div>
-            <div>
-              <dt>Adresse</dt>
-              <dd>{KONTAKT.strasse}<br />{KONTAKT.ort}</dd>
+              <dt>{ui.adresse}</dt>
+              <dd>{STANDORTE.map((s) => <span key={s.id} className="zeile">{s.strasse}, {s.ort}</span>)}</dd>
             </div>
           </dl>
         </section>
@@ -304,22 +257,22 @@ export default function App() {
 
       <footer className="footer">
         <p className="footer__mark">Do Step Inn <em>Living</em></p>
-        <p className="footer__claim">Dein Zuhause auf Zeit.</p>
+        <p className="footer__claim">{ui.claim}</p>
         <div className="footer__cols">
           <div>
-            <p className="label">Kontakt</p>
+            <p className="label">{ui.kontaktLabel.split("—").pop().trim()}</p>
             <p>
-              <a href={anfrageHref()}>{KONTAKT.email}</a><br />
+              <a href={anfrageHref("Anfrage", "")}>{KONTAKT.email}</a><br />
               <a href={KONTAKT.telefonHref}>{KONTAKT.telefon}</a><br />
-              {KONTAKT.erreichbarkeit}
+              {t(KONTAKT.erreichbarkeit)}
             </p>
           </div>
           <div>
-            <p className="label">Adresse</p>
-            <p>{KONTAKT.strasse}<br />{KONTAKT.ort}</p>
+            <p className="label">{ui.standorteTitel.replace(".", "")}</p>
+            <p>{STANDORTE.map((s) => <span key={s.id} className="zeile">{s.strasse}, {s.ort}</span>)}</p>
           </div>
           <div>
-            <p className="label">Rechtliches</p>
+            <p className="label">{ui.rechtliches}</p>
             <p>
               <a href={KONTAKT.home}>Home</a><br />
               <a href={KONTAKT.agb}>AGB</a><br />
@@ -328,11 +281,11 @@ export default function App() {
           </div>
         </div>
         <p className="footer__note">
-          Vorschau-Build. Impressum und Datenschutzerklärung für Do Step Inn Living fehlen
-          noch und sind vor einer Veröffentlichung verpflichtend. Die Raumbilder und der
-          Hintergrundfilm sind prozedurale Platzhalter; die Fotos im InnSider-Abschnitt sind echt.
+          {sprache === "de"
+            ? "Vorschau-Build. Impressum und Datenschutzerklärung für Do Step Inn Living fehlen noch und sind vor einer Veröffentlichung verpflichtend. Die Raumbilder und der Hintergrundfilm sind prozedurale Platzhalter; die Fotos im InnSider-Abschnitt sind echt."
+            : "Preview build. An imprint and a privacy policy for Do Step Inn Living are still missing and are required before publication. The room images and the background film are procedural placeholders; the photos in the InnSider section are real."}
         </p>
       </footer>
-    </>
+    </SpracheContext.Provider>
   );
 }
