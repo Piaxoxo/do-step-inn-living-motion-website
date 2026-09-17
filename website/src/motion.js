@@ -57,7 +57,9 @@ function setupVideoScrub(video) {
  * section holds still and the film keeps moving behind it.
  */
 function setupStayReveal() {
-  const section = document.querySelector("#stay");
+  // Bound to a data attribute, not an id: section ids are content, and renaming
+  // one should not silently switch the pin off.
+  const section = document.querySelector("[data-pin-section]");
   if (!section) return () => {};
   const pin = section.querySelector(".stay__pin");
   const words = [...section.querySelectorAll(".stay-word")];

@@ -1,107 +1,101 @@
-# Background film — Seedance 2.0 (Higgsfield MCP)
+# Hintergrundfilm — Seedance 2.0 (Higgsfield MCP)
 
-One generation. Runs only after `hero-room.png`, `lobby-living-reference.png`, and
-`social-night-reference.png` are approved — those three are passed as visual references.
+Eine Generierung. Läuft erst, wenn `hero-room.png`, `lobby-living-reference.png` und
+`social-night-reference.png` freigegeben sind — sie werden als Referenz übergeben.
 
-- Output (raw): `assets/videos/do-step-inn-living-scroll-background-raw.mp4`
-- Output (production): `website/public/bg.mp4` (all-keyframe H.264, see `scripts/swap-bg-video.sh`)
-- 16:9 · 12–18 s · high quality · no audio · no text
-
----
-
-## Why this film is different from a normal hero video
-
-It is never played. It is **scrubbed**: scroll position maps to `currentTime`, forward and backward, at
-whatever speed the reader moves. That imposes hard constraints:
-
-- one continuous camera language — cuts read as glitches when scrubbed
-- slow, even motion — fast motion turns into strobing under a fast scroll
-- stable exposure — flicker looks like a broken player
-- no motion the reader can "lose" — the frame must be readable at any single paused instant
-- consistent negative space — text sits on top of *every* frame, not just the first
+- Rohdatei: `assets/videos/do-step-inn-living-scroll-background-raw.mp4`
+- Produktion: `website/public/bg.mp4` und `bg.webm` (`scripts/swap-bg-video.sh`)
+- 16:9 · 12–18 s · hohe Qualität · kein Ton · kein Text
 
 ---
 
-## Phase map
+## Warum dieser Film anders ist
 
-The film has four slow phases. The site's sections are timed against them (see `website-brief.md`).
+Er wird nie abgespielt, sondern **gescrubbt**: Die Scrollposition steuert `currentTime`, vorwärts
+wie rückwärts, in beliebigem Tempo. Daraus folgen harte Vorgaben:
 
-| Phase | Approx. progress | On screen | Section overhead |
+- eine durchgehende Kamerabewegung — Schnitte wirken beim Scrubben wie Fehler
+- langsam und gleichmäßig — schnelle Bewegung strobt beim schnellen Scrollen
+- konstante Belichtung — Flackern sieht nach kaputtem Player aus
+- jedes einzelne Standbild muss lesbar sein
+- gleichbleibend viel Freifläche, denn auf **jedem** Frame sitzt Text
+
+---
+
+## Phasen
+
+| Phase | Fortschritt | Bild | Darüber |
 |---|---|---|---|
-| 1 · Arrival / room reveal | 0.00 – 0.28 | calm modern room, hero framing, wide negative space | `#home`, `#stay` |
-| 2 · Living / shared space | 0.28 – 0.55 | drift through detail into a shared living atmosphere | `#living`, `#rooms` |
-| 3 · Social / night | 0.55 – 0.82 | warmer light, evening mood, subtle city-night energy | `#social`, `#vienna` |
-| 4 · Final calm | 0.82 – 1.00 | settles to a clean, quiet frame with open space | `#cta` |
+| 1 · Ankommen | 0,00–0,28 | ruhiger, heller Wohnraum, weite Freifläche | `#home`, `#wohnen` |
+| 2 · Wohnen | 0,28–0,55 | Detail und Übergang in den Gemeinschaftsbereich | `#apartments`, `#zimmer` |
+| 3 · Nachmittag | 0,55–0,82 | wärmeres Spätnachmittagslicht, häusliche Ruhe | `#leistungen`, `#firmen` |
+| 4 · Ruhe | 0,82–1,00 | ruhiger, sehr aufgeräumter Schlussframe | `#lage`, `#kontakt` |
 
-Frame 0 must be the strongest single frame in the film — it is also the poster image and the first thing
-a visitor sees before scrolling.
+Frame 0 ist zugleich das Posterbild und muss als Standbild allein tragen.
 
 ---
 
-## Final prompt
+## Prompt
 
 ```txt
-Create a cinematic scroll-driven background video for the Hotel Do Step Inn Living website.
+Create a calm, bright, scroll-driven background video for the Do Step Inn Living website —
+furnished rooms and apartments in Vienna for stays of weeks or months.
 
-This video will be used as a full-screen website background controlled by scroll progress with GSAP ScrollTrigger, Lenis, and frame-by-frame video scrubbing. Motion must be slow, stable, smooth, and readable when the user manually scrolls.
+The video is a full-screen background controlled by scroll progress with GSAP ScrollTrigger, Lenis
+and frame-by-frame scrubbing. Motion must be slow, stable, smooth and readable when the viewer
+scrubs it by hand, forwards and backwards.
 
-Use the approved Hotel Do Step Inn Living reference images as the visual language.
+Use the approved Do Step Inn Living reference images as the visual language.
 
-Sequence:
-1. Start with a calm modern hotel room or arrival scene, framed as the hero image with strong negative space for large typography.
-2. Move slowly through architectural or room details with one continuous cinematic camera language.
-3. Transition naturally into a shared living or common-space atmosphere.
-4. Progress into a warmer social / evening mood with subtle city-night energy.
-5. End on a calm, visually clean final frame with enough negative space for the booking CTA.
+Sequence, as one continuous camera move with no cuts:
+1. Begin in a bright, uncluttered room in soft morning daylight, framed with generous empty space
+   for large typography.
+2. Drift slowly past architectural and domestic detail — a window, a desk, a doorway.
+3. Move naturally into a shared living or kitchen area, still in daylight.
+4. Warm gradually into late-afternoon light, quiet and domestic.
+5. End on a calm, very clean frame with plenty of space for a closing call to action.
 
 Visual style:
-- modern editorial hospitality campaign
-- youthful urban European city-stay energy
-- deep navy / blue foundation
-- bold restrained pink accents
-- warm practical and nightlife lighting
+- bright, airy residential interior photography
+- soft natural daylight throughout
+- white, warm sand and pale mint tones, restrained blush accents
 - realistic architecture and materials
-- polished but approachable
-- cinematic depth
+- calm, practical, quietly premium
 
-Important constraints:
-- No text inside the video
-- No fake hotel logos or signage
-- No invented room names, prices, ratings, or amenities
-- No fast cuts
-- No shaky camera
-- No extreme zooms
-- No generic five-star luxury aesthetic
-- No chaotic party scenes
-- Keep enough negative space for website text and cards
-- Maintain visual continuity across all spaces
+Constraints:
+- No text anywhere in the video
+- No logos or signage
+- No invented room names, prices, ratings or amenities
+- No cuts, no shaky camera, no extreme zooms
+- No night scenes, no artificial or coloured lighting, no party or bar atmosphere
+- No dark or moody grading
+- Keep generous negative space in every frame
+- Maintain visual continuity from first frame to last
 
-Duration: 12 to 18 seconds.
-Aspect ratio: 16:9.
-Quality: high.
+Duration: 12 to 18 seconds. Aspect ratio: 16:9. Quality: high.
 ```
 
 ---
 
-## Review checklist
+## Prüfliste
 
-- [ ] one continuous camera language, no hard cuts
-- [ ] scrubs cleanly backwards as well as forwards
-- [ ] frame 0 works as a still hero poster
-- [ ] final frame is calm and has room for the booking CTA
-- [ ] exposure is stable end to end, no flicker
-- [ ] no text, no logo, no signage in any frame
-- [ ] nothing in frame makes a factual claim about the property
-- [ ] duration between 12 and 18 s, 16:9
-- [ ] saved to `assets/videos/do-step-inn-living-scroll-background-raw.mp4`
+- [ ] eine durchgehende Kamerabewegung, keine Schnitte
+- [ ] scrubbt sauber rückwärts wie vorwärts
+- [ ] Frame 0 trägt als Standbild
+- [ ] Schlussframe ruhig, mit Platz für den Abschluss
+- [ ] Belichtung durchgehend stabil, kein Flackern
+- [ ] kein Text, kein Logo, keine Beschilderung
+- [ ] nichts im Bild behauptet einen Fakt über das Haus
+- [ ] 12–18 s, 16:9
+- [ ] unter `assets/videos/do-step-inn-living-scroll-background-raw.mp4` gespeichert
 
-## After approval
+## Danach
 
 ```bash
 scripts/swap-bg-video.sh "assets/videos/do-step-inn-living-scroll-background-raw.mp4"
 ```
 
-Then confirm in the browser console:
+Dann in der Browser-Konsole prüfen:
 
 ```js
 window.__bgv.readyState === 4

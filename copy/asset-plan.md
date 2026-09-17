@@ -16,12 +16,12 @@ Legend: ⛔ not generated · ⏳ generating · 🔍 needs review · ✅ approved
 | # | File | Subject | Ratio | Used for | Status |
 |---:|---|---|---|---|:--:|
 | 1 | `assets/images/hero-room.png` | Modern hotel room, calm wide hero composition | 16:9 | Hero poster, video poster frame, **master style reference for all other images and the film**, mobile fallback background | ⛔ |
-| 2 | `assets/images/lobby-living-reference.png` | Shared lounge / common living space | 16:9 | `#living` section, mid-film visual reference | ⛔ |
-| 3 | `assets/images/social-night-reference.png` | Warm nightlife drink moment | 16:9 | `#social` section, evening-phase film reference | ⛔ |
+| 2 | `assets/images/lobby-living-reference.png` | Gemeinschaftsbereich, Tageslicht | 16:9 | `#apartments`, Referenz für die Filmmitte | ⛔ |
+| 3 | `assets/images/social-night-reference.png` | Spätnachmittagslicht in der Gemeinschaftsküche | 16:9 | Referenz für die warme Filmphase | ⛔ |
 | 4 | `assets/images/room-private.png` | Private room, card crop | 16:9 | `#rooms` card A | ⛔ |
 | 5 | `assets/images/room-shared.png` | Shared / multi-bed room, card crop | 16:9 | `#rooms` card B | ⛔ |
 | 6 | `assets/images/common-space.png` | Secondary common space (kitchen / work / hang) | 16:9 | `#living` editorial crop | ⛔ |
-| 7 | `assets/images/city-lifestyle.png` | Vienna street / city-at-dusk lifestyle frame | 16:9 | `#vienna` section | ⛔ |
+| 7 | `assets/images/city-lifestyle.png` | Wiener Straßenszene bei Tageslicht | 16:9 | `#lage` | ⛔ |
 
 **Generation order matters.** Image 1 is generated and approved *first*; it becomes the style anchor
 referenced by images 2–7 and by the film. If image 1 is rejected, nothing downstream runs.
@@ -30,10 +30,10 @@ Shared settings for all seven:
 
 - aspect ratio 16:9, high quality
 - realistic editorial hospitality photography
-- deep navy foundation, warm practical light, restrained pink accent
+- helles Tageslicht, Weiß und Sand, mintgrüne Akzente
 - **no text, no logos, no signage, no price tags, no menus, no room numbers**
-- no identifiable real people as the dominant subject
-- no luxury cliché, no beige, no stock-photo posing
+- keine identifizierbaren Personen als Hauptmotiv
+- keine Nachtszenen, kein Nightlife, kein dunkler Luxus-Look
 
 Prompts: `copy/image-prompts.md`.
 

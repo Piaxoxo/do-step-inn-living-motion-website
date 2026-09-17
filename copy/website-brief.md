@@ -9,99 +9,60 @@ One idea drives the whole page:
 
 ---
 
-## 1. Page structure
+## 1. Seitenstruktur
 
-Eight blocks, one continuous scroll, one fixed film behind all of them.
+Neun Blöcke, ein durchgehender Scroll, ein fixierter Film dahinter.
 
-| # | ID | Working title | Job | Media |
+| # | ID | Titel | Aufgabe | Medien |
 |---:|---|---|---|---|
-| 1 | `#home` | Arrival | Name the brand, land the north star, offer the booking CTA | film phase 1 |
-| 2 | `#stay` | The room | Pinned editorial reveal — what staying here feels like | film phase 1→2 |
-| 3 | `#living` | Living | Shared spaces, the social shift | `lobby-living-reference.png`, `common-space.png` |
-| 4 | `#rooms` | Rooms | Stay formats as editorial cards | `room-private.png`, `room-shared.png` |
-| 5 | `#social` | Nights | Evening warmth, drinks, people | `social-night-reference.png` |
-| 6 | `#vienna` | The city | The property as a base for Vienna | `city-lifestyle.png` |
-| 7 | `#cta` | Book | The single strongest booking moment | film phase 4 |
-| 8 | `footer` | — | Dissolve to navy, brand signature, legal | — |
+| 1 | `#home` | Wohnen auf Zeit | Produkt benennen, Anfrage anbieten | Film Phase 1 |
+| 2 | `#wohnen` | Dein Zuhause auf Zeit | gepinnter Reveal des Kernsatzes | Film Phase 1→2 |
+| 3 | `#apartments` | Ausstattung | was jedes Apartment und jedes Zimmer mitbringt | `lobby-living-reference` |
+| 4 | `#zimmer` | Preisübersicht | Kategorien und Nettopreise, transparent | Film Phase 2 |
+| 5 | `#leistungen` | Zusatzleistungen | Services, Preise, InnSider Restaurant | Film Phase 3 |
+| 6 | `#firmen` | Ihr Langzeit-Hotel in Wien | B2B: Planbarkeit, Abrechnung, Teams | Film Phase 3 |
+| 7 | `#lage` | Wien-Meidling | Umgebung, nur belegte Nennungen | `city-lifestyle` |
+| 8 | `#kontakt` | Wir sind für Sie da | Anfrage, Anruf, Kontaktdaten | Film Phase 4 |
+| 9 | `footer` | — | Auflösung in Sand, Wortmarke, Rechtliches | — |
 
-Fixed chrome: minimal top nav (wordmark + anchor links + booking CTA), and a thin mono scroll-progress
-indicator in the brand pink.
+Fixe Elemente: schlanke Kopfzeile (Wortmarke, Ankerlinks, Anfrage-Button) und ein dünner
+Fortschrittsbalken in `--mint-deep`.
 
----
-
-## 2. The scroll story
-
-The film and the copy tell the same story at the same time. Nothing on the page contradicts the frame
-behind it.
-
-**0% — Arrival.** Full-bleed calm room frame. Oversized headline, one supporting line, two CTAs.
-A small mono cue invites the scroll. The reader has not moved yet and already knows the tone.
-
-**~12% — The room.** The section pins. Lines of an editorial statement resolve one at a time out of blur
-as the film drifts through room detail. This is the quietest, most confident moment on the page.
-
-**~30% — Living.** The pin releases into shared space. Layout opens from centred type into asymmetric
-editorial cards. The film moves out of the private room and into the common area — private becomes shared.
-
-**~45% — Rooms.** Two large cards. Image-forward, oversized names, small mono metadata.
-This is the practical beat: what can I actually book? Every fact here comes from verified data or shows
-a placeholder.
-
-**~62% — Nights.** Colour temperature turns. Pink and warm orange come forward, the film reaches its
-evening phase, the copy shifts from "where you sleep" to "who you meet".
-
-**~78% — The city.** The frame widens to the street. The hotel becomes a base rather than a destination.
-No distances or landmark claims until they are verified.
-
-**~90% — Book.** The film settles into its final calm frame. One headline, one line, one primary CTA.
-Nothing else competes.
-
-**100% — Footer.** A gradient dissolves the film into flat navy. The wordmark, then the legal small print.
+**Duzen/Siezen:** Wohn-Sektionen duzen, `#firmen` und `#kontakt` siezen — so trennt es das
+Ausgangsmaterial.
 
 ---
 
-## 3. Copy deck (draft — no factual claims)
+## 2. Die Scroll-Erzählung
 
-Every line below is brand voice only. Anything factual is a bracketed placeholder that must be replaced
-with verified content before launch.
+Der Film und der Text erzählen dasselbe: einen ruhigen Tag in einer Wohnung, nicht eine Nacht in
+einem Hotel.
 
-**`#home`**
-- eyebrow: `HOTEL DO STEP INN LIVING`
-- headline: **Stay somewhere that feels alive.**
-- support: A modern city stay — sleep well, meet people, step straight out.
-- primary CTA: `Book your stay` → `[TO VERIFY: booking URL]`
-- secondary CTA: `Explore rooms` → `#rooms`
+**0 %** Heller Wohnraum, Serifen-Schlagzeile „Wohnen auf Zeit", zwei Handlungsangebote.
 
-**`#stay`** — pinned reveal, one word/line at a time:
-- `Sleep well.` / `Step out.` / `Your base for the city.`
+**~12 %** Die Sektion pinnt. Der Kernsatz löst sich Zeile für Zeile aus der Unschärfe, während der
+Film an Raumdetails vorbeizieht. Der ruhigste Moment der Seite.
 
-**`#living`**
-- title: **Where the stay opens up.**
-- body: Shared rooms to sit in, cook in, work in, or wait out the afternoon with someone you just met.
-- chips: `[TO VERIFY: shared-space facilities]`
+**~30 %** Der Pin löst sich in die Ausstattung: was mitkommt, was im Zimmer steht.
 
-**`#rooms`**
-- title: **Where you'll sleep.**
-- cards: see the data contract in §6 — names, capacity, and amenities are placeholders until verified.
-- note: no prices anywhere until `[TO VERIFY: whether rates may be displayed]` is answered.
+**~45 %** Preise. Der sachliche Takt — echte Nettowerte, ungeklärte Spalten sichtbar als „zu prüfen".
 
-**`#social`**
-- title: **Check in. Go out.**
-- body: From first coffee to last drink, the evening starts downstairs.
+**~62 %** Zusatzleistungen und das Haus-Restaurant. Das Licht im Film wird wärmer.
 
-**`#vienna`**
-- title: **The city starts at the door.**
-- body: `[TO VERIFY: location, transport links, walking times, named landmarks]`
-- Until verified, this section runs on mood and imagery only — no numbers, no place names.
+**~78 %** Firmenkunden. Die Sprache wechselt ins Sie, das Versprechen heißt Planbarkeit.
 
-**`#cta`**
-- headline: **Ready when you are.**
-- support: Pick your dates. The rest is easy.
-- primary CTA: `Book your stay` · secondary: `See rooms`
+**~90 %** Lage und Kontakt. Der Film kommt zur Ruhe, eine Anfrage steht am Ende.
 
-**`footer`**
-- wordmark, `[TO VERIFY: address]`, `[TO VERIFY: phone]`, `[TO VERIFY: email]`,
-  `[TO VERIFY: legal links]`, `[TO VERIFY: social handles]`
+**100 %** Der Footer läuft in Sand aus.
+
+---
+
+## 3. Textstand
+
+Sämtliche Texte stammen aus dem Material des Betreibers (Website, Firmenflyer). Fakten, die nicht
+belegt sind, stehen nicht auf der Seite; ungeklärte Preisspalten sind sichtbar als „zu prüfen"
+markiert. Die Widersprüche zwischen Website und Flyer sind in
+[`copy/brand-kit.md`](brand-kit.md#offene-punkte) dokumentiert.
 
 ---
 
@@ -154,23 +115,14 @@ No parallax stacking, no horizontal scroll, no scroll-jacking.
 
 ## 6. Data contract
 
-`website/src/data/stays.js` — placeholders only until verified:
+`website/src/data/content.js` — alle Inhalte an einer Stelle, jeder Wert belegt:
 
 ```js
-export const stays = [
-  {
-    name: "[TO VERIFY: official room name]",
-    desc: "[TO VERIFY: verified short description]",
-    capacity: "[TO VERIFY: capacity]",
-    image: "/img/room-private.png",
-  },
-  {
-    name: "[TO VERIFY: official room name]",
-    desc: "[TO VERIFY: verified short description]",
-    capacity: "[TO VERIFY: capacity]",
-    image: "/img/room-shared.png",
-  },
+export const ZIMMER = [
+  { name: "Einzelzimmer", preis: "39,60" },
+  // …
 ];
+export const WOCHEN_MONATSPREIS_OFFEN = true;  // rendert "zu prüfen" statt einer Zahl
 ```
 
 Rules: large image, oversized name, short description, small mono metadata, one clear CTA, hover lift or
@@ -205,7 +157,7 @@ npx serve dist      # preview over HTTP, never file://
 ## 9. Definition of done
 
 - [ ] `copy/brand-kit.md`, `asset-plan.md`, `image-prompts.md`, `video-prompt.md`, `website-brief.md` exist
-- [ ] all seven approved images exist in `assets/images/`
+- [ ] echtes Bildmaterial ersetzt die prozeduralen Platzhalter
 - [ ] raw Seedance film exists in `assets/videos/`
 - [ ] all-keyframe film exists at `website/public/bg.mp4`
 - [ ] `npm run dev` runs; GSAP + ScrollTrigger registered; Lenis smooth scroll works
@@ -216,7 +168,7 @@ npx serve dist      # preview over HTTP, never file://
 - [ ] mobile poster fallback works; reduced-motion path works
 - [ ] the booking CTA is unmistakable
 - [ ] `npm run build -- --base=./` passes
-- [ ] **zero unverified hotel facts on the page** — every placeholder replaced or removed
+- [ ] **kein unbelegter Fakt auf der Seite** — offene Werte sichtbar markiert, nicht geraten
 - [ ] fonts self-hosted rather than hotlinked from Google (GDPR — see README)
 - [ ] `scripts/verify-motion.cjs` passes
 - [ ] no text baked into any image or video

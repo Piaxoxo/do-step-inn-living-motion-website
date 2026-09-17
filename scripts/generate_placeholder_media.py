@@ -29,22 +29,29 @@ except ImportError:  # pragma: no cover
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 IMAGES = os.path.join(ROOT, "assets", "images")
 
-# --- brand palette (see copy/brand-kit.md) ---------------------------------
-BG = np.array([0x0B, 0x10, 0x20]) / 255.0
-BG2 = np.array([0x11, 0x17, 0x2B]) / 255.0
-SURFACE = np.array([0x17, 0x1D, 0x32]) / 255.0
-SURFACE2 = np.array([0x20, 0x27, 0x41]) / 255.0
-ACCENT = np.array([0xFF, 0x3B, 0x8D]) / 255.0   # pink
-ACCENT2 = np.array([0xFF, 0x7A, 0x3D]) / 255.0  # warm orange
-WARM = np.array([0xFF, 0xC7, 0x8F]) / 255.0     # practical light
+# --- brand palette --------------------------------------------------------
+# Sampled from the supplied brand sheet, logo and company flyer, not invented:
+# the palette sheet gives mint / sand / blush on white, the logo runs a green
+# gradient from #00875F to #5ED6B2, and the flyer adds a soft sky blue.
+PAPER = np.array([0xFF, 0xFF, 0xFF]) / 255.0
+PAPER_2 = np.array([0xF4, 0xFF, 0xFB]) / 255.0   # faint mint-tinted white
+SAND = np.array([0xE8, 0xDC, 0xCF]) / 255.0
+SAND_DEEP = np.array([0xD8, 0xCB, 0xBA]) / 255.0
+MINT = np.array([0x5E, 0xD6, 0xB2]) / 255.0
+MINT_SOFT = np.array([0xA9, 0xE9, 0xD6]) / 255.0
+MINT_DEEP = np.array([0x00, 0x87, 0x5F]) / 255.0
+BLUSH = np.array([0xD8, 0xA7, 0xA0]) / 255.0
+SKY = np.array([0x84, 0xC2, 0xD8]) / 255.0
+DAYLIGHT = np.array([1.00, 0.99, 0.96])          # warm window light
 
 # --- the four film phases --------------------------------------------------
-# (bg_top, bg_bottom, warm_light, accent_light, warm_gain, accent_gain, density)
+# Morning light, midday calm, warm afternoon, settled evening — a day inside a
+# long-stay apartment rather than a night out.
 PHASES = [
-    dict(top=BG, bot=BG2, warm=WARM, acc=ACCENT, wg=0.85, ag=0.20, density=0.35),
-    dict(top=BG2, bot=SURFACE, warm=WARM, acc=ACCENT, wg=1.00, ag=0.30, density=0.60),
-    dict(top=BG, bot=SURFACE2, warm=ACCENT2, acc=ACCENT, wg=1.15, ag=0.85, density=0.75),
-    dict(top=BG, bot=BG2, warm=WARM, acc=ACCENT, wg=0.70, ag=0.35, density=0.30),
+    dict(top=PAPER, bot=MINT_SOFT, warm=DAYLIGHT, acc=MINT, wg=0.55, ag=0.40, density=0.35),
+    dict(top=PAPER_2, bot=SAND, warm=DAYLIGHT, acc=MINT, wg=0.45, ag=0.55, density=0.60),
+    dict(top=PAPER_2, bot=SAND_DEEP, warm=DAYLIGHT, acc=BLUSH, wg=0.50, ag=0.70, density=0.75),
+    dict(top=PAPER, bot=MINT_SOFT, warm=DAYLIGHT, acc=SKY, wg=0.40, ag=0.45, density=0.30),
 ]
 PHASE_AT = [0.0, 0.34, 0.68, 1.0]
 
@@ -139,7 +146,12 @@ VARIANTS = {
 
 
 def render(w, h, t, horizon=0.68, pan=0.0, bands=None, blooms=None, zoom=1.0):
-    """Render one frame of the shared scene world."""
+    """Render one frame of the shared scene world.
+
+    The brand is light — mint, sand and blush on white — so this builds up from
+    paper rather than out of darkness: architecture reads as soft shadow against
+    a bright wall, and the light sources lift rather than glow.
+    """
     p = phase_params(t)
     xs = np.linspace(0.0, 1.0, w, dtype=np.float32)
     ys = np.linspace(0.0, 1.0, h, dtype=np.float32)
@@ -149,11 +161,11 @@ def render(w, h, t, horizon=0.68, pan=0.0, bands=None, blooms=None, zoom=1.0):
     Xc = (X - 0.5) / zoom + 0.5
     Yc = (Y - 0.5) / zoom + 0.5
 
-    # 1. base vertical gradient
-    g = np.clip(Yc, 0, 1)[..., None] ** 0.85
-    img = p["top"] * 0.72 * (1 - g) + p["bot"] * 1.05 * g
+    # 1. the wall: bright at the top, warming towards the floor
+    g = np.clip(Yc, 0, 1)[..., None] ** 1.05
+    img = p["top"] * (1 - g) + p["bot"] * g
 
-    # 2. architectural bands, parallaxed by depth
+    # 2. architecture, parallaxed by depth — soft shadow, not added light
     for (x0, x1, depth) in (bands or []):
         shift = pan * (0.35 + 0.65 * depth)
         bx0, bx1 = x0 - shift, x1 - shift
@@ -163,23 +175,23 @@ def render(w, h, t, horizon=0.68, pan=0.0, bands=None, blooms=None, zoom=1.0):
         while bx0 > 1.15:
             bx0 -= 1.3
             bx1 -= 1.3
-        b = _soft_band(Xc, bx0, bx1, 0.010 + 0.018 * (1 - depth))
-        b = b * np.clip((horizon + 0.06 - Yc) / 0.5, 0.0, 1.0)  # stop at the floor
-        lift = SURFACE2 * (0.30 + 0.55 * depth)
-        img += b[..., None] * lift
-        # warm edge highlight along the leading edge
-        edge = _soft_band(Xc, bx1 - 0.012, bx1 + 0.006, 0.008)
+        b = _soft_band(Xc, bx0, bx1, 0.014 + 0.022 * (1 - depth))
+        b = b * np.clip((horizon + 0.06 - Yc) / 0.5, 0.0, 1.0)
+        shade = np.array([0.20, 0.25, 0.30]) * (0.22 + 0.30 * depth)
+        img -= b[..., None] * shade
+        # a lit edge where the light catches the return
+        edge = _soft_band(Xc, bx1 - 0.010, bx1 + 0.006, 0.008)
         edge = edge * np.clip((horizon - Yc) / 0.45, 0.0, 1.0)
-        img += edge[..., None] * p["warm"] * 0.26 * depth
+        img += edge[..., None] * p["warm"] * 0.10 * depth
 
-    # 3. floor plane
+    # 3. the floor: warm sand, a shade below the wall
     floor = np.clip((Yc - horizon) / 0.06, 0.0, 1.0)
     floor = floor * floor * (3 - 2 * floor)
     depth_fade = np.clip((Yc - horizon) / max(1.0 - horizon, 1e-6), 0, 1)
-    floor_col = BG * (0.34 + 0.16 * depth_fade)[..., None]
+    floor_col = SAND * (0.94 - 0.14 * depth_fade)[..., None]
     img = img * (1 - floor[..., None]) + floor_col * floor[..., None]
 
-    # 4. practical lights, with smeared floor reflections
+    # 4. daylight and the accent colours, with soft floor reflections
     for (cx, cy, r, gain, kind) in (blooms or []):
         col = p["warm"] if kind == "warm" else p["acc"]
         amp = p["wg"] if kind == "warm" else p["ag"]
@@ -189,25 +201,29 @@ def render(w, h, t, horizon=0.68, pan=0.0, bands=None, blooms=None, zoom=1.0):
         while bx > 1.3:
             bx -= 1.3
         light = _bloom(Xc, Yc, bx, cy, r, aspect=0.78)
-        img += light[..., None] * col * gain * amp * 0.34
+        if kind == "warm":
+            img += light[..., None] * col * gain * amp * 0.20
+        else:
+            # accents tint rather than brighten, or they blow out the paper
+            k = np.clip(light * gain * amp * 0.45, 0.0, 1.0)[..., None]
+            img = img * (1 - k) + col * k
         refl = _bloom(Xc, Yc, bx, horizon + (horizon - cy) * 0.75, r * 0.9, aspect=0.42)
-        img += (refl * floor)[..., None] * col * gain * amp * 0.13
+        img += (refl * floor)[..., None] * col * gain * amp * 0.08
 
-    # 5. horizon seam — a thin line of light where wall meets floor
-    seam = np.exp(-((Yc - horizon) / 0.004) ** 2)
-    img += seam[..., None] * p["warm"] * 0.05
+    # 5. the soft line where wall meets floor
+    seam = np.exp(-((Yc - horizon) / 0.005) ** 2)
+    img -= seam[..., None] * SAND_DEEP * 0.10
 
-    # 6. vignette
-    vig = 1.0 - 0.80 * ((Xc - 0.5) ** 2 * 1.6 + (Yc - 0.5) ** 2 * 1.3)
-    img *= np.clip(vig, 0.12, 1.0)[..., None]
+    # 6. a very gentle vignette — the frame should stay open, not close in
+    vig = 1.0 - 0.14 * ((Xc - 0.5) ** 2 * 1.6 + (Yc - 0.5) ** 2 * 1.3)
+    img *= np.clip(vig, 0.80, 1.0)[..., None]
 
-    # 7. static grain
-    img += grain(h, w)[..., None] * 0.016
+    # 7. static grain (per-frame noise would flicker under scrubbing)
+    img += grain(h, w)[..., None] * 0.010
 
-    # 8. gentle filmic shoulder, keeps highlights off pure white
+    # 8. hold the highlights just under paper white
     img = np.clip(img, 0.0, None)
-    img = img / (img + 1.35) * 2.15   # shoulder on highlights only
-    img = np.clip(img, 0, 1) ** 1.12  # keep the shadows deep
+    img = img / (img + 3.4) * 4.25
     return (np.clip(img, 0, 1) * 255).astype(np.uint8)
 
 

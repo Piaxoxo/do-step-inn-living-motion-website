@@ -3,9 +3,11 @@
 A scroll-driven cinematic landing page for **Hotel Do Step Inn Living** — Vite · React · GSAP ·
 ScrollTrigger · Lenis.
 
-> **Status: the site is built and runs on placeholder media.** Every asset is procedurally
-> generated, not photographed, and every property fact on the page is a visible `TO VERIFY`
-> placeholder. Swapping in the real GPT Image 2 / Seedance 2.0 assets is a file copy.
+> **Status: the site is built, in German, on the operator's real content.** Room categories,
+> prices, services, contact details and the company positioning all come from supplied material —
+> see [`copy/brand-kit.md`](copy/brand-kit.md). Two things are still open: the imagery and the
+> background film are procedural placeholders, and the weekly/monthly price columns show
+> "zu prüfen" because the two supplied sources disagree.
 
 Follows the skill at
 [`.claude/skills/do-step-inn-living-motion-website/SKILL.md`](.claude/skills/do-step-inn-living-motion-website/SKILL.md).
@@ -14,11 +16,16 @@ Follows the skill at
 
 ## The idea
 
-> A modern hotel stay revealed through scroll, from arrival to living.
+> Wohnen auf Zeit, im Scrollen erzählt.
 
 A full-screen film sits fixed behind the page. Scroll position drives its `currentTime` frame by
-frame, walking the visitor through one continuous journey: arrival, the room, shared living, social
-evening, the city, and a final booking moment. Creative north star: **Stay somewhere that feels alive.**
+frame, following one quiet day in a long-stay apartment: morning light, the rooms, the shared
+kitchen, warm afternoon, and a closing enquiry. Claim: **Dein Zuhause auf Zeit.**
+
+Do Step Inn Living lets furnished rooms and apartments in Vienna-Meidling for stays of weeks or
+months — business trips, project work, study, interim housing — and to companies placing staff
+long-term. It is not a hostel and not a city-break product; the site is written accordingly, and
+in German.
 
 ---
 
@@ -122,9 +129,11 @@ policy, which is also why local screenshots render in fallback faces.)
 ## Rules this project runs on
 
 - All website text is HTML/CSS. Nothing is baked into images or video.
-- No invented hotel facts. Room names, capacities, amenities, address, contact, transport and
-  policies render as visible `[TO VERIFY: …]` markers until the operator supplies them, and the
-  booking CTA stays inert rather than pointing at a guessed URL.
+- No invented hotel facts. Everything on the page traces to supplied material; where two sources
+  disagree the page shows "zu prüfen" rather than picking a number, and the conflicts are listed
+  under [Offene Punkte](copy/brand-kit.md#offene-punkte).
+- The CTAs are the operator's real enquiry email and phone number. No booking-engine URL has been
+  supplied, so no "book now" button is invented.
 - Do Step Inn **Central** facts elsewhere in this repository belong to a different property and are
   not reused here.
 - The stack is fixed: Vite, React (JS), GSAP, ScrollTrigger, Lenis.
@@ -133,10 +142,18 @@ policy, which is also why local screenshots render in fallback faces.)
 
 ## Still needed
 
-Blocking, from the operator: the address and contact details, the official room categories with
-capacities and amenities, the booking engine URL, and whether rates may be shown at all. The full
-list is in [`copy/brand-kit.md` §8](copy/brand-kit.md#8-fact-status) — including the open question of
-whether Living is an apartment product or a hotel product, which would change the copy and the two
-room cards.
+From the operator, in rough order of importance — full detail under
+[Offene Punkte](copy/brand-kit.md#offene-punkte):
+
+1. **One approved price set on one basis.** The website texts are net, the flyer is gross, and the
+   difference is not explained by tax. Weekly and monthly columns stay "zu prüfen" until this is settled.
+2. **Apartment or hotel room?** The website sells apartments with their own kitchen; the flyer sells
+   hotel rooms with a shared kitchen. This decides what the photography has to show.
+3. Booking-engine URL, cancellation and deposit terms, minimum stay, check-in times.
+4. Imprint and privacy policy for *Living*.
+5. Real photography of the rooms.
 
 Then: connect Higgsfield MCP and run the eight approved generations in `copy/asset-plan.md`.
+
+Also worth fixing on the live site: the phone number links to `tel:202-555-0188`, a template
+placeholder. It displays correctly but dials the wrong number.

@@ -1,30 +1,38 @@
-# Image prompts — GPT Image 2 (Higgsfield MCP)
+# Bildprompts — GPT Image 2 (Higgsfield MCP)
 
-Seven prompts, one per approved asset in `copy/asset-plan.md`. Generate exactly these, in this order.
-No extra variations without a separate approval.
+Sieben Bilder, in dieser Reihenfolge. Das Heldenbild zuerst — es ist der Stilanker, auf den sich
+alle anderen und der Film beziehen.
 
-**Global settings:** aspect ratio 16:9 · quality high · realistic editorial hospitality photography.
+**Globale Einstellungen:** 16:9 · hohe Qualität · realistische, helle Interior-Fotografie.
 
-**Global restrictions (apply to every prompt below):** no baked-in text of any kind, no hotel logos or
-signage, no menus or price tags or room numbers, no invented awards or ratings, no identifiable real
-people as the dominant subject, no five-star luxury cliché, no beige hotel blandness, no stock-photo posing.
+**Globale Ausschlüsse (gelten für jeden Prompt):** kein Text im Bild, keine Logos oder
+Beschilderung, keine Preisschilder, keine erfundenen Auszeichnungen, keine identifizierbaren
+Personen als Hauptmotiv, kein Nachtclub- oder Nightlife-Look, kein dunkler Luxus-Look,
+keine Stockfoto-Pose.
+
+**Farbwelt in jedem Prompt:** helles Tageslicht, warmes Weiß, Sandtöne, mintgrüne Akzente,
+sparsam Altrosa. Ruhig, aufgeräumt, bewohnbar — nicht repräsentativ.
 
 ---
 
-## 1 — `assets/images/hero-room.png` (style anchor — generate first)
+## 1 — `assets/images/hero-room.png` (Stilanker, zuerst erzeugen)
 
 ```txt
-Create a premium editorial hero image for Hotel Do Step Inn Living, a modern youthful urban hospitality brand.
+Create a bright, calm editorial interior photograph for Do Step Inn Living, a Vienna provider of
+furnished rooms and apartments for longer stays.
 
-The main subject is a contemporary hotel room shown in a confident wide composition. The room should feel clean, comfortable, practical, stylish, and lived-in without looking staged or luxurious in a generic five-star way.
+Subject: a modern, uncluttered room for living rather than for a one-night hotel stay — a made bed
+or a sofa, a desk by a window, daylight falling across real materials, one or two honest signs of
+someone actually living there.
 
-Style: modern hospitality campaign, editorial magazine photography, youthful European city-stay energy, bold but approachable design.
+Style: contemporary residential interior photography, bright and airy, soft natural daylight,
+white and warm sand tones with restrained mint-green accents. Calm, practical, quietly premium.
 
-Composition: wide 16:9 frame, strong architectural lines, one clear visual focal area, enough negative space in the left third and upper half for large website typography. Use warm bedside or practical ambient lighting with deep navy shadows and restrained pink or warm accent details where natural.
+Composition: wide 16:9, generous negative space in the left half and upper third for large website
+typography, one clear focal area, realistic architecture and proportions.
 
-Mood: welcoming, urban, calm, cool, design-conscious.
-
-Restrictions: no baked-in text, no fake hotel logos, no fake signage, no people as the dominant subject, no luxury cliché styling, no excessive beige, no generic stock-photo look.
+Restrictions: no text, no logos, no signage, no people as the dominant subject, no dark or moody
+lighting, no night scenes, no luxury-hotel styling, no stock-photo look.
 
 Aspect ratio: 16:9. High quality.
 ```
@@ -34,17 +42,17 @@ Aspect ratio: 16:9. High quality.
 ## 2 — `assets/images/lobby-living-reference.png`
 
 ```txt
-Create a cinematic editorial image for Hotel Do Step Inn Living showing a modern shared lounge or common living space.
+Create a bright editorial photograph of a shared living and lounge area for Do Step Inn Living.
 
-The space should feel social, youthful, relaxed, practical, and visually distinctive. Show comfortable seating, warm light, small hospitality details, and an atmosphere that suggests people can meet, work, relax, or prepare for a night out.
+The space should read as somewhere guests spend weeks, not one night: comfortable seating, a large
+table, daylight, plants, room to work or sit with a coffee. Calm and orderly, never crowded.
 
-Style: editorial lifestyle hotel campaign, contemporary urban hostel/hotel energy, premium but accessible. Match the lighting, materials, and colour language of the approved hero room image.
+Match the daylight, materials and colour language of the approved hero image: white and sand with
+mint-green accents.
 
-Composition: wide 16:9, layered depth, strong image crop, dark blue foundation with warm practical light and subtle pink accents.
+Composition: wide 16:9, layered depth, clean crop.
 
-Restrictions: no text, no fake logos, no crowded party scene, no generic luxury lobby, no unrealistic architecture.
-
-Aspect ratio: 16:9. High quality.
+Restrictions: no text, no logos, no crowds, no bar or party atmosphere, no dark lighting.
 ```
 
 ---
@@ -52,15 +60,16 @@ Aspect ratio: 16:9. High quality.
 ## 3 — `assets/images/social-night-reference.png`
 
 ```txt
-Create an expressive editorial nightlife image for Hotel Do Step Inn Living.
+Create a warm, quiet editorial photograph of late-afternoon light in a communal kitchen or dining
+corner at Do Step Inn Living.
 
-Focus on warm social atmosphere, a stylish drink moment, dark blue surroundings, pink highlights, reflections, candid energy, and a sense of starting or ending a night in the city.
+The mood is the end of a working day at a long stay: low warm sun across a table, simple crockery,
+a kettle or coffee pot, soft blush and sand tones. Settled and domestic — not nightlife.
 
-Style: modern magazine photography, youthful European nightlife, premium social-media campaign, cinematic but natural. Same material and colour language as the approved hero room image, shifted into evening warmth.
+Same materials and colour language as the approved hero image, shifted into warmer afternoon light.
 
-Restrictions: no readable text, no fake logos, no nightclub cliché lasers, no excessive neon, no obvious stock-photo posing, no branded bottles or labels.
-
-Aspect ratio: 16:9. High quality.
+Restrictions: no text, no logos, no branded packaging, no bar scene, no neon, no night club,
+no darkness.
 ```
 
 ---
@@ -68,17 +77,17 @@ Aspect ratio: 16:9. High quality.
 ## 4 — `assets/images/room-private.png`
 
 ```txt
-Create a premium editorial image for Hotel Do Step Inn Living.
+Create a bright editorial photograph for Do Step Inn Living.
 
-Subject: a private room shown as a clean card crop — a made bed, a desk or work surface by a window, daylight falling across real materials, one or two lived-in details.
+Subject: a single or double room shown as a clean card crop — made bed, bedside surface, a window
+with daylight, a place to put a suitcase down for a few weeks.
 
-Use the same visual language as the approved hero image: modern urban hospitality, strong editorial framing, deep blue foundations, warm practical light, restrained pink accents, realistic materials, and an approachable youthful mood.
+Use the approved hero image's language: daylight, white and sand, mint accents, realistic materials,
+calm and uncluttered.
 
-Composition: clean enough for use inside a website card, clear focal point, realistic proportions, no embedded copy.
+Composition: works inside a website card, clear focal point, no embedded copy.
 
-Restrictions: no text, no fake logos, no invented prices, no fake amenity signage, no busy stock-photo styling.
-
-Aspect ratio: 16:9. High quality.
+Restrictions: no text, no logos, no room numbers, no price signage, no dark lighting.
 ```
 
 ---
@@ -86,17 +95,16 @@ Aspect ratio: 16:9. High quality.
 ## 5 — `assets/images/room-shared.png`
 
 ```txt
-Create a premium editorial image for Hotel Do Step Inn Living.
+Create a bright editorial photograph for Do Step Inn Living.
 
-Subject: a shared multi-bed room shown as a clean card crop — considered bed architecture with a real sense of personal space, warm individual reading light, natural wood and textile materials, calm and orderly rather than crowded.
+Subject: a twin or multi-bed room shown as a clean card crop — separate beds with a real sense of
+personal space, individual reading light, daylight, natural wood and textile.
 
-Use the same visual language as the approved hero image: modern urban hospitality, strong editorial framing, deep blue foundations, warm practical light, restrained pink accents, realistic materials, and an approachable youthful mood.
+Use the approved hero image's language: daylight, white and sand, mint accents, calm and orderly.
 
-Composition: clean enough for use inside a website card, clear focal point, realistic proportions, no embedded copy.
+Composition: works inside a website card, clear focal point, no embedded copy.
 
-Restrictions: no text, no fake logos, no invented prices, no fake amenity signage, no bed numbers or labels, no busy stock-photo styling, no cramped bunk-room cliché.
-
-Aspect ratio: 16:9. High quality.
+Restrictions: no text, no logos, no bed numbers, no cramped dormitory look, no dark lighting.
 ```
 
 ---
@@ -104,17 +112,16 @@ Aspect ratio: 16:9. High quality.
 ## 6 — `assets/images/common-space.png`
 
 ```txt
-Create a premium editorial image for Hotel Do Step Inn Living.
+Create a bright editorial photograph for Do Step Inn Living.
 
-Subject: a secondary shared space — a communal kitchen or long shared table where guests cook, work, and sit together, shot in warm late-afternoon light with real materials and a few honest lived-in details.
+Subject: a communal kitchen or long shared table where longer-stay guests cook and work — clean
+worktop, daylight, a few real everyday details.
 
-Use the same visual language as the approved hero image: modern urban hospitality, strong editorial framing, deep blue foundations, warm practical light, restrained pink accents, realistic materials, and an approachable youthful mood.
+Use the approved hero image's language: daylight, white and sand, mint accents.
 
-Composition: clean enough for use inside a website card, clear focal point, realistic proportions, no embedded copy.
+Composition: works inside a website card, clear focal point, no embedded copy.
 
-Restrictions: no text, no fake logos, no branded packaging, no menus or chalkboards, no invented amenity signage, no busy stock-photo styling.
-
-Aspect ratio: 16:9. High quality.
+Restrictions: no text, no logos, no branded packaging, no menus or chalkboards, no dark lighting.
 ```
 
 ---
@@ -122,28 +129,25 @@ Aspect ratio: 16:9. High quality.
 ## 7 — `assets/images/city-lifestyle.png`
 
 ```txt
-Create a premium editorial image for Hotel Do Step Inn Living.
+Create a bright editorial photograph of an everyday Viennese street scene in daylight, seen from
+the point of view of someone living in the neighbourhood for a few weeks.
 
-Subject: a European city street at blue hour seen from a traveller's point of view — wet stone, tram wires or streetlights, warm windows, movement blurred just enough to feel alive, the feeling of stepping out of your accommodation into the evening.
+Ordinary city texture: stone, trees, a tram line or a wide pavement, a calm working-day mood.
+Daylight, soft shadows, no tourist landmark presented as a location claim.
 
-Use the same visual language as the approved hero image: strong editorial framing, deep blue foundations, warm practical light, restrained pink accents, realistic architecture and materials, approachable youthful mood.
+Composition: wide 16:9, generous negative space for typography.
 
-Composition: wide 16:9, generous negative space for overlaid typography, one clear focal area.
-
-Restrictions: no text, no readable shop or street signage, no fake logos, no recognisable landmark presented as a factual location claim, no invented distances or directions, no busy stock-photo styling.
-
-Aspect ratio: 16:9. High quality.
+Restrictions: no text, no readable shop or street signage, no logos, no invented distances or
+directions, no night scene.
 ```
 
 ---
 
-## Review checklist per image
+## Prüfliste je Bild
 
-Before an image is marked approved:
-
-- [ ] no text, no logo, no signage anywhere in the frame
-- [ ] colour language matches the approved hero anchor
-- [ ] enough negative space for the typography that will sit on it
-- [ ] architecture and proportions read as real
-- [ ] no accidental factual claim (no visible price, rating, room number, or address)
-- [ ] saved at the exact path in `copy/asset-plan.md`
+- [ ] kein Text, kein Logo, keine Beschilderung im Bild
+- [ ] helles Tageslicht, Farbwelt wie beim freigegebenen Heldenbild
+- [ ] genug Freifläche für die Typografie, die darauf sitzt
+- [ ] Architektur und Proportionen wirken echt
+- [ ] keine unbeabsichtigte Tatsachenbehauptung (kein Preis, keine Bewertung, keine Zimmernummer)
+- [ ] unter dem in `copy/asset-plan.md` festgelegten Pfad gespeichert

@@ -1,235 +1,204 @@
-# Brand kit — Hotel Do Step Inn Living
+# Brand Kit — Do Step Inn Living
 
-Source of truth for the visual and verbal system of the `do-step-inn-living-motion-website` project.
-Read this file before editing the site or generating any media.
+Verbindliche Grundlage für Gestaltung und Sprache dieses Projekts.
+Vor jeder Änderung an der Website oder an Medien lesen.
 
-> **Fact policy:** every hotel-specific claim in this file is either marked **VERIFIED** with its source
-> or marked **TO VERIFY**. Nothing marked TO VERIFY may appear on the live site, in copy, or inside
-> generated media until the operator confirms it. See [Fact status](#8-fact-status).
-
----
-
-## 1. Core identity
-
-- **Name:** Hotel Do Step Inn Living
-- **Category:** modern urban city stay (Vienna) — TO VERIFY: official property category and star rating
-- **Positioning:** a modern, youthful, social city stay with an editorial lifestyle feel
-- **North star:** **Stay somewhere that feels alive.**
-- **Promise:** a place to sleep, meet, relax, and go out from — a base, not just a bed
-
-### Tone of voice
-
-bold · warm · contemporary · urban · energetic · direct · welcoming
-
-Write short. Write in second person. Lead with the feeling, follow with the practical detail.
-Never oversell, never use booking-engine language ("Best rate guaranteed!", "Book now and save!").
-
-**Voice examples (safe — no factual claims):**
-
-- "Stay somewhere that feels alive."
-- "Sleep well. Step out."
-- "Check in. Go out."
-- "Your base for the city."
-- "From first coffee to last drink."
-
-**Voice anti-examples:**
-
-- "Experience unparalleled luxury in the heart of Vienna."
-- "Our 5-star amenities await."
-- "Book direct for the lowest price!"
+Quellen: die Website-Texte, der Firmenflyer „Ihr Langzeit-Hotel in Wien", das Logo und das
+Farbblatt — alle vom Betreiber übermittelt. Nichts hier ist erfunden. Wo sich Quellen
+widersprechen, steht der Widerspruch unter [Offene Punkte](#offene-punkte), statt still
+aufgelöst zu werden.
 
 ---
 
-## 2. Brand personality
+## 1. Was Do Step Inn Living ist
 
-Do Step Inn Living should feel like part hotel, part social hub, part city-lifestyle editorial:
+- **Produkt:** Wohnen auf Zeit — möblierte Apartments bzw. Zimmer für Kurz- und
+  Langzeitaufenthalte in Wien
+- **Nicht:** ein Social-Hostel, kein Städtetrip-Produkt, kein Nightlife
+- **Anlässe:** Geschäftsreise, Projektarbeit, Studium, Übergangslösung
+- **Zweite Zielgruppe (B2B):** Unternehmen, die Mitarbeitende längerfristig unterbringen —
+  Projekteinsatz, temporäre Teamunterbringung, langfristige Stationierung
+- **Claim:** *Dein Zuhause auf Zeit.*
+- **Betreiber:** Kern Beherbergungsbetriebs GmbH
 
-- urban energy
-- accessible comfort
-- social atmosphere
-- independence and flexibility
-- stylish but unpretentious design
-- memorable city stays
+### Tonalität
 
----
+unkompliziert · klar · ruhig · verlässlich · sachlich-warm
 
-## 3. Visual character
+Kurze Sätze. Keine Superlative, keine Buchungsmaschinen-Rhetorik. Das Versprechen ist
+Planbarkeit, nicht Aufregung. Leitsatz aus dem eigenen Material:
 
-**Yes:**
+> „Ein Aufenthalt sollte sich nie kompliziert anfühlen — sondern klar, flexibel und zuverlässig."
 
-- editorial magazine layouts, oversized typography
-- striking contrast, strong image crops
-- nightlife warmth against calm room quiet
-- deep navy foundations with bold pink accents
-- large breathing room, clean hierarchy
-- realistic architecture, real materials, lived-in detail
-
-**No:**
-
-- generic corporate hotel design
-- sterile beige "luxury"
-- old-fashioned travel imagery
-- crowded booking-engine aesthetics
-- excessive glassmorphism
-- clichéd stock-photo hospitality
-- generic travel-site gradients
-- nightclub cliché (lasers, heavy neon)
+**Duzen oder siezen:** Die Endkunden-Texte duzen („was du brauchst"), die Firmentexte siezen
+(„Ihr Projekt"). Das ist bewusst getrennt und wird auf der Seite so gehalten: Wohn-Sektionen
+duzen, die Firmen-Sektion siezt.
 
 ---
 
-## 4. Color tokens
+## 2. Farben
+
+Aus dem Farbblatt und dem Logo gemessen, nicht geschätzt.
 
 ```css
 :root {
-  --bg: #0B1020;
-  --bg-2: #11172B;
-  --surface: #171D32;
-  --surface-2: #202741;
-  --surface-soft: rgba(23, 29, 50, 0.78);
-  --text: #F7F4F2;
-  --muted: #B6B4BE;
-  --accent: #FF3B8D;
-  --accent-2: #FF7A3D;
-  --blue: #243DFF;
-  --line: rgba(255, 255, 255, 0.12);
-  --success: #67D7A0;
+  --paper:     #FFFFFF;
+  --paper-2:   #F4FFFB;  /* mintgetöntes Weiß, aus dem Flyer */
+  --sand:      #E8DCCF;  /* Farbblatt */
+  --sand-deep: #D8CBBA;
+  --mint:      #5ED6B2;  /* Farbblatt, Primärakzent */
+  --mint-soft: #A9E9D6;  /* Flyer-Flächen */
+  --mint-deep: #00875F;  /* dunkles Ende des Logo-Verlaufs */
+  --blush:     #D8A7A0;  /* Farbblatt */
+  --sky:       #84C2D8;  /* Flyer-Kopfband */
+  --ink:       #191919;
+  --ink-soft:  #3E4F4A;
+  --muted:     #6B7A75;
 }
 ```
 
-Usage rules:
+Regeln:
 
-| Token | Role |
-|---|---|
-| `--bg`, `--bg-2` | large background areas, footer dissolve |
-| `--surface`, `--surface-2`, `--surface-soft` | cards, panels, floating UI over the video |
-| `--text` | primary copy (warm off-white, never pure `#fff` for body) |
-| `--muted` | secondary copy, metadata |
-| `--accent` (pink) | **primary brand accent** — CTAs, highlights, tags, scroll progress |
-| `--accent-2` (warm orange) | nightlife, drinks, sunset, social moments only |
-| `--blue` | rare graphic punctuation, never large fills |
-| `--success` | availability / confirmation states only |
-
-- Pink is an accent, not a surface. Never flood a section with it.
-- Deep blue / navy carries most large background areas.
-- Avoid large generic gradients unless they support a specific transition (the footer dissolve is the exception).
-
-**Contrast requirement:** all body copy over the background film must clear WCAG AA (4.5:1).
-That is what the `.bg-tint` layer exists for — see `website-brief.md`.
+- **Hell ist die Grundhaltung.** Weiß und mintgetöntes Weiß tragen die Flächen. Kein dunkler Modus.
+- **Mint ist der Markenakzent** — Linien, Punkte, Hervorhebungen. `--mint-deep` für Text und
+  Buttons, weil `--mint` auf Weiß keinen ausreichenden Kontrast hat.
+- **Sand** ist der warme Gegenpol: Boden, Footer, ruhige Flächen.
+- **Blush** sparsam für Wärme und für Hinweise.
+- **Sky** selten, als zweiter kühler Akzent.
+- Fließtext immer mindestens WCAG AA (4,5:1). `--ink` auf Weiß liegt bei etwa 17:1.
 
 ---
 
-## 5. Typography
+## 3. Typografie
+
+Das Logo setzt „Do Step Inn" in eine kontrastreiche Serife und „Living" in eine Schreibschrift.
+Die Website greift das über die Serifen-Überschrift und ein kursives „Living" auf — die
+Schreibschrift selbst wird nicht nachgebaut, dafür gibt es das Logo.
 
 ```css
-:root {
-  --font: "Inter", system-ui, sans-serif;
-  --font-head: "Space Grotesk", system-ui, sans-serif;
-  --font-mono: "Space Mono", monospace;
-}
+--font:      "Inter", system-ui, sans-serif;          /* Fließtext, Labels */
+--font-head: "Playfair Display", Georgia, serif;      /* Überschriften, Wortmarke */
 ```
 
-| Family | Use |
-|---|---|
-| `--font-head` (Space Grotesk / Archivo Black) | nav logo, hero statement, section titles, room titles, lifestyle statements, final CTA, footer wordmark |
-| `--font` (Inter) | body copy, descriptions, links |
-| `--font-mono` (Space Mono / JetBrains Mono) | room metadata, capacity, amenity chips, small labels, scroll progress, dev labels |
-
-Scale direction: the hero headline is the largest type on the page by a clear margin.
-Use `clamp()` for every heading so oversized type never causes horizontal overflow on mobile.
+Zahlen in Preistabellen mit `font-variant-numeric: tabular-nums`, damit Spalten stehen.
 
 ---
 
-## 6. Motion principles
+## 4. Bildsprache
 
-- Motion serves reading, never decoration for its own sake.
-- The background film is scrubbed by scroll — it never autoplays past the reader.
-- One pinned reveal section is the motion centrepiece (`#stay`). Do not pin three sections in a row.
-- Text reveals are blur + rise + opacity, short distances (max 18px), no bounce, no spin.
-- Respect `prefers-reduced-motion`: fall back to the poster image and static text.
+- helles Tageslicht, ruhige Flächen, echte Materialien
+- Wohnsituationen statt Hotelrepräsentation: Schreibtisch am Fenster, Küche, aufgeräumte Ruhe
+- keine Nachtaufnahmen, kein Neon, keine Partyszenen
+- keine Menschenmassen; wenn Menschen, dann beiläufig und einzeln
+- kein Text, keine Logos, keine Preisschilder im Bild
 
----
-
-## 7. Content rules
-
-- All website text lives in HTML/CSS. **Never** bake copy into generated images or video.
-- No fake hotel logos or signage in generated media.
-- No invented room names, prices, capacities, amenities, ratings, awards, addresses, transport times,
-  or booking conditions — anywhere, including image prompts.
-- Where a real fact is required but unknown, the site uses a visible placeholder token
-  (e.g. `[TO VERIFY: room name]`) so an unverified build can never be mistaken for a finished one.
+**Aktueller Stand:** Alle Bilder und der Hintergrundfilm sind prozedurale Platzhalter
+(`scripts/generate_placeholder_media.py`) in genau dieser Palette. Sie geben Licht und Stimmung
+vor, zeigen aber keine Räume. Echtes Bildmaterial ersetzt sie 1:1 an denselben Pfaden.
 
 ---
 
-## 8. Fact status
+## 5. Gesicherte Fakten
 
-### VERIFIED — brand / operator level
+Direkt aus dem übermittelten Material — auf der Website verwendbar.
 
-Source: `imprint.html` in this repository (the Do Step Inn **Central** site). These are **operator-level**
-facts for the "Do Step Inn" brand. They must still be confirmed as applying to the *Living* property
-before they are used on this site.
-
-| Fact | Value | Source |
+| Feld | Wert | Quelle |
 |---|---|---|
-| Operating company | Kern Beherbergungsbetriebs GmbH | repo `imprint.html` |
-| Brand | Do Step Inn | repo `imprint.html` |
-| Company register | FN 253911 z, Commercial Court of Vienna | repo `imprint.html` |
-| VAT | ATU61356623 | repo `imprint.html` |
-| Managing director | Mag. Gerald Kern | repo `imprint.html` |
-| Operator email | office@dostepinn.at | repo `imprint.html` |
+| Adresse | Wurmbstraße 36, 1120 Wien | Website, Flyer-Karte |
+| E-Mail | reservierung@dostepinn.at | Website, Flyer |
+| Telefon | +43 676 3682844 | Website, Flyer |
+| Erreichbarkeit | Mo–Fr 08:00–17:00 Uhr | Website |
+| Betreiber | Kern Beherbergungsbetriebs GmbH | Website |
+| Website | https://dostepinn-living.at/ | Website |
+| AGB | https://dostepinn-living.at/contact-copy/ | Website |
 
-### OPEN — source of truth not yet reachable
+**Zimmerkategorien:** Einzelzimmer, Doppelzimmer (1 PAX / 2 PAX), Zweibettzimmer,
+Dreibettzimmer, Vierbettzimmer.
 
-The operator named the booking site as the source for all property facts:
+**Ausstattung je Apartment (Website):** voll möbliert & bezugsfertig · eigene Küche oder
+Kitchenette · modernes Bad · WLAN inklusive · gute öffentliche Anbindung · flexible Mietdauer.
 
-```txt
-https://dostepinn-living.at/#/booking/search
-```
+**Ausstattung je Zimmer (Flyer):** private Dusche/WC · Sat-TV & High-Speed WLAN · Klimaanlage ·
+Mini-Kühlschrank; aufgebettet übergeben, regelmäßig vom Housekeeping serviciert.
 
-It could not be read from this session — `dostepinn-living.at` is blocked by this environment's network
-egress policy (proxy answered 403 to CONNECT). Nothing from it has been used. To unblock, either add the
-domain to the environment's allowed hosts, drop an export of the page into Google Drive, or paste the
-facts directly.
+**InnSider Restaurant, im Haus (Flyer):** Frühstücksbuffet täglich 07:30–10:30 · frühere
+Frühstückszeiten nach Absprache · warme Küche Mo–Fr 11:00–19:00 · Konsumation auf
+Firmenrechnung möglich.
 
-Note that the page is a hash-route booking search (`/#/booking/search`), i.e. a JavaScript app — a plain
-HTML fetch may return an empty shell even once the domain is reachable. The room categories most likely
-come from a booking-engine API behind it.
+**Preise 3–5 Nächte, netto (Website):** Einzelzimmer 39,60 € · Doppelzimmer 1 PAX 43,20 € ·
+Doppelzimmer 2 PAX 47,60 € · Zweibettzimmer 49,60 € · Dreibettzimmer 56,80 € ·
+Vierbettzimmer 63,60 €. Zzgl. MwSt. und Ortstaxe. Ab 3 Monaten Vertragsdauer entfällt die
+Ortstaxe; in Wochen- und Monatspreisen ist nach 2 Wochen eine Zusatzreinigung inkludiert.
 
-**Positioning question — blocks the creative brief.** Third-party search results describe Do Step Inn
-Living as *furnished apartments for short and medium-term stays* (business trips, project work, study,
-interim housing), which is a different product from the hostel-style social hotel this brief currently
-assumes. Unconfirmed and third-party, so it is recorded here only as a question, not as a fact.
-**TO VERIFY — is Living an apartment product or a hotel/hostel product?** The answer changes the scroll
-story, the room-card model, and the image prompts.
+**Zusatzleistungen, netto (Website):** Frühstück 9,82 € · Abendessen 12,90 € (Mo–Fr 14:00–19:00) ·
+Bleibezimmer Service 7,27 € · Zusatzreinigung 14,55 € · Zusatzreinigung bei
+MitarbeiterInnenwechsel 19,64 € · Parken WIPARK Garage 16,50 € · Parken Park&Ride Hetzendorf
+4,60 €. Parken extern, diverse Tarife.
 
-### TO VERIFY — everything property-specific
+**Lage (nur was die Flyer-Karte selbst benennt):** Bahnhof Wien Meidling (U6, S-Bahn, Fernzüge),
+Euro Plaza, WIPARK Garage, Park&Ride Hetzendorf, A2/A23 Richtung Süden, Wienerberg/Business
+Park Wien. **Keine Geh- oder Fahrzeiten** — das Material nennt keine.
 
-Nothing below may be published or generated until the operator supplies it.
+---
 
-- [ ] **TO VERIFY** — official property name and spelling ("Hotel Do Step Inn Living" vs another form)
-- [ ] **TO VERIFY** — street address and postal code of the *Living* property
-- [ ] **TO VERIFY** — property phone number and booking email for *Living*
-- [ ] **TO VERIFY** — booking engine URL / deep link for the "Book your stay" CTA
-- [ ] **TO VERIFY** — official room / stay category names
-- [ ] **TO VERIFY** — capacity per category
-- [ ] **TO VERIFY** — amenities per category and property-wide
-- [ ] **TO VERIFY** — rates, rate structure, currency, and whether any price may be shown at all
-- [ ] **TO VERIFY** — check-in / check-out times and process
-- [ ] **TO VERIFY** — cancellation, deposit, age, and pet policies
-- [ ] **TO VERIFY** — star rating / category classification
-- [ ] **TO VERIFY** — ratings, review scores, awards (only if officially documented)
-- [ ] **TO VERIFY** — nearest transport nodes and any walking or transport times
-- [ ] **TO VERIFY** — nearby landmarks the site may name
-- [ ] **TO VERIFY** — social media handles and legal / footer links for *Living*
-- [ ] **TO VERIFY** — whether real property photography exists that should replace or sit beside AI imagery
-- [ ] **TO VERIFY** — accessibility information
-- [ ] **TO VERIFY** — languages the site must ship in (the Central site ships 7)
+## Offene Punkte
 
-### Explicitly NOT reusable
+Nicht erfunden, nicht stillschweigend entschieden. Jeder Punkt braucht eine Antwort vom Betreiber.
 
-The Do Step Inn **Central** facts in this repository (Südtiroler Platz 3, 1040 Vienna; the three-minute
-Hauptbahnhof walk; the pod-bed and private-room descriptions; the phone number +43 1 890 23 51) belong to
-a **different property**. They must not be copied into the Living site.
+### 1. Zwei Preisstände, die sich widersprechen
 
-> Note for the operator: the existing Central site is internally inconsistent — page footers say
-> *Südtiroler Platz 3, 1040 Vienna* while `imprint.html` says *Felberstraße 20, 1150 Vienna*.
-> Worth resolving there, and a good reason to be careful about which address belongs to which property here.
+Die Website führt Nettopreise, der Flyer Bruttopreise inklusive USt. und Ortstaxe — und die
+Differenz ist nicht durch Steuern erklärbar:
+
+| Kategorie | Website netto | Flyer brutto |
+|---|---:|---:|
+| Einzelzimmer | 39,60 | 48,00 |
+| Doppelzimmer 1 PAX | 43,20 | 51,20 |
+| Doppelzimmer 2 PAX | 47,60 | 55,00 |
+| Zweibettzimmer | 49,60 | 55,00 |
+| Dreibettzimmer | 56,80 | 60,00 |
+| Vierbettzimmer | 63,60 | 68,00 |
+
+Zusätzlich: Auf der Website kosten Doppelzimmer 2 PAX und Zweibettzimmer unterschiedlich viel
+(47,60 / 49,60), im Flyer gleich viel (beide 55,00).
+Auch die Zusatzleistungen unterscheiden sich (Frühstück 9,82 netto vs. 10,80 brutto; Abendessen
+12,90 vs. 15,80; Zusatzreinigung 14,55 vs. 16,00; Park&Ride 4,60 vs. 4,99).
+
+**Die Seite zeigt derzeit die Netto-Werte der Website.** Wochen- und Monatspreise stehen nur im
+Flyer und damit auf der anderen Basis — deshalb stehen sie auf der Seite als „zu prüfen", statt
+gemischt zu werden. **Benötigt:** ein freigegebener Preisstand mit einer einzigen Basis.
+
+### 2. Apartment oder Hotelzimmer?
+
+Die Website verkauft „Apartments" mit „eigene Küche oder Kitchenette". Der Flyer verkauft
+„modern eingerichtete Hotelzimmer" mit „Gemeinschaftsküche & Aufenthaltsräume". Die
+Kategorienamen (Einzel-, Doppel-, Drei-, Vierbettzimmer) sind Hotelzimmer-Namen.
+Das ist kein Detail: Es entscheidet, was auf Bildern zu sehen sein muss und was die Seite
+verspricht. **Die Seite übernimmt aktuell beide Formulierungen aus ihrer jeweiligen Quelle.**
+
+### 3. Schreibweise der Adresse
+
+Flyer-Textblock: „Wurmbsstraße 36". Flyer-Karte und Website: „Wurmbstraße 36".
+Die Seite verwendet **Wurmbstraße 36** (zwei Quellen gegen eine).
+
+### 4. Kaputter Telefonlink auf der Live-Website
+
+Die übermittelte Website-Fassung verlinkt die Telefonnummer auf `tel:202-555-0188` — eine
+Platzhalternummer aus einem Template. Angezeigt wird die richtige Nummer, gewählt die falsche.
+**Auf dieser Seite korrigiert**, auf der Live-Website vermutlich noch offen.
+
+### 5. Kleinere Unstimmigkeiten im Flyer
+
+- Die Spalte „Ø €/Pers./Nacht" beim Wochenpreis führt Werte pro Zimmer, nicht pro Person
+  (z. B. 329,00 ÷ 7 = 47,00 — das ist der Zimmerpreis, bei 2 PAX wären es 23,50).
+- Einzelzimmer-Monatspreis: 798,00 ÷ 30 = 26,60, angegeben sind 27,00.
+
+### 6. Weiterhin nicht übermittelt
+
+- URL der Buchungsmaschine für einen „Direkt buchen"-Button
+- Stornobedingungen, Kaution, Mindestaufenthalt, Check-in/Check-out-Zeiten
+- Sternekategorie, Bewertungen, Auszeichnungen
+- Impressum und Datenschutzerklärung für *Living* (nur die AGB-URL liegt vor)
+- Social-Media-Profile
+- Barrierefreiheit
+- echtes Bildmaterial der Räume

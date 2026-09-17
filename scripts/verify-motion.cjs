@@ -59,24 +59,28 @@ const check=(name,ok,detail)=>{console.log(`${ok?'PASS':'FAIL'}  ${name}${detail
   check('scrub spans the film', fwd[0]===0 && fwd[5]>meta.dur-0.2, `${fwd[0]} -> ${fwd[5]} of ${meta.dur}`);
 
   // pin geometry: no overlap into #living
-  const stayTop=await p.evaluate(()=>document.getElementById('stay').getBoundingClientRect().top+window.scrollY);
+  const stayTop=await p.evaluate(()=>{const el=document.querySelector('[data-pin-section]');
+    return el.getBoundingClientRect().top+window.scrollY;});
   await go(p,stayTop+900*1.8*0.95);await p.waitForTimeout(700);
   const words=await p.evaluate(()=>[...document.querySelectorAll('.stay-word')].map(w=>+(+w.style.opacity).toFixed(2)));
   check('pinned reveal resolves', words.every(o=>o>0.9), JSON.stringify(words));
-  const ly=await p.evaluate(()=>document.getElementById('living').getBoundingClientRect().top+window.scrollY);
+  const ly=await p.evaluate(()=>{const next=document.querySelector('[data-pin-section]').nextElementSibling;
+    return next.getBoundingClientRect().top+window.scrollY;});
   await go(p,ly);await p.waitForTimeout(700);
   const bleed=await p.evaluate(()=>{const r=document.querySelector('.stay-word').getBoundingClientRect();
     return r.bottom>0&&r.top<window.innerHeight;});
-  check('pinned text does not bleed into #living', !bleed);
+  check('pinned text does not bleed into the next section', !bleed);
 
   // contrast: hero copy over the film
   const contrast=await p.evaluate(()=>{
     const lum=c=>{const [r,g,b]=c.match(/\d+/g).map(Number).map(v=>{v/=255;return v<=0.03928?v/12.92:((v+0.055)/1.055)**2.4;});
       return 0.2126*r+0.7152*g+0.0722*b;};
+    // Read the real ground rather than hard-coding one: the theme's background
+    // is a token, and a stale constant here would "fail" a perfectly readable page.
     const t=lum(getComputedStyle(document.querySelector('.hero__title')).color);
-    const bg=lum('rgb(11,16,32)');
+    const bg=lum(getComputedStyle(document.body).backgroundColor);
     return +(((Math.max(t,bg)+0.05)/(Math.min(t,bg)+0.05))).toFixed(2);});
-  check('hero copy clears WCAG AA on the base ground', contrast>=4.5, `ratio ${contrast}`);
+  check('hero copy clears WCAG AA on the page ground', contrast>=4.5, `ratio ${contrast}`);
 
   for(const w of [1440,1024,768,390,320]){
     await p.setViewportSize({width:w,height:844});await p.waitForTimeout(450);
