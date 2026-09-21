@@ -14,3 +14,6 @@ assets/videos/do-step-inn-living-scroll-background-placeholder.mp4
 # -----------------------------------------------------------------------------
 __pycache__/
 .DS_Store
+
+# Node-Abhaengigkeiten (Wurzel: nur Playwright fuer scripts/verify-motion.cjs)
+node_modules/

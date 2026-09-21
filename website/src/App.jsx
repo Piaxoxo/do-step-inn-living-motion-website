@@ -206,12 +206,15 @@ export default function App() {
               {t(INNSIDER.punkte).map((p) => <li key={p}>{p}</li>)}
             </ul>
           </div>
-          <div className="galerie" data-galerie>
-            {INNSIDER.bilder.map((b, i) => (
-              <figure className="galerie__bild" key={b.src} data-tiefe={String((i % 3) + 1)}>
-                <img src={b.src} alt={t(b.alt)} loading="lazy" />
-              </figure>
-            ))}
+          <div className="galerie-buehne" data-galerie-buehne>
+            <div className="galerie" data-galerie>
+              {INNSIDER.bilder.map((b, i) => (
+                <figure className="galerie__bild" key={b.src} data-tiefe={String((i % 3) + 1)}>
+                  <img src={b.src} alt={t(b.alt)} loading="lazy" />
+                  <figcaption>{t(b.titel)}</figcaption>
+                </figure>
+              ))}
+            </div>
           </div>
         </section>
 

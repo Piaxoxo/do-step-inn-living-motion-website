@@ -29,12 +29,16 @@ export const isCompact = () =>
  */
 function setupVideoScrub(video) {
   let lastVideoT = -1;
+  // Die Seitenhoehe wird gecacht: sie jeden Frame zu lesen erzwingt ein Relayout.
+  let maxScroll = 1;
+  const messen = () => {
+    maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+  };
 
   const updateVideo = () => {
     if (!video.duration) return;
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-    const progress = Math.min(1, Math.max(0, scrollTop / Math.max(1, maxScroll)));
+    const progress = Math.min(1, Math.max(0, scrollTop / maxScroll));
     const t = progress * (video.duration - 0.05);
     if (Math.abs(t - lastVideoT) > 0.008) {
       video.currentTime = t;
@@ -44,20 +48,22 @@ function setupVideoScrub(video) {
 
   video.pause();
   video.currentTime = 0;
+  messen();
 
-  const trigger = ScrollTrigger.create({
-    trigger: document.body,
-    start: "top top",
-    end: "bottom bottom",
-    scrub: true,
-    onUpdate: updateVideo,
-  });
-
+  // Bewusst am Ticker statt an einer ScrollTrigger-Strecke: die gepinnte
+  // Galerie schiebt Hoehe in die Seite, und jede Trigger-Strecke, die wir
+  // dafuer definieren, endet irgendwo vor dem echten Seitenende -- der Film
+  // blieb dann stehen, bevor der Scroll unten ankam.
+  gsap.ticker.add(updateVideo);
+  ScrollTrigger.addEventListener("refresh", messen);
+  window.addEventListener("resize", messen);
   video.addEventListener("loadedmetadata", updateVideo);
 
   return () => {
+    gsap.ticker.remove(updateVideo);
+    ScrollTrigger.removeEventListener("refresh", messen);
+    window.removeEventListener("resize", messen);
     video.removeEventListener("loadedmetadata", updateVideo);
-    trigger.kill();
   };
 }
 
@@ -221,26 +227,45 @@ function setupTiefe() {
   return () => tweens.forEach((t) => { t.scrollTrigger?.kill(); t.kill(); });
 }
 
-/** Die InnSider-Galerie zieht beim Scrollen seitlich durch. */
+/**
+ * Der Bilderstreifen zieht sich seitwaerts auf, waehrend die Sektion steht.
+ * Gepinnt wird die ganze Sektion, nicht nur der Streifen -- sonst schiebt sich
+ * die Ueberschrift weg und die Bilder haengen allein in einer weissen Flaeche.
+ * Ohne Pin waere die Strecke -- neun Bilder -- in dem kurzen Fenster, das die
+ * Galerie selbst durchs Bild braucht, nur ein Vorbeirauschen.
+ */
 function setupGalerie() {
+  const buehne = document.querySelector("#innsider");
   const el = document.querySelector("[data-galerie]");
-  if (!el) return () => {};
+  if (!buehne || !el) return () => {};
   const weite = () => el.scrollWidth - el.clientWidth;
   if (weite() <= 0) return () => {};
+
+  // Schmale Geraete behalten den normalen Wischstreifen: ein Pin wuerde dort
+  // den vertikalen Scroll ueber die volle Streifenlaenge kapern.
+  if (window.matchMedia("(max-width: 860px)").matches) return () => {};
+
   const tween = gsap.to(el, {
     scrollLeft: weite,
     ease: "none",
     scrollTrigger: {
-      trigger: el,
-      start: "top 75%",
-      end: "bottom top",
-      scrub: 0.8,
+      trigger: buehne,
+      start: "center center",
+      // Etwas kuerzer als die Streifenbreite: der Streifen laeuft schneller
+      // als der Daumen, sonst haelt der Pin die Seite zu lange fest.
+      end: () => "+=" + weite() * 0.8,
+      scrub: 0.6,
+      pin: true,
+      anticipatePin: 1,
       invalidateOnRefresh: true,
     },
   });
-  return () => { tween.scrollTrigger?.kill(); tween.kill(); };
+  return () => {
+    tween.scrollTrigger?.kill();
+    tween.kill();
+    el.scrollLeft = 0;
+  };
 }
-
 
 /**
  * Karten kippen unter dem Zeiger — echtes CSS-3D mit Perspektive.
@@ -336,22 +361,44 @@ function setupMaskenReveal() {
   };
 }
 
-/** Die Bildergalerie dreht sich beim Durchscrollen leicht in den Raum. */
+/**
+ * Jedes Bild dreht sich nach seiner Lage im Sichtfenster des Streifens:
+ * am Rand angekippt und zurueckgesetzt, in der Mitte frontal. Die Drehung
+ * haengt an der Horizontalen, nicht am Seitenscroll -- in der gepinnten
+ * Buehne stehen die Bilder vertikal still.
+ */
 function setupGalerieTiefe() {
+  const el = document.querySelector("[data-galerie]");
   const bilder = gsap.utils.toArray("[data-galerie] .galerie__bild");
-  if (!bilder.length) return () => {};
-  const tweens = bilder.map((el) =>
-    gsap.fromTo(el,
-      { rotationY: 12, z: -70 },
-      {
-        rotationY: -12,
-        z: 0,
-        ease: "none",
-        scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: 0.8 },
-      })
-  );
+  if (!el || !bilder.length) return () => {};
+
+  const dreh = bilder.map((b) => gsap.quickSetter(b, "rotationY", "deg"));
+  const tief = bilder.map((b) => gsap.quickSetter(b, "z", "px"));
+  let angefordert = false;
+
+  const zeichne = () => {
+    angefordert = false;
+    const mitte = el.scrollLeft + el.clientWidth / 2;
+    bilder.forEach((b, i) => {
+      const abstand = (b.offsetLeft + b.offsetWidth / 2 - mitte) / el.clientWidth;
+      const d = gsap.utils.clamp(-1, 1, abstand);
+      dreh[i](d * -16);
+      tief[i](-Math.abs(d) * 90);
+    });
+  };
+  const anfordern = () => {
+    if (angefordert) return;
+    angefordert = true;
+    requestAnimationFrame(zeichne);
+  };
+
+  el.addEventListener("scroll", anfordern, { passive: true });
+  window.addEventListener("resize", anfordern);
+  zeichne();
+
   return () => {
-    tweens.forEach((t) => { t.scrollTrigger?.kill(); t.kill(); });
+    el.removeEventListener("scroll", anfordern);
+    window.removeEventListener("resize", anfordern);
     gsap.set(bilder, { clearProps: "transform" });
   };
 }

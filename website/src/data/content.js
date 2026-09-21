@@ -272,15 +272,20 @@ export const INNSIDER = {
     en: ["Breakfast buffet daily 7:30–10:30 am", "Earlier breakfast by arrangement", "Hot food Mon–Fri 11 am – 7 pm", "Can be put on the company invoice"],
   },
   bilder: [
-    { src: "/img/innsider/innsider-vorspeise.jpg", alt: { de: "Vorspeise im InnSider Restaurant", en: "Starter at the InnSider restaurant" } },
-    { src: "/img/innsider/innsider-hauptspeise.jpg", alt: { de: "Hauptspeise im InnSider Restaurant", en: "Main course at the InnSider restaurant" } },
-    { src: "/img/innsider/innsider-mehlspeise.jpg", alt: { de: "Mehlspeise im InnSider Restaurant", en: "Dessert at the InnSider restaurant" } },
-    { src: "/img/innsider/innsider-ausschank.jpg", alt: { de: "Ausschank im InnSider Restaurant", en: "At the bar of the InnSider restaurant" } },
+    { src: "/img/innsider/innsider-vorspeise.jpg",     titel: { de: "Vorspeise",        en: "Starter" },        alt: { de: "Angerichtete Vorspeise im InnSider", en: "Plated starter at the InnSider" } },
+    { src: "/img/innsider/innsider-teller-fisch.jpg",  titel: { de: "Aus der Küche",    en: "From the kitchen" }, alt: { de: "Hauptgang mit Fisch, am Teller angerichtet", en: "Fish main course, plated" } },
+    { src: "/img/innsider/innsider-hauptspeise.jpg",   titel: { de: "Hauptgang",        en: "Main course" },     alt: { de: "Hauptgang mit Knödeln im InnSider", en: "Main course with dumplings at the InnSider" } },
+    { src: "/img/innsider/innsider-teller-tatar.jpg",  titel: { de: "Tagesempfehlung",  en: "Today's pick" },    alt: { de: "Angerichteter Gang im InnSider", en: "Plated course at the InnSider" } },
+    { src: "/img/innsider/innsider-mehlspeise.jpg",    titel: { de: "Mehlspeise",       en: "Dessert" },         alt: { de: "Süße Mehlspeise im InnSider", en: "Sweet dessert at the InnSider" } },
+    { src: "/img/innsider/innsider-karte.jpg",         titel: { de: "Karte",            en: "The menu" },        alt: { de: "Getränkekarte mit Aperitif im InnSider", en: "Drinks menu with an aperitif at the InnSider" } },
+    { src: "/img/innsider/innsider-ausschank.jpg",     titel: { de: "Ausschank",        en: "At the tap" },      alt: { de: "Bier wird im InnSider frisch gezapft", en: "Beer being poured at the InnSider" } },
+    { src: "/img/innsider/innsider-bar.jpg",           titel: { de: "Die Bar",          en: "The bar" },         alt: { de: "Gast an der Bar im InnSider", en: "A guest at the InnSider bar" } },
+    { src: "/img/innsider/innsider-gastraum.jpg",      titel: { de: "Gastraum",         en: "The dining room" }, alt: { de: "Zwei Gäste beim Essen im Gastraum des InnSider", en: "Two guests dining in the InnSider dining room" } },
   ],
 };
 
 export const KONDITIONEN = [
-  { frage: { de: "Mindestaufenthalt", en: "Minimum stay" }, antwort: { de: "7 Nächte. Danach zu jedem Monatsende kündbar.", en: "7 nights. After that, cancellable at the end of any month." } },
+  { frage: { de: "Mindestaufenthalt", en: "Minimum stay" }, antwort: { de: "Kein fixer Mindestaufenthalt. Die Nachtpreise laut Firmenflyer gelten ab 3 Nächten. Zu jedem Monatsende kündbar.", en: "No fixed minimum stay. The nightly rates in the company flyer apply from 3 nights. Cancellable at the end of any month." } },
   { frage: { de: "Kaution", en: "Deposit" }, antwort: { de: "Keine — außer 40 € Schlüsselkaution, die zurückerstattet wird.", en: "None — apart from a € 40 key deposit, which is returned." } },
   { frage: { de: "Nebenkosten", en: "Running costs" }, antwort: { de: "Strom und Instandhaltung sind in der Monatsmiete enthalten.", en: "Electricity and maintenance are included in the monthly rent." } },
   { frage: { de: "Rauchen", en: "Smoking" }, antwort: { de: "Nicht gestattet.", en: "Not permitted." } },

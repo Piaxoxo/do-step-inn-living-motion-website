@@ -1133,22 +1133,55 @@ section {
   display: flex;
   gap: 1.25rem;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
   padding-bottom: 0.5rem;
   scrollbar-width: thin;
 }
 
+/* Grid-Kinder haben min-width: auto -- ohne das Zuruecksetzen druecken die
+   neun Karten des Streifens die Seite horizontal auseinander. */
+.galerie-buehne { display: block; min-width: 0; }
+
+/* Ab hier wird die Sektion gepinnt und muss deshalb ins Fenster passen --
+   sonst schneidet der untere Fensterrand die Karten an. Schmaler wird die
+   Sektion nicht gepinnt und behaelt ihren normalen Abstandsrhythmus. */
+@media (min-width: 861px) {
+  .innsider {
+    padding-block: clamp(1.5rem, 4vh, 3.5rem);
+    gap: 2rem;
+  }
+}
+
+.galerie { min-width: 0; max-width: 100%; }
+
 .galerie__bild {
+  position: relative;
   margin: 0;
-  flex: 0 0 min(34rem, 78vw);
-  aspect-ratio: 3 / 2;
+  /* Auf der gepinnten Buehne bemisst sich die Karte an der Hoehe: so fuellt
+     der Streifen das Bild, statt als schmales Band darin zu schwimmen. */
+  flex: 0 0 auto;
+  height: min(38vh, 26rem);
+  aspect-ratio: 4 / 3;
   overflow: hidden;
   border-radius: 20px;
   border: 1px solid var(--line-soft);
   scroll-snap-align: center;
+  background: var(--ink);
 }
 
-.galerie__bild img { width: 100%; height: 100%; object-fit: cover; }
+.galerie__bild img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.galerie__bild figcaption {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 2.75rem 1.1rem 0.95rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: #fff;
+  /* Die Aufnahmen sind dunkel und ungleichmaessig belichtet -- der Verlauf
+     haelt die Zeile lesbar, ohne das Bild flaechig zuzudecken. */
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.74), rgba(0, 0, 0, 0));
+}
 
 /* === Konditionen ========================================================== */
 
@@ -1192,7 +1225,8 @@ section {
   }
 
   .rechner__summe { position: static; }
-  .galerie__bild { flex-basis: 84vw; }
+  .galerie { scroll-snap-type: x mandatory; }
+  .galerie__bild { height: auto; width: 82vw; }
 }
 
 @media (prefers-reduced-motion: reduce) {
