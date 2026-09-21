@@ -2,6 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { initMotion } from "./motion.js";
 import Preisrechner from "./components/Preisrechner.jsx";
 import { SpracheContext, t as uebersetze, UI } from "./i18n.js";
+import { useRoute } from "./router.js";
+import { Link } from "./components/Link.jsx";
+import Rechtsseite from "./pages/Rechtsseite.jsx";
 import {
   KONTAKT,
   anfrageHref,
@@ -30,7 +33,7 @@ function AnfrageLink({ sprache, ui, variant = "primary", label, betreff, text })
   const standardBetreff =
     sprache === "de" ? "Anfrage Do Step Inn Living" : "Enquiry Do Step Inn Living";
   return (
-    <a className={`btn btn--${variant}`} href={anfrageHref(betreff ?? standardBetreff, text ?? standardText)}>
+    <a className={`btn btn--${variant}`} data-magnet href={anfrageHref(betreff ?? standardBetreff, text ?? standardText)}>
       {label ?? ui.anfragen}
     </a>
   );
@@ -39,10 +42,12 @@ function AnfrageLink({ sprache, ui, variant = "primary", label, betreff, text })
 export default function App() {
   const videoRef = useRef(null);
   const [sprache, setSprache] = useState("de");
+  const [pfad, gehe] = useRoute();
+  const istHome = pfad === "/";
   const ui = UI[sprache];
   const t = (w) => uebersetze(w, sprache);
 
-  useEffect(() => initMotion({ video: videoRef.current }), []);
+  useEffect(() => initMotion({ video: videoRef.current, film: istHome }), [pfad, istHome]);
   useEffect(() => {
     document.documentElement.lang = sprache;
   }, [sprache]);
@@ -64,9 +69,11 @@ export default function App() {
       <div className="grain" aria-hidden="true" />
 
       <header className="nav">
-        <a className="nav__logo" href="#home">Do Step Inn <em>Living</em></a>
+        <Link className="nav__logo" to="/" gehe={gehe}>Do Step Inn <em>Living</em></Link>
         <nav className="nav__links" aria-label={sprache === "de" ? "Abschnitte" : "Sections"}>
-          {ui.nav.map(([label, href]) => <a key={href} href={href}>{label}</a>)}
+          {istHome
+            ? ui.nav.map(([label, href]) => <a key={href} href={href}>{label}</a>)
+            : <Link to="/" gehe={gehe}>{sprache === "de" ? "Zur Startseite" : "Back to home"}</Link>}
         </nav>
         <div className="nav__end">
           <div className="sprachwahl" role="group" aria-label={sprache === "de" ? "Sprache" : "Language"}>
@@ -83,10 +90,11 @@ export default function App() {
         <span className="nav__rule" aria-hidden="true"><span data-progress-bar /></span>
       </header>
 
+      {istHome ? (
       <main className="page">
         <section id="home" className="hero">
           <p className="eyebrow" data-reveal>{ui.heroEyebrow}</p>
-          <h1 className="hero__title" data-reveal>
+          <h1 className="hero__title" data-reveal data-maske>
             {ui.heroTitel[0]}<br />{ui.heroTitel[1]}
           </h1>
           <p className="hero__lede" data-reveal>{ui.heroText}</p>
@@ -111,7 +119,7 @@ export default function App() {
         <section id="vorteile" className="produkte">
           <div className="section__head" data-reveal>
             <p className="label">{ui.vorteileLabel}</p>
-            <h2>{ui.vorteileTitel}</h2>
+            <h2 data-maske>{ui.vorteileTitel}</h2>
             <p className="lede">{ui.vorteileText}</p>
           </div>
           <div className="produkte__grid">
@@ -130,12 +138,12 @@ export default function App() {
         <section id="zimmer" className="zimmertypen">
           <div className="section__head" data-reveal>
             <p className="label">{ui.zimmerLabel}</p>
-            <h2>{ui.zimmerTitel}</h2>
+            <h2 data-maske>{ui.zimmerTitel}</h2>
             <p className="lede">{ui.zimmerText}</p>
           </div>
           <div className="typen__grid">
             {ZIMMERTYPEN.map((z, i) => (
-              <article className="typ panel" key={z.id} data-reveal data-tiefe={String((i % 2) + 1)}>
+              <article className="typ panel" key={z.id} data-reveal data-kippen="7" data-tiefe={String((i % 2) + 1)}>
                 <p className="produkt__kern">{t(z.kern)}</p>
                 <h3>{t(z.name)}</h3>
                 <p className="muted">{t(z.text)}</p>
@@ -151,9 +159,14 @@ export default function App() {
         <section id="preise" className="preise">
           <div className="section__head" data-reveal>
             <p className="label">{ui.preiseLabel}</p>
-            <h2>{ui.preiseTitel}</h2>
+            <h2 data-maske>{ui.preiseTitel}</h2>
             <p className="lede">{ui.preiseText}</p>
           </div>
+          <p className="notice" data-reveal>
+            {sprache === "de"
+              ? "Die Kategorien im Rechner folgen der Firmenpreisliste und beschreiben die Belegung. Die Zimmertypen weiter oben beschreiben die Ausstattung."
+              : "The categories in the calculator follow the company price list and describe occupancy. The room types above describe the fit-out."}
+          </p>
           <div data-reveal><Preisrechner /></div>
           <ul className="footnotes" data-reveal>
             {t(PREIS_REGELN).map((r) => <li key={r}>{r}</li>)}
@@ -163,12 +176,12 @@ export default function App() {
         <section id="standorte" className="standorte">
           <div className="section__head" data-reveal>
             <p className="label">{ui.standorteLabel}</p>
-            <h2>{ui.standorteTitel}</h2>
+            <h2 data-maske>{ui.standorteTitel}</h2>
             <p className="lede">{ui.standorteText}</p>
           </div>
           <div className="standorte__liste">
             {STANDORTE.map((s, i) => (
-              <article className="standort panel" key={s.id} data-reveal data-tiefe={String((i % 3) + 1)}>
+              <article className="standort panel" key={s.id} data-reveal data-kippen="5" data-tiefe={String((i % 3) + 1)}>
                 <header>
                   <h3>{s.name}</h3>
                   <p className="standort__adresse">{s.strasse} · {s.ort}</p>
@@ -187,7 +200,7 @@ export default function App() {
         <section id="innsider" className="innsider">
           <div className="section__head" data-reveal>
             <p className="label">{ui.innsiderLabel}</p>
-            <h2>{ui.innsiderTitel}</h2>
+            <h2 data-maske>{ui.innsiderTitel}</h2>
             <p className="lede">{t(INNSIDER.text)}</p>
             <ul className="ticks ticks--tight">
               {t(INNSIDER.punkte).map((p) => <li key={p}>{p}</li>)}
@@ -205,7 +218,7 @@ export default function App() {
         <section id="firmen" className="business">
           <div className="business__body" data-reveal>
             <p className="label">{ui.firmenLabel}</p>
-            <h2>{ui.firmenTitel}</h2>
+            <h2 data-maske>{ui.firmenTitel}</h2>
             <p className="lede">{ui.firmenText}</p>
             <ul className="ticks">
               {t(FIRMEN.vorteile).map((v) => <li key={v}>{v}</li>)}
@@ -236,7 +249,7 @@ export default function App() {
         <section id="kontakt" className="cta">
           <div data-reveal>
             <p className="label">{ui.kontaktLabel}</p>
-            <h2>{ui.kontaktTitel}</h2>
+            <h2 data-maske>{ui.kontaktTitel}</h2>
             <p className="lede">{ui.kontaktText}</p>
           </div>
           <div className="actions" data-reveal>
@@ -254,6 +267,9 @@ export default function App() {
           </dl>
         </section>
       </main>
+      ) : (
+        <Rechtsseite pfad={pfad} />
+      )}
 
       <footer className="footer">
         <p className="footer__mark">Do Step Inn <em>Living</em></p>
@@ -274,16 +290,17 @@ export default function App() {
           <div>
             <p className="label">{ui.rechtliches}</p>
             <p>
-              <a href={KONTAKT.home}>Home</a><br />
-              <a href={KONTAKT.agb}>AGB</a><br />
+              <Link to="/impressum" gehe={gehe}>{sprache === "de" ? "Impressum" : "Legal notice"}</Link><br />
+              <Link to="/datenschutz" gehe={gehe}>{sprache === "de" ? "Datenschutz" : "Privacy"}</Link><br />
+              <Link to="/agb" gehe={gehe}>AGB</Link><br />
               {KONTAKT.betreiber}
             </p>
           </div>
         </div>
         <p className="footer__note">
           {sprache === "de"
-            ? "Vorschau-Build. Impressum und Datenschutzerklärung für Do Step Inn Living fehlen noch und sind vor einer Veröffentlichung verpflichtend. Die Raumbilder und der Hintergrundfilm sind prozedurale Platzhalter; die Fotos im InnSider-Abschnitt sind echt."
-            : "Preview build. An imprint and a privacy policy for Do Step Inn Living are still missing and are required before publication. The room images and the background film are procedural placeholders; the photos in the InnSider section are real."}
+            ? "Vorschau-Build. Impressum und Datenschutzerklärung stehen als Entwurf bereit und gehören vor einer Veröffentlichung juristisch geprüft; die AGB müssen vom Betreiber kommen. Die Raumbilder und der Hintergrundfilm sind prozedurale Platzhalter — die Fotos im InnSider-Abschnitt sind echt."
+            : "Preview build. The legal notice and privacy policy are drafts and need legal review before publication; the terms must come from the operator. The room images and the background film are procedural placeholders — the photos in the InnSider section are real."}
         </p>
       </footer>
     </SpracheContext.Provider>

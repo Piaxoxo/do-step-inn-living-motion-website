@@ -68,56 +68,66 @@ export const ZIMMERTYPEN = [
   },
 ];
 
-// --- Preise: Preisliste aus dem Living-Webdokument --------------------------
-// Inklusive aller Steuern und Serviceleistungen. Keine Zusatzkosten, keine
-// Kaution — außer 40 € Schlüsselkaution, die am Ende zurückerstattet wird.
-export const TARIFE = {
-  standard: {
-    name: { de: "Standard Zimmer", en: "Standard room" },
-    hinweis: { de: "Zimmertyp 1 + 2", en: "room type 1+2" },
-    staffel: [
-      { personen: 1, tag: 37, woche: 175, monat: 528 },
-      { personen: 2, tag: 45, woche: 205, monat: 594 },
-      { personen: 3, tag: 52, woche: 245, monat: 658 },
-    ],
-  },
-  premium: {
-    name: { de: "Premium Zimmer", en: "Premium room" },
-    hinweis: { de: "Zimmertyp 3", en: "room type 3" },
-    staffel: [
-      { personen: 1, tag: 45, woche: 199, monat: 594 },
-      { personen: 2, tag: 55, woche: 239, monat: 668 },
-      { personen: 3, tag: 64, woche: 259, monat: 748 },
-    ],
-  },
-  mini: {
-    name: { de: "Mini-Apartment", en: "Mini apartment" },
-    hinweis: { de: "Zimmertyp 4", en: "room type 4" },
-    staffel: [
-      { personen: 1, tag: 49, woche: 228, monat: 685 },
-      { personen: 2, tag: 59, woche: 258, monat: 768 },
-    ],
-  },
+// --- Preise: Firmenflyer „Ihr Langzeit-Hotel in Wien" ----------------------
+// Inklusive USt. und Ortstaxe. Vom Betreiber als verbindlich bestätigt — die
+// Netto-Liste der Website und die Staffel aus dem Living-Webdokument werden
+// bewusst nicht verwendet, damit nie zwei Grundlagen vermischt werden.
+export const KATEGORIEN = [
+  { id: "ez",  name: { de: "Einzelzimmer", en: "Single room" },              nacht: 48.0, woche: 287.0, monat: 798.0 },
+  { id: "dz1", name: { de: "Doppelzimmer 1 PAX", en: "Double room, 1 pax" }, nacht: 51.2, woche: 308.0, monat: 858.0 },
+  { id: "dz2", name: { de: "Doppelzimmer 2 PAX", en: "Double room, 2 pax" }, nacht: 55.0, woche: 329.0, monat: 930.0 },
+  { id: "zbz", name: { de: "Zweibettzimmer", en: "Twin room" },              nacht: 55.0, woche: 329.0, monat: 930.0 },
+  { id: "dbz", name: { de: "Dreibettzimmer", en: "Triple room" },            nacht: 60.0, woche: 364.0, monat: 1020.0 },
+  { id: "vbz", name: { de: "Vierbettzimmer", en: "Quadruple room" },         nacht: 68.0, woche: 413.0, monat: 1170.0 },
+];
+
+// Zusatzleistungen, ebenfalls Firmenflyer, inkl. USt.
+// "proNacht" entscheidet, ob der Rechner mit der Nächtezahl multipliziert oder
+// eine frei wählbare Stückzahl anbietet.
+export const EXTRAS = [
+  { id: "fruehstueck", preis: 10.8, proNacht: true,
+    name: { de: "Frühstück", en: "Breakfast" },
+    detail: { de: "Buffet im InnSider, täglich 07:30–10:30", en: "Buffet at the InnSider, daily 7:30–10:30 am" } },
+  { id: "abendessen", preis: 15.8, proNacht: true,
+    name: { de: "Abendessen", en: "Dinner" },
+    detail: { de: "Im InnSider, Mo–Fr 14:00–19:00", en: "At the InnSider, Mon–Fri 2–7 pm" } },
+  { id: "reinigung", preis: 16.0, proNacht: false,
+    name: { de: "Zusatzreinigung", en: "Extra cleaning" },
+    detail: { de: "Gesamtreinigung inkl. Bettwäschewechsel", en: "Full clean including a change of linen" } },
+  { id: "wechsel", preis: 21.6, proNacht: false,
+    name: { de: "Reinigung bei MitarbeiterInnenwechsel", en: "Cleaning between staff changes" },
+    detail: { de: "Für einen reibungslosen Wechsel", en: "For a smooth handover" } },
+  { id: "wipark", preis: 16.5, proNacht: true,
+    name: { de: "Parken WIPARK Garage", en: "Parking, WIPARK garage" },
+    detail: { de: "Tagespauschale, extern", en: "Daily rate, external" } },
+  { id: "parkride", preis: 4.99, proNacht: true,
+    name: { de: "Parken Park&Ride Hetzendorf", en: "Parking, Park&Ride Hetzendorf" },
+    detail: { de: "Tagespauschale, extern", en: "Daily rate, external" } },
+];
+
+export const EXTRAS_FUSSNOTE = {
+  de: "Parken extern, diverse Tarife (Abendpauschale, Tagespauschale, Wochenkarte, Dauerparker).",
+  en: "Parking is external, various rates available (evening, daily, weekly, season ticket).",
 };
 
-export const MINDEST_NAECHTE = 7;   // Wochenpreis ab 7 Nächten
-export const MONAT_NAECHTE = 30;    // Monatspreis wird immer für 30 Nächte verrechnet
+export const MINDEST_NAECHTE = 3;   // Nachtpreis gilt laut Flyer ab 3 Nächten
+export const MONAT_NAECHTE = 30;
 export const SCHLUESSELKAUTION = 40;
 
 export const PREIS_REGELN = {
   de: [
-    "Einzelne Tage sind nicht buchbar — der Tagespreis dient nur dazu, einen Wochen- oder Monatsaufenthalt zu verlängern.",
-    "Der Wochenpreis setzt einen Aufenthalt von mindestens 7 Nächten voraus.",
-    "Der Monatspreis wird immer für 30 Nächte verrechnet.",
-    "Alle Preise verstehen sich inklusive Steuern und Serviceleistungen. Strom und Instandhaltung sind im Monatspreis enthalten.",
+    "Alle Preise inkl. USt. und Ortstaxe, pro Zimmer. Angebot nach Verfügbarkeit, Preisänderungen vorbehalten.",
+    "Der Nachtpreis gilt ab 3 Nächten (So–Fr), der Wochenpreis ab 7 Nächten, der Monatspreis ab 30 Nächten.",
+    "Bei Monats- und Wochenzimmern ist wöchentlich eine Reinigung inkl. Bettwäschewechsel inkludiert. Bei kürzeren Aufenthalten wird täglich Klopapier aufgefüllt, Mist entleert und auf Wunsch werden Handtücher gewechselt.",
+    "Ab einer Vertragsdauer von 3 Monaten entfällt die Ortstaxe — der finale Preis wird dann individuell gerechnet.",
     "Keine Kaution — ausgenommen 40 € Schlüsselkaution, die am Ende des Aufenthalts zurückerstattet wird.",
   ],
   en: [
-    "You cannot book single days — daily rates are only used to add on to a weekly or monthly stay.",
-    "The weekly rate requires a minimum stay of 7 nights.",
-    "The monthly rate is always charged for 30 nights.",
-    "Given prices always include all taxes and service charges. Electricity and maintenance are included in the monthly rent.",
-    "No room deposit — apart from a key deposit of € 40, which is returned at the end of your stay.",
+    "All prices include VAT and city tax, per room. Subject to availability; prices may change.",
+    "The nightly rate applies from 3 nights (Sun–Fri), the weekly rate from 7 nights, the monthly rate from 30 nights.",
+    "Weekly and monthly rooms include one clean per week with a change of linen. On shorter stays, toilet paper is restocked daily, bins are emptied and towels changed on request.",
+    "From a contract term of 3 months the city tax no longer applies — the final price is then calculated individually.",
+    "No deposit — apart from a € 40 key deposit, returned at the end of your stay.",
   ],
 };
 

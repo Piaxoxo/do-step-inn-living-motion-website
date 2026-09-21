@@ -4,6 +4,15 @@ import Lenis from "lenis";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Lenis übernimmt den Scroll; window.scrollTo allein bewegt dann nichts mehr.
+// Der Router braucht deshalb einen Weg, sauber nach oben zu springen.
+let aktivesLenis = null;
+
+export function nachObenSpringen() {
+  if (aktivesLenis) aktivesLenis.scrollTo(0, { immediate: true });
+  window.scrollTo(0, 0);
+}
+
 export const prefersReducedMotion = () =>
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -232,17 +241,156 @@ function setupGalerie() {
   return () => { tween.scrollTrigger?.kill(); tween.kill(); };
 }
 
+
+/**
+ * Karten kippen unter dem Zeiger — echtes CSS-3D mit Perspektive.
+ *
+ * Kein WebGL: Die Transformation läuft auf dem Compositor, kostet kein
+ * zusätzliches Ladegewicht und fällt auf Touch-Geräten einfach weg. Der Zeiger
+ * wird über quickSetter geschrieben statt über ein Tween pro Bewegung, sonst
+ * stapeln sich bei jeder Mausbewegung neue Animationen.
+ */
+function setupKippen() {
+  if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return () => {};
+  const karten = gsap.utils.toArray("[data-kippen]");
+  const aufraeumer = [];
+
+  karten.forEach((el) => {
+    const setRX = gsap.quickSetter(el, "rotationX", "deg");
+    const setRY = gsap.quickSetter(el, "rotationY", "deg");
+    const setZ = gsap.quickSetter(el, "z", "px");
+    const staerke = Number(el.dataset.kippen) || 6;
+
+    const bewegen = (e) => {
+      const r = el.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      setRY(x * staerke * 2);
+      setRX(-y * staerke * 2);
+      setZ(18);
+    };
+    const zurueck = () => {
+      gsap.to(el, { rotationX: 0, rotationY: 0, z: 0, duration: 0.6, ease: "power3.out" });
+    };
+
+    el.addEventListener("pointermove", bewegen);
+    el.addEventListener("pointerleave", zurueck);
+    aufraeumer.push(() => {
+      el.removeEventListener("pointermove", bewegen);
+      el.removeEventListener("pointerleave", zurueck);
+      gsap.set(el, { clearProps: "transform" });
+    });
+  });
+
+  return () => aufraeumer.forEach((f) => f());
+}
+
+/** Der Hauptknopf zieht den Zeiger leicht an. */
+function setupMagnet() {
+  if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return () => {};
+  const knoepfe = gsap.utils.toArray("[data-magnet]");
+  const aufraeumer = [];
+
+  knoepfe.forEach((el) => {
+    const bewegen = (e) => {
+      const r = el.getBoundingClientRect();
+      const x = e.clientX - (r.left + r.width / 2);
+      const y = e.clientY - (r.top + r.height / 2);
+      gsap.to(el, { x: x * 0.22, y: y * 0.3, duration: 0.4, ease: "power3.out" });
+    };
+    const zurueck = () => gsap.to(el, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.45)" });
+    el.addEventListener("pointermove", bewegen);
+    el.addEventListener("pointerleave", zurueck);
+    aufraeumer.push(() => {
+      el.removeEventListener("pointermove", bewegen);
+      el.removeEventListener("pointerleave", zurueck);
+      gsap.set(el, { clearProps: "transform" });
+    });
+  });
+
+  return () => aufraeumer.forEach((f) => f());
+}
+
+/**
+ * Überschriften schieben sich hinter einer Maske hervor.
+ *
+ * clip-path statt opacity: Die Zeile ist nie halb sichtbar, sondern wird
+ * aufgedeckt — das liest sich gedruckt statt eingeblendet.
+ */
+function setupMaskenReveal() {
+  const ziele = gsap.utils.toArray("[data-maske]");
+  const tweens = ziele.map((el) =>
+    gsap.fromTo(el,
+      { clipPath: "inset(0 0 100% 0)", y: 16 },
+      {
+        clipPath: "inset(0 0 -10% 0)",
+        y: 0,
+        duration: 1.1,
+        ease: "power4.out",
+        scrollTrigger: { trigger: el, start: "top 88%", once: true },
+      })
+  );
+  return () => {
+    tweens.forEach((t) => { t.scrollTrigger?.kill(); t.kill(); });
+    gsap.set(ziele, { clearProps: "clipPath,transform" });
+  };
+}
+
+/** Die Bildergalerie dreht sich beim Durchscrollen leicht in den Raum. */
+function setupGalerieTiefe() {
+  const bilder = gsap.utils.toArray("[data-galerie] .galerie__bild");
+  if (!bilder.length) return () => {};
+  const tweens = bilder.map((el) =>
+    gsap.fromTo(el,
+      { rotationY: 12, z: -70 },
+      {
+        rotationY: -12,
+        z: 0,
+        ease: "none",
+        scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: 0.8 },
+      })
+  );
+  return () => {
+    tweens.forEach((t) => { t.scrollTrigger?.kill(); t.kill(); });
+    gsap.set(bilder, { clearProps: "transform" });
+  };
+}
+
+/** Der Hero atmet mit dem Zeiger — sehr leise, sonst wird es kirmesartig. */
+function setupHeroTiefe() {
+  const hero = document.querySelector(".hero");
+  if (!hero || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return () => {};
+  const schichten = gsap.utils.toArray(".hero > *");
+  const setter = schichten.map((el, i) => ({
+    x: gsap.quickTo(el, "x", { duration: 0.9, ease: "power3.out" }),
+    y: gsap.quickTo(el, "y", { duration: 0.9, ease: "power3.out" }),
+    tiefe: (i + 1) * 1.6,
+  }));
+
+  const bewegen = (e) => {
+    const x = e.clientX / window.innerWidth - 0.5;
+    const y = e.clientY / window.innerHeight - 0.5;
+    setter.forEach((s) => { s.x(x * s.tiefe); s.y(y * s.tiefe * 0.5); });
+  };
+  window.addEventListener("pointermove", bewegen, { passive: true });
+  return () => {
+    window.removeEventListener("pointermove", bewegen);
+    gsap.set(schichten, { clearProps: "transform" });
+  };
+}
+
 /**
  * Wire everything up. Returns a teardown so React can unmount cleanly — which
  * StrictMode exercises on every mount in development.
  */
-export function initMotion({ video } = {}) {
+export function initMotion({ video, film = true } = {}) {
   const cleanups = [];
   const reduced = prefersReducedMotion();
   const compact = isCompact();
 
   if (!reduced) {
     const lenis = new Lenis({ duration: 1.12, smoothWheel: true, wheelMultiplier: 0.9 });
+    aktivesLenis = lenis;
     const onScroll = () => ScrollTrigger.update();
     lenis.on("scroll", onScroll);
     const raf = (time) => lenis.raf(time * 1000);
@@ -254,6 +402,7 @@ export function initMotion({ video } = {}) {
       gsap.ticker.lagSmoothing(500, 33);
       lenis.off("scroll", onScroll);
       lenis.destroy();
+      if (aktivesLenis === lenis) aktivesLenis = null;
       if (import.meta.env.DEV) delete window.__lenis;
     });
 
@@ -262,7 +411,7 @@ export function initMotion({ video } = {}) {
 
   // The film only runs where it earns its cost: not on touch, not under
   // reduced-motion. Both fall back to the hero poster.
-  if (video && !reduced && !compact) {
+  if (video && film && !reduced && !compact) {
     cleanups.push(setupVideoScrub(video));
     if (import.meta.env.DEV) {
       window.__bgv = video;
@@ -275,7 +424,12 @@ export function initMotion({ video } = {}) {
     cleanups.push(setupSectionEntrances());
     cleanups.push(setupTiefe());
     cleanups.push(setupGalerie());
+    cleanups.push(setupGalerieTiefe());
     cleanups.push(setupCursor());
+    cleanups.push(setupKippen());
+    cleanups.push(setupMagnet());
+    cleanups.push(setupMaskenReveal());
+    cleanups.push(setupHeroTiefe());
   }
   cleanups.push(setupProgressReadout());
 

@@ -1371,3 +1371,189 @@ section[id] {
 
   .sprachwahl button { padding: 0.3rem 0.55rem; }
 }
+
+/* === Räumlichkeit =========================================================
+   Echte Perspektive über CSS-3D. Kein WebGL: Die Transformationen laufen auf
+   dem Compositor, kosten kein Ladegewicht und fallen auf Touch weg. */
+
+.produkte__grid,
+.typen__grid,
+.standorte__liste,
+.recht__bloecke,
+.galerie {
+  perspective: 1400px;
+  perspective-origin: 50% 40%;
+}
+
+[data-kippen] {
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: box-shadow 0.4s ease;
+}
+
+[data-kippen]:hover {
+  box-shadow: 0 34px 80px rgba(25, 25, 25, 0.13);
+}
+
+.galerie__bild {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+[data-maske] {
+  will-change: clip-path, transform;
+}
+
+.hero > * {
+  will-change: transform;
+}
+
+/* === Rechtsseiten ========================================================= */
+
+.recht {
+  padding-top: calc(var(--nav-h) + 6vh);
+}
+
+.recht__kopf {
+  padding-bottom: 2vh;
+}
+
+.recht h1 {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: clamp(2.5rem, 7vw, 6rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.recht__inhalt {
+  display: grid;
+  gap: 2rem;
+  max-width: 62rem;
+}
+
+.pruefhinweis {
+  border: 1px solid rgba(216, 167, 160, 0.55);
+  background: rgba(216, 167, 160, 0.12);
+  color: #8a5049;
+  border-radius: 14px;
+  padding: 0.95rem 1.2rem;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  max-width: 70ch;
+}
+
+.pruefhinweis--offen {
+  border-color: rgba(94, 214, 178, 0.5);
+  background: rgba(169, 233, 214, 0.3);
+  color: var(--mint-deep);
+}
+
+.recht__bloecke {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+  gap: 1.25rem;
+}
+
+.recht__block {
+  padding: 1.75rem;
+}
+
+.recht__block h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.recht__block dl {
+  margin: 0;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.recht__block dt {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.recht__block dd {
+  margin: 0;
+  color: var(--ink-soft);
+  overflow-wrap: anywhere;
+}
+
+.recht__block a { color: var(--mint-deep); }
+
+.recht__abschnitte {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.recht__abschnitt {
+  border-left: 3px solid var(--mint);
+  padding: 0.25rem 0 0.25rem 1.5rem;
+  max-width: 70ch;
+}
+
+.recht__abschnitt h2 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.recht__abschnitt p { color: var(--ink-soft); }
+
+.recht__abschnitt--warnung {
+  border-left-color: var(--blush);
+}
+
+.recht__fliesstext {
+  color: var(--ink-soft);
+  max-width: 70ch;
+  line-height: 1.7;
+}
+
+.recht__gliederung {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: agb;
+  display: grid;
+  gap: 0.5rem;
+  max-width: 52rem;
+}
+
+.recht__gliederung li {
+  counter-increment: agb;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 1.1rem;
+  border-radius: 14px;
+  background: rgba(169, 233, 214, 0.2);
+  color: var(--ink-soft);
+}
+
+.recht__gliederung li::before {
+  content: counter(agb, decimal-leading-zero);
+  font-variant-numeric: tabular-nums;
+  color: var(--mint-deep);
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+
+.recht__gliederung li span { flex: 1; }
+
+.recht__gliederung li em {
+  font-style: normal;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--blush);
+}
+
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  [data-kippen] { transform: none !important; }
+}

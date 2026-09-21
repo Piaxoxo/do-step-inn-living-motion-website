@@ -1,78 +1,74 @@
 /**
- * Prüft die Preisstaffel des Rechners.
+ * Prüft die Preisstaffel des Rechners gegen den Firmenflyer.
  *
  * Geld darf nicht raten: Diese Beträge stehen auf der Website und in jeder
- * Angebotsmail, die jemand abschickt. Ausführen aus website/:
- *
- *   node ../scripts/test-preis.mjs
+ * Angebotsmail. Ausführen aus website/:  node ../scripts/test-preis.mjs
  */
-import { berechneAufenthalt, moeglichePersonen } from "../website/src/lib/preis.js";
-import { TARIFE, MINDEST_NAECHTE } from "../website/src/data/content.js";
+import { berechneZimmer, berechneExtras } from "../website/src/lib/preis.js";
+import { KATEGORIEN, EXTRAS, MINDEST_NAECHTE } from "../website/src/data/content.js";
 
 let fehler = 0;
 const pruefe = (ok, text) => { console.log(`${ok ? "PASS" : "FAIL"}  ${text}`); if (!ok) fehler++; };
 
-// Standard, 1 Person: Tag 37 / Woche 175 / Monat 528.
-// Die Erwartungen sind die günstigste Deckung, nicht die naheliegendste:
-// 13 Nächte werden als zwei Wochen abgerechnet (350 €), weil eine Woche plus
-// sechs Tage 397 € kosten würde; 49 Nächte als Monat plus drei Wochen (1.053 €)
-// statt als zwei Monate (1.056 €).
-for (const [n, erw] of [[7,175],[8,212],[13,350],[14,350],[20,525],[21,525],[29,528],[30,528],[37,703],[49,1053],[60,1056],[67,1231]]) {
-  const r = berechneAufenthalt("standard", 1, n);
+// Einzelzimmer: Nacht 48 / Woche 287 / Monat 798.
+// Erwartet ist jeweils die günstigste Deckung, nicht die naheliegendste:
+// 21 Nächte werden als Monat verrechnet (798 €), weil drei Wochen 861 € kosten.
+for (const [n, erw] of [[3,144],[6,287],[7,287],[10,431],[13,574],[14,574],[21,798],[29,798],[30,798],[37,1085],[60,1596]]) {
+  const r = berechneZimmer("ez", n);
   pruefe(r.gueltig && Math.abs(r.summe - erw) < 0.005,
-    `Standard 1 Pers · ${String(n).padStart(2)} Nächte = ${r.summe.toFixed(2)} € (erwartet ${erw.toFixed(2)})`);
+    `Einzelzimmer · ${String(n).padStart(2)} Nächte = ${r.summe.toFixed(2)} € (erwartet ${erw.toFixed(2)})`);
 }
 
-// Unter sieben Nächten gibt es keinen Preis, sondern einen Hinweis.
-for (const n of [1, 3, 6]) {
-  const r = berechneAufenthalt("standard", 1, n);
-  pruefe(!r.gueltig && r.grund === "zu-kurz", `${n} Nächte werden als zu kurz abgewiesen (Minimum ${MINDEST_NAECHTE})`);
+for (const n of [1, 2]) {
+  const r = berechneZimmer("ez", n);
+  pruefe(!r.gueltig && r.grund === "zu-kurz", `${n} Nächte werden abgewiesen (Nachtpreis gilt ab ${MINDEST_NAECHTE})`);
 }
 
-// Ein längerer Aufenthalt darf nie weniger kosten — sonst rechnet der Rechner
-// Gästen mehr an, als ihr eigener Tarif hergibt.
+// Ein längerer Aufenthalt darf nie weniger kosten.
 let verletzung = null;
-for (const t of Object.keys(TARIFE)) for (const p of moeglichePersonen(t)) {
+for (const k of KATEGORIEN) {
   let vorher = 0;
   for (let n = MINDEST_NAECHTE; n <= 400; n++) {
-    const s = berechneAufenthalt(t, p, n).summe;
-    if (s < vorher - 0.001 && !verletzung) verletzung = `${t}/${p}P bei ${n} Nächten: ${s} < ${vorher}`;
+    const s = berechneZimmer(k.id, n).summe;
+    if (s < vorher - 0.001 && !verletzung) verletzung = `${k.id} bei ${n} Nächten: ${s} < ${vorher}`;
     vorher = s;
   }
 }
 pruefe(!verletzung, verletzung ?? "kein längerer Aufenthalt ist billiger als ein kürzerer");
 
-// Und nie teurer, als man es von Hand zusammenstellen könnte.
+// Und nie teurer als eine von Hand gebaute Kombination.
 let teurer = null;
-for (const t of Object.keys(TARIFE)) for (const p of moeglichePersonen(t)) {
-  const s = TARIFE[t].staffel.find((x) => x.personen === p);
+for (const k of KATEGORIEN) {
   for (let n = MINDEST_NAECHTE; n <= 200; n++) {
-    const r = berechneAufenthalt(t, p, n).summe;
+    const r = berechneZimmer(k.id, n).summe;
     for (let m = 0; m <= Math.ceil(n / 30); m++) for (let w = 0; w <= Math.ceil(n / 7); w++) {
       const rest = Math.max(0, n - m * 30 - w * 7);
-      const vergleich = m * s.monat + w * s.woche + rest * s.tag;
-      if (vergleich < r - 0.001 && !teurer) teurer = `${t}/${p}P bei ${n} Nächten: ${r} statt ${vergleich}`;
+      const vergleich = m * k.monat + w * k.woche + rest * k.nacht;
+      if (vergleich < r - 0.001 && !teurer) teurer = `${k.id} bei ${n} Nächten: ${r} statt ${vergleich}`;
     }
   }
 }
-pruefe(!teurer, teurer ?? "keine Kombination aus Monaten, Wochen und Tagen ist günstiger");
+pruefe(!teurer, teurer ?? "keine Kombination aus Monaten, Wochen und Nächten ist günstiger");
 
-// Jede Kombination aus Tarif und Personenzahl rechnet.
+// Alle sechs Kategorien tragen den Flyer-Wert für 30 Nächte.
+const monat = { ez: 798, dz1: 858, dz2: 930, zbz: 930, dbz: 1020, vbz: 1170 };
 let alle = true;
-for (const t of Object.keys(TARIFE)) for (const p of moeglichePersonen(t)) {
-  const r = berechneAufenthalt(t, p, 30);
-  if (!r.gueltig || !(r.summe > 0)) alle = false;
-}
-pruefe(alle, "alle Tarif- und Personenkombinationen liefern gültige Summen");
+for (const k of KATEGORIEN) if (Math.abs(berechneZimmer(k.id, 30).summe - monat[k.id]) > 0.005) alle = false;
+pruefe(alle, "alle sechs Kategorien treffen den Monatspreis des Flyers");
 
-// Statt eines Hinweises rechnet der Rechner gleich die günstigere Einheit ab:
-// 29 Nächte kosten den Monatspreis und decken 30 Nächte.
-const r29 = berechneAufenthalt("standard", 1, 29);
-pruefe(r29.verrechneteNaechte === 30 && Math.abs(r29.summe - 528) < 0.005,
+// 29 Nächte werden als Monat verrechnet, weil das günstiger ist.
+const r29 = berechneZimmer("ez", 29);
+pruefe(r29.verrechneteNaechte === 30 && Math.abs(r29.summe - 798) < 0.005,
   `29 Nächte werden als Monat zu ${r29.verrechneteNaechte} Nächten verrechnet (${r29.summe.toFixed(2)} €)`);
 
-// Unbekannte Kombination fällt sauber durch.
-pruefe(berechneAufenthalt("mini", 3, 30).gueltig === false, "Mini-Apartment für 3 Personen gibt es nicht");
+// Extras: pro Nacht multipliziert, Stückzahlen nicht.
+const ex = berechneExtras({ fruehstueck: 1, reinigung: 2 }, 14);
+const f = ex.find((e) => e.id === "fruehstueck");
+const rg = ex.find((e) => e.id === "reinigung");
+pruefe(Math.abs(f.betrag - 14 * 10.8) < 0.005, `Frühstück 1 × 14 Nächte = ${f.betrag.toFixed(2)} €`);
+pruefe(Math.abs(rg.betrag - 2 * 16.0) < 0.005, `Zusatzreinigung 2 × Stückpreis = ${rg.betrag.toFixed(2)} €`);
+pruefe(berechneExtras({}, 14).length === 0, "ohne Auswahl keine Extras-Posten");
+pruefe(EXTRAS.length === 6, "sechs Zusatzleistungen aus dem Flyer");
 
 console.log(fehler ? `\n${fehler} Fehler` : "\nalle Prüfungen bestanden");
 process.exit(fehler ? 1 : 0);

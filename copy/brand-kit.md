@@ -296,3 +296,36 @@ kein längerer Aufenthalt je billiger ist als ein kürzerer.
   des englischen Originals durch Claude und **nicht freigegeben**.
 - Das Dokument nennt den Copyright-Platzhalter „XXXX" und verweist auf
   Impressum, AGB und Datenschutz — die Inhalte fehlen weiterhin.
+
+---
+
+## Nachtrag 2 — Entscheidungen des Betreibers
+
+**Preise: Firmenflyer, endgültig.** Der Rechner arbeitet mit der Flyer-Tabelle
+(Einzelzimmer 48 / 287 / 798 usw.) und den sechs Zusatzleistungen des Flyers.
+Die Netto-Liste der Website und die Staffel aus dem Living-Webdokument sind
+damit vom Tisch. Die Zimmertypen (Standard, Standard mit Hochbett, Premium,
+Mini-Apartment) bleiben als **Ausstattungsbeschreibung** stehen; die Kategorien
+im Rechner beschreiben die **Belegung**. Auf der Seite steht ein Satz, der
+genau das erklärt — sonst wirkt es wie ein Widerspruch.
+
+**Rechtsseiten liegen jetzt im eigenen Design** unter `/impressum`,
+`/datenschutz` und `/agb`, nicht mehr als Fremdlinks:
+
+- *Impressum* trägt die Angaben aus dem veröffentlichten Impressum der Kern
+  Beherbergungsbetriebs GmbH — dieselbe Gesellschaft, dieselbe Adresse wie der
+  Living-Hauptstandort Felberstraße 20.
+- *Datenschutzerklärung* beschreibt, was diese Seite technisch tatsächlich tut:
+  keine Cookies, keine Analyse, kein Formular, Hosting bei Vercel, Schriften von
+  Google. Kurz, weil die Seite wenig tut.
+- *AGB* sind **absichtlich unfertig** — nur die Gliederung, die ein
+  Beherbergungsvertrag üblicherweise abdeckt. Vertragsbedingungen erfindet hier
+  niemand.
+
+Alle drei tragen einen sichtbaren Hinweis, dass sie juristisch zu prüfen sind.
+
+**Räumlichkeit ohne WebGL.** Karten kippen unter dem Zeiger, die Galerie dreht
+sich beim Scrollen leicht in den Raum, der Hero atmet mit der Maus, der
+Hauptknopf zieht den Zeiger an, Überschriften werden hinter einer Maske
+aufgedeckt. Alles CSS-3D auf dem Compositor — kein zusätzliches Ladegewicht,
+und auf Touch sowie bei `prefers-reduced-motion` fällt es ersatzlos weg.
