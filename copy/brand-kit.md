@@ -329,3 +329,35 @@ sich beim Scrollen leicht in den Raum, der Hero atmet mit der Maus, der
 Hauptknopf zieht den Zeiger an, Überschriften werden hinter einer Maske
 aufgedeckt. Alles CSS-3D auf dem Compositor — kein zusätzliches Ladegewicht,
 und auf Touch sowie bei `prefers-reduced-motion` fällt es ersatzlos weg.
+
+### AGB — Entwurf statt Gliederung
+
+Die AGB sind jetzt ausformuliert: 15 Paragraphen, 49 Absätze. Ausgeschrieben ist,
+was das Material des Betreibers deckt — Preise und Ortstaxe aus dem Firmenflyer,
+die 40-€-Schlüsselkaution, Kündigung zum Monatsende, Rauchverbot, Haustiere und
+Barrierefreiheit auf Anfrage, der Reinigungsrhythmus, die Firmenrechnung, die
+vier Standorte.
+
+**13 Stellen bleiben bewusst offen** und sind im Vertragstext sichtbar als
+solche markiert, in eigener Farbe und mit eigener Marke — sie sehen absichtlich
+nicht wie Vertragstext aus, weil sie keiner sind:
+
+| Paragraph | Was fehlt |
+|---|---|
+| § 2 Vertragsabschluss | Bindungsfrist eines Angebots |
+| § 5 Zahlung | Zahlungszeitpunkt, Zahlungsziel, Zahlungsarten, Anzahlung, Verzugsfolgen |
+| § 6 Kaution | Höhe bei Nebenwohnsitz |
+| § 7 Aufenthalt | Check-in- und Check-out-Zeiten, Selbst-Check-in, späterer Check-out |
+| § 8 Kündigung | Kündigungsfrist und Form |
+| § 9 Storno | Fristen und Sätze, Ersatzperson, Nichtanreise |
+| § 10 Hausordnung | Ruhezeiten, Besuchsregeln, verlorene Schlüssel |
+| § 12 Haftung | Formulierung gegenüber Verbrauchern |
+| § 15 Schluss | Gerichtsstand |
+
+Fristen, Beträge und die Rechtswahl sind unternehmerische Entscheidungen. Eine
+erfundene Zahl in einem Vertragstext bindet später jemanden — deshalb steht dort
+keine. Der gesamte Text gehört vor einer Veröffentlichung anwaltlich geprüft;
+besonders § 9 und § 12, weil Stornosätze und Haftungsausschlüsse gegenüber
+Verbraucherinnen und Verbrauchern nur eingeschränkt zulässig sind.
+
+Die englische Fassung trägt den Hinweis, dass im Zweifel die deutsche gilt.
