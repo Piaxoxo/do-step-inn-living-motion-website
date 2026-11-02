@@ -430,3 +430,16 @@ Drei Dinge, die daran hängen:
 **Noch offen für die Rechtsprüfung:** wer der Anbieter firmenrechtlich ist
 (Name, Adresse), ob ein Auftragsverarbeitungsvertrag besteht, und ob die Maske
 erst nach einer Einwilligung geladen werden darf statt sofort.
+
+### Entscheidung zur Einwilligung (02.11.2026)
+
+Gefragt, ob die Buchungsmaske erst nach einer Einwilligung geladen werden darf:
+**Betreiber hat „sofort laden" entschieden.** So ist es gebaut — Skript und
+Stylesheet liegen in `index.html` und laufen bei jedem Seitenaufruf.
+
+Die Entscheidung ändert nichts an der Sachlage, die in der
+Datenschutzerklärung steht: die Maske lädt von einem fremden Server und
+überträgt die IP-Adresse jedes Besuchers, auch wenn er sie nicht benutzt. Der
+Abschnitt „Buchungsmaske" bleibt deshalb markiert, damit die Rechtsprüfung ihn
+sieht. Offen bleiben dort weiterhin: Firma und Adresse des Anbieters sowie der
+Auftragsverarbeitungsvertrag.
