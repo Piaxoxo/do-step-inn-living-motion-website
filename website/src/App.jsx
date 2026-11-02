@@ -10,6 +10,7 @@ import {
   anfrageHref,
   ZIMMERTYPEN,
   ZIMMER_BILDER,
+  ZIMMER_BILDER_HINWEIS,
   STANDORTE,
   VORTEILE,
   ZIELGRUPPEN,
@@ -151,6 +152,7 @@ export default function App() {
               </figure>
             ))}
           </div>
+          <p className="zimmerschau__hinweis">{t(ZIMMER_BILDER_HINWEIS)}</p>
 
           <div className="typen__grid">
             {ZIMMERTYPEN.map((z, i) => (

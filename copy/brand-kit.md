@@ -361,3 +361,27 @@ besonders § 9 und § 12, weil Stornosätze und Haftungsausschlüsse gegenüber
 Verbraucherinnen und Verbrauchern nur eingeschränkt zulässig sind.
 
 Die englische Fassung trägt den Hinweis, dass im Zweifel die deutsche gilt.
+
+## Nachtrag 3 — Bildmaterial: Hotelzimmer und Apartmentzimmer sehen anders aus
+
+Vom Betreiber am 02.11.2026 bestätigt, nachdem beide Serien nebeneinander lagen:
+
+- **Hotelzimmer** — helle Dachzimmer, weiße und hellgraue Wände, helles Holz,
+  Fenster oder Dachfenster mit Stadtblick, kühles Tageslicht. Das sind die
+  Aufnahmen aus dem Drive-Ordner „Do Step Inn Living Haus und HotelZimmer"
+  (`2.jpg`, `3.jpg`, `9.jpg`, `DSC06150.jpg`), die jetzt im Bildband der
+  Zimmer-Sektion liegen.
+- **Apartmentzimmer** — gelbe Wände, Hochbett mit Holzleiter, Holzdecke,
+  dunkler Boden, Kunstlicht. Dazu die Gemeinschaftsküche mit Ziegelwand und
+  der geteilte Sanitärbereich.
+
+Das ist kein Stilunterschied zwischen zwei Fotografen, sondern **zwei
+Produkte**. Bilder der einen Serie dürfen nicht für die andere stehen, und ein
+Bildband ohne Angabe, welche Serie es zeigt, wird als Abbildung der vier
+Zimmertypen gelesen. Deshalb trägt das Band in der Zimmer-Sektion die Zeile
+„Aufnahmen aus den Hotelzimmern" (`ZIMMER_BILDER_HINWEIS`).
+
+**Noch offen:** welcher Standort zu welcher Serie gehört. Der Standorttext zu
+Meidling nennt „viele Standard Zimmer mit Hochbett", was zu den gelben Zimmern
+passen würde — bestätigt ist das nicht, also steht es nirgends auf der Seite.
+Ebenso offen, welcher der vier Zimmertypen auf welchem Foto zu sehen ist.

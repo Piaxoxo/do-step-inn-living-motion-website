@@ -31,6 +31,17 @@ export const anfrageHref = (betreff, text) =>
  * zu sehen ist, und das zu behaupten waere geraten. Die Zeilen beschreiben
  * deshalb nur, was tatsaechlich im Bild ist.
  */
+/**
+ * Diese Aufnahmen zeigen Hotelzimmer, nicht Apartmentzimmer -- die beiden
+ * Produkte sehen deutlich verschieden aus. Weil das Bildband in der Sektion
+ * ueber die Zimmertypen steht, muss der Unterschied dabeistehen, sonst liest
+ * man die Bilder als Abbildung der vier Typen.
+ */
+export const ZIMMER_BILDER_HINWEIS = {
+  de: "Aufnahmen aus den Hotelzimmern.",
+  en: "Photographs of the hotel rooms.",
+};
+
 export const ZIMMER_BILDER = [
   {
     src: "/img/zimmer/zimmer-raum.jpg",
