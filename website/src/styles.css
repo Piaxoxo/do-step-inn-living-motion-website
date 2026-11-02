@@ -1127,6 +1127,57 @@ section {
 
 /* === InnSider-Galerie ===================================================== */
 
+/* === Ausstattung mit Kuechenbildern ======================================= */
+
+.ausstattung {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: center;
+}
+
+.ausstattung__text { min-width: 0; }
+
+.ausstattung__bilder {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(0.7rem, 1.5vw, 1.2rem);
+  min-width: 0;
+  perspective: 1200px;
+}
+
+.ausstattung__bild {
+  position: relative;
+  margin: 0;
+  min-width: 0;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid var(--line-soft);
+  background: var(--sand);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.ausstattung__bild img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.ausstattung__bild figcaption {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 2.25rem 0.85rem 0.75rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: #fff;
+  /* Die Kueche ist warm und ungleichmaessig ausgeleuchtet -- ohne Verlauf
+     verschwindet die Zeile im hellen Holzboden am unteren Bildrand. */
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+}
+
+@media (max-width: 860px) {
+  .ausstattung { grid-template-columns: 1fr; }
+}
+
 /* === Zimmerschau ========================================================== */
 
 /* Drei Hochformate, versetzt gehaengt. Der Versatz ist der Grund, warum das

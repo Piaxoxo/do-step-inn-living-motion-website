@@ -14,6 +14,7 @@ import {
   VORTEILE,
   ZIELGRUPPEN,
   AUSSTATTUNG_TEXT,
+  GEMEINSCHAFT_BILDER,
   PREIS_REGELN,
   KONDITIONEN,
   FIRMEN,
@@ -160,9 +161,19 @@ export default function App() {
               </article>
             ))}
           </div>
-          <div className="panel note" data-reveal>
-            <p className="label">{ui.ausstattungTitel}</p>
-            <p className="muted">{t(AUSSTATTUNG_TEXT)}</p>
+          <div className="panel note ausstattung" data-reveal>
+            <div className="ausstattung__text">
+              <p className="label">{ui.ausstattungTitel}</p>
+              <p className="muted">{t(AUSSTATTUNG_TEXT)}</p>
+            </div>
+            <div className="ausstattung__bilder">
+              {GEMEINSCHAFT_BILDER.map((b, i) => (
+                <figure className="ausstattung__bild" key={b.src} data-tiefe={String((i % 2) + 1)} data-kippen="5">
+                  <img src={b.src} alt={t(b.alt)} loading="lazy" />
+                  <figcaption>{t(b.titel)}</figcaption>
+                </figure>
+              ))}
+            </div>
           </div>
         </section>
 

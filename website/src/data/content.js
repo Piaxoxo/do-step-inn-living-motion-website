@@ -35,7 +35,7 @@ export const ZIMMER_BILDER = [
   {
     src: "/img/zimmer/zimmer-raum.jpg",
     titel: { de: "Tageslicht", en: "Daylight" },
-    alt: { de: "Zimmer mit Bett, Dachschraege und Fenster zur Stadt", en: "Room with bed, sloped ceiling and a window onto the city" },
+    alt: { de: "Zimmer mit Bett, Dachschräge und Fenster zur Stadt", en: "Room with bed, sloped ceiling and a window onto the city" },
   },
   {
     src: "/img/zimmer/zimmer-arbeiten.jpg",
@@ -45,12 +45,12 @@ export const ZIMMER_BILDER = [
   {
     src: "/img/zimmer/zimmer-ankommen.jpg",
     titel: { de: "Ankommen", en: "Settling in" },
-    alt: { de: "Gast raeumt den Schrank ein, Koffer daneben, Fernseher an der Wand", en: "A guest unpacking into the wardrobe, suitcase beside it, TV on the wall" },
+    alt: { de: "Gast räumt den Schrank ein, Koffer daneben, Fernseher an der Wand", en: "A guest unpacking into the wardrobe, suitcase beside it, TV on the wall" },
   },
   {
     src: "/img/zimmer/zimmer-tuer.jpg",
-    titel: { de: "An der Tuer", en: "At the door" },
-    alt: { de: "Gast mit Telefon an der Zimmertuer, Garderobenhaken und Tuerschild", en: "A guest with a phone at the room door, coat hooks and door hanger" },
+    titel: { de: "An der Tür", en: "At the door" },
+    alt: { de: "Gast mit Telefon an der Zimmertür, Garderobenhaken und Türschild", en: "A guest with a phone at the room door, coat hooks and door hanger" },
   },
 ];
 
@@ -276,6 +276,23 @@ export const ZIELGRUPPEN = {
     "Companies looking for long-term accommodation for employees",
   ],
 };
+
+/**
+ * Die Gemeinschaftsküche. Der Ausstattungstext nennt sie, bisher ohne Bild --
+ * und sie ist der Unterschied zwischen "Zimmer" und "auf Zeit wohnen".
+ */
+export const GEMEINSCHAFT_BILDER = [
+  {
+    src: "/img/haus/kueche-arbeitsflaeche.jpg",
+    titel: { de: "Gemeinschaftsküche", en: "Shared kitchen" },
+    alt: { de: "Küche mit Ziegelwand, Arbeitsflächen aus Edelstahl, Töpfen, Mikrowelle und Dunstabzug", en: "Kitchen with brick wall, stainless steel counters, pots, microwave and extractor hood" },
+  },
+  {
+    src: "/img/haus/kueche-tisch.jpg",
+    titel: { de: "Platz zum Essen", en: "Somewhere to eat" },
+    alt: { de: "Hoher Gemeinschaftstisch mit Stühlen neben Kochfeld und Spüle", en: "A high communal table with chairs beside the hob and sink" },
+  },
+];
 
 export const AUSSTATTUNG_TEXT = {
   de: "Alle Unterkünfte sind sauber, modern und voll möbliert. Ob mit oder ohne eigenes Bad — jedes Zimmer hat TV, Kühlschrank, Geschirr und Besteck. Dazu kommen die Gemeinschaftsküche und kostenloses WLAN. Handtücher und Bettwäsche sind im Preis enthalten, ebenso die wöchentliche Reinigung der Gemeinschaftsflächen. Die Reinigung des eigenen Zimmers durch unser Personal lässt sich gegen Aufpreis dazubuchen.",
