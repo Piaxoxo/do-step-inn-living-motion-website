@@ -1178,6 +1178,28 @@ section {
   .ausstattung { grid-template-columns: 1fr; }
 }
 
+/* === Buchungsmaske ======================================================== */
+
+.buchen { display: grid; gap: 2rem; }
+
+/* Das Markup drinnen gehoert dem Anbieter -- hier wird nur Platz geschaffen
+   und ein Ueberlaufen der Seite verhindert. */
+.buchen__maske {
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.buchen__maske ibe-up { display: block; min-width: 0; }
+
+.buchen__ersatz {
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: 1px dashed var(--line-soft);
+  border-radius: 18px;
+}
+
 /* === Zimmerschau ========================================================== */
 
 /* Drei Hochformate, versetzt gehaengt. Der Versatz ist der Grund, warum das
@@ -1471,6 +1493,14 @@ section[id] {
 }
 
 .standort h3 { font-size: clamp(1.35rem, 2.2vw, 1.85rem); }
+
+.standort__art {
+  margin: 0 0 0.4rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--mint-deep);
+}
 
 .standort__adresse {
   font-weight: 500;

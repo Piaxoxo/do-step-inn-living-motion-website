@@ -6,6 +6,7 @@ import { useRoute } from "./router.js";
 import { Link } from "./components/Link.jsx";
 import Rechtsseite from "./pages/Rechtsseite.jsx";
 import {
+  IBE,
   KONTAKT,
   anfrageHref,
   ZIMMERTYPEN,
@@ -45,7 +46,21 @@ function AnfrageLink({ sprache, ui, variant = "primary", label, betreff, text })
 export default function App() {
   const videoRef = useRef(null);
   const [sprache, setSprache] = useState("de");
+  // Die Buchungsmaske gehoert einem fremden Server. Laedt sein Skript nicht,
+  // bliebe hier sonst ein leeres Loch statt eines Wegs zur Buchung.
+  const [ibeFehlt, setIbeFehlt] = useState(false);
   const [pfad, gehe] = useRoute();
+
+  useEffect(() => {
+    let abgebrochen = false;
+    const uhr = setTimeout(() => { if (!abgebrochen) setIbeFehlt(true); }, 6000);
+    customElements.whenDefined("ibe-up").then(() => {
+      if (abgebrochen) return;
+      clearTimeout(uhr);
+      setIbeFehlt(false);
+    });
+    return () => { abgebrochen = true; clearTimeout(uhr); };
+  }, []);
   const istHome = pfad === "/";
   const ui = UI[sprache];
   const t = (w) => uebersetze(w, sprache);
@@ -179,6 +194,30 @@ export default function App() {
           </div>
         </section>
 
+        <section id="buchen" className="buchen">
+          <div className="section__head" data-reveal>
+            <p className="label">{ui.buchenLabel}</p>
+            <h2 data-maske>{ui.buchenTitel}</h2>
+            <p className="lede">{t(IBE.hinweis)}</p>
+          </div>
+          {/* Die Maske ist ein Web Component des Anbieters. Der key haengt an
+              der Sprache, damit sie beim Umschalten neu aufgebaut wird -- ein
+              blosses Attribut-Update greift sie nicht auf. */}
+          <div className="buchen__maske" data-reveal>
+            <ibe-up key={sprache} ibe-key={IBE.schluessel} language={sprache}></ibe-up>
+            {ibeFehlt && (
+              <div className="buchen__ersatz">
+                <p className="muted">{t(IBE.ersatz)}</p>
+                <AnfrageLink
+                  sprache={sprache}
+                  ui={ui}
+                  label={sprache === "de" ? "Anfrage schreiben" : "Send an enquiry"}
+                />
+              </div>
+            )}
+          </div>
+        </section>
+
         <section id="preise" className="preise">
           <div className="section__head" data-reveal>
             <p className="label">{ui.preiseLabel}</p>
@@ -206,6 +245,7 @@ export default function App() {
             {STANDORTE.map((s, i) => (
               <article className="standort panel" key={s.id} data-reveal data-kippen="5" data-tiefe={String((i % 3) + 1)}>
                 <header>
+                  <p className="standort__art">{t(s.art)}</p>
                   <h3>{s.name}</h3>
                   <p className="standort__adresse">{s.strasse} · {s.ort}</p>
                   <p className="standort__bahn">{t(s.bahnhof)}</p>

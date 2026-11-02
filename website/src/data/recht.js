@@ -77,11 +77,19 @@ export const DATENSCHUTZ = {
       },
     },
     {
-      titel: { de: "Keine Cookies, keine Analyse", en: "No cookies, no analytics" },
+      titel: { de: "Keine Analyse, kein Tracking", en: "No analytics, no tracking" },
       text: {
-        de: "Diese Website setzt keine Cookies, bindet keine Analyse- oder Trackingdienste ein und erstellt keine Profile. Es gibt deshalb auch keinen Cookie-Banner.",
-        en: "This website sets no cookies, embeds no analytics or tracking services and builds no profiles. That is why there is no cookie banner.",
+        de: "Diese Website bindet keine Analyse- oder Trackingdienste ein und erstellt keine Profile. Eigene Cookies setzen wir nicht. Die eingebundene Buchungsmaske ist davon ausgenommen — siehe den folgenden Abschnitt.",
+        en: "This website embeds no analytics or tracking services and builds no profiles. We set no cookies of our own. The embedded booking mask is the exception — see the following section.",
       },
+    },
+    {
+      titel: { de: "Buchungsmaske", en: "Booking mask" },
+      text: {
+        de: "Im Abschnitt „Buchen“ ist eine Buchungsmaske eingebunden, die von ibe.uphotel.agency geladen wird. Ihr Browser nimmt dabei Verbindung zu diesem Server auf und übermittelt Ihre IP-Adresse, auch wenn Sie die Maske nicht benutzen. Für den Buchungsvorgang speichert der Anbieter in der Regel Cookies oder vergleichbare Daten in Ihrem Browser; was Sie in die Maske eingeben — Reisezeitraum, Name, Kontakt- und Zahlungsdaten — wird vom Anbieter verarbeitet, um Ihre Buchung abzuwickeln (Art. 6 Abs. 1 lit. b DSGVO).",
+        en: "The “Book” section embeds a booking mask loaded from ibe.uphotel.agency. Your browser contacts that server and transmits your IP address, even if you do not use the mask. For the booking process the provider will usually store cookies or comparable data in your browser; what you enter into the mask — dates, name, contact and payment details — is processed by the provider in order to handle your booking (Art. 6(1)(b) GDPR).",
+      },
+      warnung: true,
     },
     {
       titel: { de: "Kein Kontaktformular", en: "No contact form" },

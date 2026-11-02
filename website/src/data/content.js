@@ -11,6 +11,24 @@
 
 export const SPRACHEN = ["de", "en"];
 
+/**
+ * Buchungsmaschine. Nur die Hotelzimmer sind online buchbar -- Apartment- und
+ * Langzeitzimmer laufen laut Betreiber ueber Anfrage. Das Skript und das
+ * Stylesheet liegen in index.html, wie vom Anbieter vorgegeben.
+ */
+export const IBE = {
+  schluessel: "f291a9eb-f08c-4cfc-b119-ce5c644b691e",
+  anbieter: "uphotel.agency",
+  hinweis: {
+    de: "Online buchbar sind die Hotelzimmer. Apartmentwohnungen und Langzeitzimmer vergeben wir auf Anfrage — schreib uns einfach.",
+    en: "The hotel rooms can be booked online. Apartment flats and long-stay rooms are arranged on request — just write to us.",
+  },
+  ersatz: {
+    de: "Die Buchungsmaske lässt sich gerade nicht laden. Schreib uns den Zeitraum und wir melden uns mit einem Angebot zurück.",
+    en: "The booking mask cannot be loaded right now. Write to us with your dates and we will come back with an offer.",
+  },
+};
+
 export const KONTAKT = {
   email: "reservierung@dostepinn.at",
   telefon: "+43 676 3682844",
@@ -172,10 +190,18 @@ export const PREIS_REGELN = {
 };
 
 // --- Standorte --------------------------------------------------------------
+/**
+ * Zwei verschiedene Dinge stehen in dieser Liste, und das muss sichtbar sein:
+ * die Do-Step-Inn-Hotels einerseits, die Apartmentwohnungen andererseits.
+ * Suedtiroler Platz und Kollergasse hiessen hier faelschlich "Do Step Inn" --
+ * sie sind keine Hotels, sondern Wohnungen. In der Felberstrasse gibt es
+ * beides. Deshalb traegt jeder Eintrag ein `art`-Feld, das auf der Karte steht.
+ */
 export const STANDORTE = [
   {
     id: "felberstrasse",
     name: "Do Step Inn Hotel",
+    art: { de: "Hotel & Apartmentwohnungen", en: "Hotel & apartment flats" },
     strasse: "Felberstraße 20",
     ort: "1150 Wien",
     bahnhof: { de: "Wien Westbahnhof · 3 Minuten zu Fuß", en: "Wien Westbahnhof · 3 minutes on foot" },
@@ -195,6 +221,7 @@ export const STANDORTE = [
   {
     id: "meidling",
     name: "Do Step Inn Meidling",
+    art: { de: "Hotel", en: "Hotel" },
     strasse: "Wurmbstraße 36",
     ort: "1120 Wien",
     bahnhof: { de: "Wien Meidling · 3 Minuten zu Fuß", en: "Wien Meidling · 3 minutes on foot" },
@@ -213,7 +240,8 @@ export const STANDORTE = [
   },
   {
     id: "central",
-    name: "Do Step Inn Central",
+    name: "Apartmentwohnung Südtiroler Platz",
+    art: { de: "Apartmentwohnung", en: "Apartment flat" },
     strasse: "Südtiroler Platz 3",
     ort: "1040 Wien",
     bahnhof: { de: "Wien Hauptbahnhof · gegenüber", en: "Wien Hauptbahnhof · opposite" },
@@ -232,7 +260,8 @@ export const STANDORTE = [
   },
   {
     id: "kollergasse",
-    name: "Do Step Inn Kollergasse",
+    name: "Apartmentwohnung Kollergasse",
+    art: { de: "Apartmentwohnung", en: "Apartment flat" },
     strasse: "Kollergasse 9",
     ort: "1030 Wien",
     bahnhof: { de: "Wien Mitte · in unmittelbarer Nähe", en: "Wien Mitte · close by" },

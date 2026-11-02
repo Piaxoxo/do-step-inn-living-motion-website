@@ -385,3 +385,48 @@ Zimmertypen gelesen. Deshalb trägt das Band in der Zimmer-Sektion die Zeile
 Meidling nennt „viele Standard Zimmer mit Hochbett", was zu den gelben Zimmern
 passen würde — bestätigt ist das nicht, also steht es nirgends auf der Seite.
 Ebenso offen, welcher der vier Zimmertypen auf welchem Foto zu sehen ist.
+
+## Nachtrag 4 — Standorte: Hotels und Apartmentwohnungen sind nicht dasselbe
+
+Vom Betreiber am 02.11.2026 korrigiert: Kollergasse ist **kein Do Step Inn**,
+sondern eine Apartmentwohnung. Dasselbe gilt für den Südtiroler Platz.
+Apartmentwohnungen gibt es außerdem in der Felberstraße, also am selben Ort wie
+das Hotel.
+
+Auf der Seite standen beide fälschlich als „Do Step Inn Kollergasse" und
+„Do Step Inn Central" — das liest sich wie zwei weitere Hotels. Jetzt:
+
+| Adresse | Was es ist |
+|---|---|
+| Felberstraße 20, 1150 | Do Step Inn Hotel **und** Apartmentwohnungen |
+| Wurmbstraße 36, 1120 | Do Step Inn Meidling (Hotel) |
+| Südtiroler Platz 3, 1040 | Apartmentwohnung |
+| Kollergasse 9, 1030 | Apartmentwohnung |
+
+**Noch offen:** wie die Apartmentwohnungen offiziell heißen. „Apartmentwohnung
+<Adresse>" ist meine Behelfsbezeichnung, damit nichts fälschlich als Hotel
+firmiert — kein Name, den der Betreiber bestätigt hätte.
+
+## Nachtrag 5 — Buchungsmaschine
+
+Betreiber hat den Einbettungscode geliefert (uphotel.agency, Schlüssel in
+`content.js` unter `IBE`). Skript und Stylesheet liegen in `website/index.html`,
+die Maske steht im Abschnitt „Buchen" vor dem Preisrechner.
+
+Drei Dinge, die daran hängen:
+
+1. **Nur Hotelzimmer sind online buchbar.** Apartment- und Langzeitzimmer
+   laufen über Anfrage — steht als Hinweis über der Maske.
+2. **Die Datenschutzerklärung musste geändert werden.** Sie behauptete „keine
+   Cookies, keine Analyse". Die Maske lädt von einem fremden Server, überträgt
+   dabei die IP-Adresse und setzt für den Buchungsvorgang in der Regel Cookies.
+   Der Abschnitt heißt jetzt „Keine Analyse, kein Tracking" und es gibt einen
+   eigenen Abschnitt „Buchungsmaske", als Warnung markiert.
+3. **Nicht getestet.** `ibe.uphotel.agency` ist in der Entwicklungsumgebung per
+   Netzwerk-Policy gesperrt. Geprüft ist nur, dass das Element im DOM steht und
+   dass der Auffangfall greift, wenn das Skript nicht lädt. Ob die Maske
+   richtig aussieht und funktioniert, muss am Livestand geprüft werden.
+
+**Noch offen für die Rechtsprüfung:** wer der Anbieter firmenrechtlich ist
+(Name, Adresse), ob ein Auftragsverarbeitungsvertrag besteht, und ob die Maske
+erst nach einer Einwilligung geladen werden darf statt sofort.

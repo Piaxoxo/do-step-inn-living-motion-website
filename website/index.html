@@ -16,9 +16,14 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap"
       rel="stylesheet"
     />
+    <!-- Buchungsmaschine (uphotel.agency). Das Stylesheet steht hier statt im
+         Body, damit die Maske nicht ungestylt aufblitzt; das Skript laedt am
+         Ende des Body, wie vom Anbieter vorgegeben. -->
+    <link href="https://ibe.uphotel.agency/ibe.min.css" rel="stylesheet" />
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script type="text/javascript" src="https://ibe.uphotel.agency/ibe.min.js"></script>
   </body>
 </html>
