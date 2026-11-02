@@ -9,6 +9,7 @@ import {
   KONTAKT,
   anfrageHref,
   ZIMMERTYPEN,
+  ZIMMER_BILDER,
   STANDORTE,
   VORTEILE,
   ZIELGRUPPEN,
@@ -141,6 +142,15 @@ export default function App() {
             <h2 data-maske>{ui.zimmerTitel}</h2>
             <p className="lede">{ui.zimmerText}</p>
           </div>
+          <div className="zimmerschau" data-reveal>
+            {ZIMMER_BILDER.map((b, i) => (
+              <figure className="zimmerschau__bild" key={b.src} data-tiefe={String((i % 3) + 1)} data-kippen="5">
+                <img src={b.src} alt={t(b.alt)} loading="lazy" />
+                <figcaption>{t(b.titel)}</figcaption>
+              </figure>
+            ))}
+          </div>
+
           <div className="typen__grid">
             {ZIMMERTYPEN.map((z, i) => (
               <article className="typ panel" key={z.id} data-reveal data-kippen="7" data-tiefe={String((i % 2) + 1)}>

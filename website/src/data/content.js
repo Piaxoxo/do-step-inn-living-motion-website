@@ -25,6 +25,30 @@ export const anfrageHref = (betreff, text) =>
   `mailto:${KONTAKT.email}?subject=${encodeURIComponent(betreff)}&body=${encodeURIComponent(text)}`;
 
 // --- Zimmertypen ------------------------------------------------------------
+/**
+ * Aufnahmen aus den Zimmern. Bewusst nicht einzelnen Zimmertypen zugeordnet:
+ * aus den Bildern geht nicht hervor, ob ein Standard- oder ein Premiumzimmer
+ * zu sehen ist, und das zu behaupten waere geraten. Die Zeilen beschreiben
+ * deshalb nur, was tatsaechlich im Bild ist.
+ */
+export const ZIMMER_BILDER = [
+  {
+    src: "/img/zimmer/zimmer-raum.jpg",
+    titel: { de: "Tageslicht", en: "Daylight" },
+    alt: { de: "Zimmer mit Bett, Dachschraege und Fenster zur Stadt", en: "Room with bed, sloped ceiling and a window onto the city" },
+  },
+  {
+    src: "/img/zimmer/zimmer-arbeiten.jpg",
+    titel: { de: "Arbeiten", en: "Working" },
+    alt: { de: "Gast arbeitet mit Laptop am Bett, Telefonat am Fenster", en: "A guest working on a laptop on the bed, on the phone by the window" },
+  },
+  {
+    src: "/img/zimmer/zimmer-ankommen.jpg",
+    titel: { de: "Ankommen", en: "Settling in" },
+    alt: { de: "Gast raeumt den Schrank ein, Koffer daneben, Fernseher an der Wand", en: "A guest unpacking into the wardrobe, suitcase beside it, TV on the wall" },
+  },
+];
+
 export const ZIMMERTYPEN = [
   {
     id: "standard",
