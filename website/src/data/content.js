@@ -47,6 +47,11 @@ export const ZIMMER_BILDER = [
     titel: { de: "Ankommen", en: "Settling in" },
     alt: { de: "Gast raeumt den Schrank ein, Koffer daneben, Fernseher an der Wand", en: "A guest unpacking into the wardrobe, suitcase beside it, TV on the wall" },
   },
+  {
+    src: "/img/zimmer/zimmer-tuer.jpg",
+    titel: { de: "An der Tuer", en: "At the door" },
+    alt: { de: "Gast mit Telefon an der Zimmertuer, Garderobenhaken und Tuerschild", en: "A guest with a phone at the room door, coat hooks and door hanger" },
+  },
 ];
 
 export const ZIMMERTYPEN = [
@@ -305,6 +310,11 @@ export const INNSIDER = {
     { src: "/img/innsider/innsider-ausschank.jpg",     titel: { de: "Ausschank",        en: "At the tap" },      alt: { de: "Bier wird im InnSider frisch gezapft", en: "Beer being poured at the InnSider" } },
     { src: "/img/innsider/innsider-bar.jpg",           titel: { de: "Die Bar",          en: "The bar" },         alt: { de: "Gast an der Bar im InnSider", en: "A guest at the InnSider bar" } },
     { src: "/img/innsider/innsider-gastraum.jpg",      titel: { de: "Gastraum",         en: "The dining room" }, alt: { de: "Zwei Gäste beim Essen im Gastraum des InnSider", en: "Two guests dining in the InnSider dining room" } },
+    { src: "/img/innsider/innsider-service.jpg",       titel: { de: "Service",          en: "Service" },         alt: { de: "Mitarbeiterin hinter der Bar mit einer Rose", en: "A member of staff behind the bar, holding a rose" } },
+    { src: "/img/innsider/innsider-service-rose.jpg",  titel: { de: "Hinter der Bar",   en: "Behind the bar" },  alt: { de: "Mitarbeiterin bei der Arbeit hinter der Bar", en: "A member of staff at work behind the bar" } },
+    { src: "/img/innsider/innsider-anstossen.jpg",     titel: { de: "Anstoßen",         en: "A toast" },         alt: { de: "Gäste stoßen mit Aperol Spritz an", en: "Guests raising Aperol spritz glasses" } },
+    { src: "/img/innsider/innsider-abend.jpg",         titel: { de: "Abend",            en: "Evening" },         alt: { de: "Zwei Gäste am Abend im InnSider", en: "Two guests at the InnSider in the evening" } },
+    { src: "/img/innsider/innsider-tanz.jpg",          titel: { de: "Später Abend",     en: "Late evening" },    alt: { de: "Gäste tanzen an der Bar im InnSider", en: "Guests dancing at the InnSider bar" } },
   ],
 };
 

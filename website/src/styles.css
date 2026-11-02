@@ -1133,8 +1133,8 @@ section {
    kein Raster ist: die Blicke sollen nicht auf einer Linie liegen. */
 .zimmerschau {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(1rem, 2.5vw, 2rem);
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(0.8rem, 1.8vw, 1.5rem);
   align-items: start;
   margin: 0 0 clamp(2.5rem, 6vw, 4.5rem);
   perspective: 1500px;
@@ -1154,9 +1154,10 @@ section {
   will-change: transform;
 }
 
-/* Das mittlere Bild haengt tiefer, das rechte hoeher -- gegen die Linie. */
-.zimmerschau__bild:nth-child(2) { margin-top: clamp(2rem, 6vw, 5rem); }
-.zimmerschau__bild:nth-child(3) { margin-top: clamp(-2rem, -3vw, -1rem); }
+/* Auf und ab statt auf einer Linie: zweites und viertes Bild haengen tiefer. */
+.zimmerschau__bild:nth-child(2) { margin-top: clamp(2rem, 5vw, 4rem); }
+.zimmerschau__bild:nth-child(3) { margin-top: clamp(-1.5rem, -2vw, -0.5rem); }
+.zimmerschau__bild:nth-child(4) { margin-top: clamp(3rem, 7vw, 5.5rem); }
 
 .zimmerschau__bild img {
   width: 100%;
@@ -1178,16 +1179,18 @@ section {
   background: linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));
 }
 
-@media (max-width: 760px) {
+@media (max-width: 980px) {
   .zimmerschau { grid-template-columns: 1fr 1fr; }
-  .zimmerschau__bild:nth-child(3) { grid-column: span 2; aspect-ratio: 3 / 2; margin-top: 0; }
+  .zimmerschau__bild:nth-child(3) { margin-top: clamp(2rem, 5vw, 4rem); }
+  .zimmerschau__bild:nth-child(4) { margin-top: clamp(-1.5rem, -2vw, -0.5rem); }
 }
 
 @media (max-width: 460px) {
   .zimmerschau { grid-template-columns: 1fr; }
   .zimmerschau__bild,
   .zimmerschau__bild:nth-child(2),
-  .zimmerschau__bild:nth-child(3) { margin-top: 0; aspect-ratio: 3 / 4; grid-column: auto; }
+  .zimmerschau__bild:nth-child(3),
+  .zimmerschau__bild:nth-child(4) { margin-top: 0; aspect-ratio: 3 / 4; }
 }
 
 .innsider { display: grid; gap: 3rem; }

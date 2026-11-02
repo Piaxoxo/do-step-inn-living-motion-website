@@ -251,9 +251,10 @@ function setupGalerie() {
     scrollTrigger: {
       trigger: buehne,
       start: "center center",
-      // Etwas kuerzer als die Streifenbreite: der Streifen laeuft schneller
-      // als der Daumen, sonst haelt der Pin die Seite zu lange fest.
-      end: () => "+=" + weite() * 0.8,
+      // Deutlich kuerzer als die Streifenbreite: bei vierzehn Bildern wuerde
+      // ein Verhaeltnis von 1:1 die Seite ueber mehrere Bildschirmhoehen
+      // festhalten. Der Streifen laeuft dafuer schneller als der Daumen.
+      end: () => "+=" + weite() * 0.5,
       scrub: 0.6,
       pin: true,
       anticipatePin: 1,
